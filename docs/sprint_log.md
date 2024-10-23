@@ -1,0 +1,108 @@
+# Sprint Log
+
+## Sprint 1
+
+- **Date Range**: 2024-10-22 -> 2024-10-30
+- **Lead**: Ann Marie
+- **Goals**:
+    - Complete proposal
+    - ...
+- **Assignments**
+    - Ann Marie
+      - ...
+    - Nate Stott
+      - ...
+    - Madi Patch
+      - ...
+    - Brighton Ellis
+      - ...
+
+| Date       | Hours | Name | Notes                             |
+|------------|-------|------|-----------------------------------|
+| 2024-10-22 | 1.5   | All  | Discuss Project Start on Proposal |
+| 2024-10-23 |       |      |                                   |
+| 2024-10-24 |       |      |                                   |
+| 2024-10-25 |       |      |                                   |
+| 2024-10-28 |       |      |                                   |
+| 2024-10-29 |       |      |                                   |
+| 2024-10-30 |       |      |                                   |
+
+## Sprint 2
+
+- **Date Range**: 2024-10-31 -> 2024-11-08
+- **Lead**: Nate Stott
+- **Goals**:
+    - ...
+- **Assignments**
+    - Ann Marie
+        - ...
+    - Nate Stott
+        - ...
+    - Madi Patch
+        - ...
+    - Brighton Ellis
+        - ...
+
+| Date       | Hours | Name       | Notes                        |
+|------------|-------|------------|------------------------------|
+| 2024-10-31 |       |            |                              |
+| 2024-11-01 |       |            |                              |
+| 2024-11-04 |       |            |                              |
+| 2024-11-05 |       |            |                              |
+| 2024-11-06 |       |            |                              |
+| 2024-11-07 |       |            |                              |
+| 2024-11-08 |       |            |                              |
+
+## Sprint 3
+
+- **Date Range**: 2024-11-11 -> 2024-11-19
+- **Lead**: Madi Patch
+- **Goals**:
+    - ...
+- **Assignments**
+    - Ann Marie
+        - ...
+    - Nate Stott
+        - ...
+    - Madi Patch
+        - ...
+    - Brighton Ellis
+        - ...
+
+| Date       | Hours | Name       | Notes                        |
+|------------|-------|------------|------------------------------|
+| 2024-11-11 |       |            |                              |
+| 2024-11-12 |       |            |                              |
+| 2024-11-13 |       |            |                              |
+| 2024-11-14 |       |            |                              |
+| 2024-11-15 |       |            |                              |
+| 2024-11-18 |       |            |                              |
+| 2024-11-19 |       |            |                              |
+
+## Sprint 4
+
+- **Date Range**: 2024-11-20 -> 2024-11-29
+- **Lead**: Bellis
+- **Goals**:
+    - ...
+- **Assignments**
+    - Ann Marie
+        - ...
+    - Nate Stott
+        - ...
+    - Madi Patch
+        - ...
+    - Brighton Ellis
+        - ...
+
+| Date       | Hours | Name       | Notes                        |
+|------------|-------|------------|------------------------------|
+| 2024-11-20 |       |            |                              |
+| 2024-11-21 |       |            |                              |
+| 2024-11-22 |       |            |                              |
+| 2024-11-25 |       |            |                              |
+| 2024-11-26 |       |            |                              |
+
+## Important Dates
+
+- **Project Due Date**: 12/06
