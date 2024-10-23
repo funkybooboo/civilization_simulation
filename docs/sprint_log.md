@@ -1,5 +1,11 @@
 # Sprint Log
 
+## Asana Board
+
+Stay organized and on track with your assignments and tasks!
+
+[**View the Asana Board**](https://app.asana.com/0/1208612487538355/board)
+
 ## Sprint 1
 
 - **Date Range**: 2024-10-22 -> 2024-10-30
@@ -7,15 +13,6 @@
 - **Goals**:
     - Complete proposal
     - ...
-- **Assignments**
-    - Ann Marie
-      - ...
-    - Nate Stott
-      - ...
-    - Madi Patch
-      - ...
-    - Brighton Ellis
-      - ...
 
 | Date       | Hours | Name | Notes                             |
 |------------|-------|------|-----------------------------------|
@@ -33,15 +30,6 @@
 - **Lead**: Nate Stott
 - **Goals**:
     - ...
-- **Assignments**
-    - Ann Marie
-        - ...
-    - Nate Stott
-        - ...
-    - Madi Patch
-        - ...
-    - Brighton Ellis
-        - ...
 
 | Date       | Hours | Name       | Notes                        |
 |------------|-------|------------|------------------------------|
@@ -59,15 +47,6 @@
 - **Lead**: Madi Patch
 - **Goals**:
     - ...
-- **Assignments**
-    - Ann Marie
-        - ...
-    - Nate Stott
-        - ...
-    - Madi Patch
-        - ...
-    - Brighton Ellis
-        - ...
 
 | Date       | Hours | Name       | Notes                        |
 |------------|-------|------------|------------------------------|
@@ -85,15 +64,6 @@
 - **Lead**: Bellis
 - **Goals**:
     - ...
-- **Assignments**
-    - Ann Marie
-        - ...
-    - Nate Stott
-        - ...
-    - Madi Patch
-        - ...
-    - Brighton Ellis
-        - ...
 
 | Date       | Hours | Name       | Notes                        |
 |------------|-------|------------|------------------------------|
