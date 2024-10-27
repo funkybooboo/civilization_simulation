@@ -1,0 +1,6 @@
+load farm, and other information from json file
+
+generate 1000 random maps, and start games
+
+for each game
+    ...

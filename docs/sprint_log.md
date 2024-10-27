@@ -14,15 +14,18 @@ Stay organized and on track with your assignments and tasks!
     - Complete proposal
     - ...
 
-| Date       | Hours | Name | Notes                             |
-|------------|-------|------|-----------------------------------|
-| 2024-10-22 | 1.5   | All  | Discuss Project Start on Proposal |
-| 2024-10-23 |       |      |                                   |
-| 2024-10-24 |       |      |                                   |
-| 2024-10-25 |       |      |                                   |
-| 2024-10-28 |       |      |                                   |
-| 2024-10-29 |       |      |                                   |
-| 2024-10-30 |       |      |                                   |
+| Date       | Hours | Name      | Notes                                                 |
+|------------|-------|-----------|-------------------------------------------------------|
+| 2024-10-22 | 1.5   | All       | Kick off meeting                                      |
+| 2024-10-23 | 1.5   | Nate      | Finalize some ideas for the project proposal          |
+| 2024-10-23 | 1.5   | Madi      | Finalize some ideas for the project proposal          |
+| 2024-10-23 | 1.5   | Ann Marie | Finalize some ideas for the project proposal          |
+| 2024-10-24 | 0.25  | Nate      | Format project proposal                               |
+| 2024-10-25 |       |           |                                                       |
+| 2024-10-26 | 1     | Nate      | Write methodology for project proposal. Start on uml. |
+| 2024-10-28 |       |           |                                                       |
+| 2024-10-29 |       |           |                                                       |
+| 2024-10-30 |       |           |                                                       |
 
 ## Sprint 2
 
