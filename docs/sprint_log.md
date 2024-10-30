@@ -12,7 +12,8 @@ Stay organized and on track with your assignments and tasks!
 - **Lead**: Ann Marie
 - **Goals**:
     - Complete proposal
-    - ...
+    - Complete UML
+    - Have a plan
 
 | Date       | Hours | Name      | Notes                                                 |
 |------------|-------|-----------|-------------------------------------------------------|
@@ -24,7 +25,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-25 |       |           |                                                       |
 | 2024-10-26 | 1     | Nate      | Write methodology for project proposal. Start on uml. |
 | 2024-10-28 |       |           |                                                       |
-| 2024-10-29 |       |           |                                                       |
+| 2024-10-29 | 3     | Nate      | UML meeting                                           |
 | 2024-10-30 |       |           |                                                       |
 
 ## Sprint 2
@@ -32,7 +33,7 @@ Stay organized and on track with your assignments and tasks!
 - **Date Range**: 2024-10-31 -> 2024-11-08
 - **Lead**: Nate Stott
 - **Goals**:
-    - ...
+  - get MVP out
 
 | Date       | Hours | Name       | Notes                        |
 |------------|-------|------------|------------------------------|
