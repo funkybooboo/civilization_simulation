@@ -1,6 +1,6 @@
-package main.java.org.echoes_of_eden.buildings;
+package org.echoes_of_eden.Simulation.Game.Buildings;
 
-abstract class Building {
+public abstract class Building {
     protected int stoneRequired;
     protected int stoneDelivered;
     protected int woodRequired;

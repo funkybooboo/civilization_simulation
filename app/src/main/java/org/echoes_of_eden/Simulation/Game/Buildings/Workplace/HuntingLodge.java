@@ -1,4 +1,4 @@
-package main.java.org.echoes_of_eden.buildings.workplace;
+package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
 
 public class HuntingLodge extends Workplace {    
     public HuntingLodge() {

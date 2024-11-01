@@ -1,4 +1,4 @@
-package main.java.org.echoes_of_eden.buildings.workplace;
+package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
 
 public class GatheringLodge extends Workplace {    
     public GatheringLodge() {
@@ -16,6 +16,7 @@ public class GatheringLodge extends Workplace {
         this.isUsable = false;
     }
 
+    @Override
     public void disaster() {
         // implement disaster
     }

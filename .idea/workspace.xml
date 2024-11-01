@@ -5,13 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9ae86df-c7fd-46a6-98a7-31468c05c4d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/AI/AI.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/AI/Action/Action.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Human/Human.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Job/Job.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Building.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/House.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/Residence.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/Residence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/AnimalFarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/AnimalFarm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Barn.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Barn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Cemetery.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Cemetery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Chapel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Chapel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CoalMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CoalMine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CropFarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CropFarm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/GatheringLodge.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/GatheringLodge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/HuntingLodge.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/HuntingLodge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/IronMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/IronMine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Sawmill.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Sawmill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/StoneMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/StoneMine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Tavern.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Tavern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Workplace.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Workplace.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +84,13 @@
   "keyToString": {
     "Gradle.Upgrade Gradle wrapper.executor": "Run",
     "Gradle.echoes_of_eden:app [:app:org.example.App.main()].executor": "Run",
+    "NIXITCH_NIXPKGS_CONFIG": "",
+    "NIXITCH_NIX_CONF_DIR": "",
+    "NIXITCH_NIX_OTHER_STORES": "",
+    "NIXITCH_NIX_PATH": "",
+    "NIXITCH_NIX_PROFILES": "",
+    "NIXITCH_NIX_REMOTE": "",
+    "NIXITCH_NIX_USER_PROFILE_DIR": "",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
@@ -87,7 +104,7 @@
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Groovy",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>

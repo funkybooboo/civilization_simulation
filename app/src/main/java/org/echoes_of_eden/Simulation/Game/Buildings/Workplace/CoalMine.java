@@ -1,6 +1,4 @@
-package main.java.org.echoes_of_eden.buildings;
-
-import java.util.ArrayList;
+package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
 
 public class CoalMine extends Workplace {
     public CoalMine() {

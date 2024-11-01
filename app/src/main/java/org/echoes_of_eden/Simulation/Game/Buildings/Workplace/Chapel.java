@@ -1,6 +1,4 @@
-package main.java.org.echoes_of_eden.buildings.workplace;
-
-import main.java.org.echoes_of_eden.buildings.Workplace;
+package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
 
 public class Chapel extends Workplace {
     protected int seatingCapacity;
