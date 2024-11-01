@@ -26,6 +26,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-26 | 1     | Nate      | Write methodology for project proposal. Start on uml. |
 | 2024-10-28 |       |           |                                                       |
 | 2024-10-29 | 3     | Nate      | UML meeting                                           |
+| 2024-10-29 | 3     | Ann Marie | UML meeting                                           |
 | 2024-10-30 |       |           |                                                       |
 
 ## Sprint 2
