@@ -6,22 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d9ae86df-c7fd-46a6-98a7-31468c05c4d6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Building.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Building.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/House.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/House.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/Residence.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Residence/Residence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/AnimalFarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/AnimalFarm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Barn.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Barn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Cemetery.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Cemetery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Chapel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Chapel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CoalMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CoalMine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CropFarm.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/CropFarm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/GatheringLodge.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/GatheringLodge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/HuntingLodge.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/HuntingLodge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/IronMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/IronMine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Sawmill.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Sawmill.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/StoneMine.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/StoneMine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Tavern.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Tavern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Workplace.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/echoes_of_eden/Simulation/Game/Buildings/Workplace/Workplace.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/psudocode/high_level.psudocode" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/uml/high_level.drawio" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/uml/low_level.drawio" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
