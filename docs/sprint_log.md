@@ -34,7 +34,7 @@ Stay organized and on track with your assignments and tasks!
 - **Lead**: Nate Stott
 - **Goals**:
   - get MVP out
-
+    
 | Date       | Hours | Name       | Notes                        |
 |------------|-------|------------|------------------------------|
 | 2024-10-31 |       |            |                              |
