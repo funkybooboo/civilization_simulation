@@ -18,6 +18,7 @@ public class House extends Residence {
         this.coal = new ArrayList<Coal>();
     }
 
+    @Override
     public void disaster() {
         // implement disaster
     }
