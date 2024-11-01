@@ -2,6 +2,8 @@ package org.echoes_of_eden.Simulation.Game.Building.Workplace;
 
 import java.util.ArrayList;
 
+import javax.tools.Tool;
+
 public class Barn extends Workplace {
     protected ArrayList<Firewood> firewood;
     protected ArrayList<Wood> wood;
@@ -36,6 +38,7 @@ public class Barn extends Workplace {
         this.isUsable = false;
     }
 
+    @Override
     public void disaster() {
         // implement disaster
     }

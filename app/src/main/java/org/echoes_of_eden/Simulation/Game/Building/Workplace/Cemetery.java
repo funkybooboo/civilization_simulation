@@ -22,6 +22,7 @@ public class Cemetery extends Workplace {
         this.isUsable = false;
     }
 
+    @Override
     public void disaster() {
         // implement disaster
     }

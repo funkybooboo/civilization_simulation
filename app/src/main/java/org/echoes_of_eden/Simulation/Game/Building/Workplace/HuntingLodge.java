@@ -16,6 +16,7 @@ public class HuntingLodge extends Workplace {
         this.isUsable = false;
     }
 
+    @Override
     public void disaster() {
         // implement disaster
     }
