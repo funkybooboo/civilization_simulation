@@ -1,4 +1,4 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Residence;
+package org.echoes_of_eden.Simulation.Game.Building.Residence;
 
 public class House extends Residence {
 

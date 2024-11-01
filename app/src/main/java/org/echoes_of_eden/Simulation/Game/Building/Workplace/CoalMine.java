@@ -1,4 +1,4 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
+package org.echoes_of_eden.Simulation.Game.Building.Workplace;
 
 public class CoalMine extends Workplace {
     public CoalMine() {

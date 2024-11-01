@@ -1,4 +1,4 @@
-package org.echoes_of_eden.Simulation.Game.Buildings;
+package org.echoes_of_eden.Simulation.Game.Building;
 
 public abstract class Building {
     protected int stoneRequired;

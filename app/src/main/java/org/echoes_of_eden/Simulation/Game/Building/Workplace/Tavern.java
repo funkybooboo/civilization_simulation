@@ -1,7 +1,7 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
+package org.echoes_of_eden.Simulation.Game.Building.Workplace;
 
-public class GatheringLodge extends Workplace {    
-    public GatheringLodge() {
+public class Tavern extends Workplace {        
+    public Tavern() {
         this.stoneRequired = 10;
         this.woodRequired = 10;
         this.ironRequired = 10;
@@ -11,12 +11,11 @@ public class GatheringLodge extends Workplace {
         this.ironDelivered = 0;
 
         this.numberOfWorkers = 0;
-        this.maxWorkers = 20;
+        this.maxWorkers = 2;
 
         this.isUsable = false;
     }
 
-    @Override
     public void disaster() {
         // implement disaster
     }

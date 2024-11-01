@@ -1,9 +1,7 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
+package org.echoes_of_eden.Simulation.Game.Building.Workplace;
 
-public class AnimalFarm extends Workplace {    
-    // keep track of all the animals
-    
-    public AnimalFarm() {
+public class StoneMine extends Workplace {
+    public StoneMine() {
         this.stoneRequired = 10;
         this.woodRequired = 10;
         this.ironRequired = 10;

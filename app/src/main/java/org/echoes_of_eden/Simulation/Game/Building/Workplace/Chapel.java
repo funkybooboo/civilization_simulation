@@ -1,7 +1,9 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
+package org.echoes_of_eden.Simulation.Game.Building.Workplace;
 
-public class HuntingLodge extends Workplace {    
-    public HuntingLodge() {
+public class Chapel extends Workplace {
+    protected int seatingCapacity;
+    
+    public Chapel() {
         this.stoneRequired = 10;
         this.woodRequired = 10;
         this.ironRequired = 10;

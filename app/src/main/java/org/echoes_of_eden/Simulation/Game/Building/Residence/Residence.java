@@ -1,6 +1,6 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Residence;
+package org.echoes_of_eden.Simulation.Game.Building.Residence;
 
-import org.echoes_of_eden.Simulation.Game.Buildings.Building;
+import org.echoes_of_eden.Simulation.Game.Building.Building;
 
 public abstract class Residence extends Building {
     protected ArrayList<Food> food;

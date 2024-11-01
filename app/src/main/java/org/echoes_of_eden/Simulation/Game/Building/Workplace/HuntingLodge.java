@@ -1,10 +1,7 @@
-package org.echoes_of_eden.Simulation.Game.Buildings.Workplace;
+package org.echoes_of_eden.Simulation.Game.Building.Workplace;
 
-public class Cemetery extends Workplace {
-    protected int emptyGraves;
-    protected int filledGraves;
-    
-    public Cemetery() {
+public class HuntingLodge extends Workplace {    
+    public HuntingLodge() {
         this.stoneRequired = 10;
         this.woodRequired = 10;
         this.ironRequired = 10;
@@ -13,11 +10,8 @@ public class Cemetery extends Workplace {
         this.woodDelivered = 0;
         this.ironDelivered = 0;
 
-        this.emptyGraves = 100;
-        this.filledGraves = 0;
-
         this.numberOfWorkers = 0;
-        this.maxWorkers = 10;
+        this.maxWorkers = 20;
 
         this.isUsable = false;
     }
