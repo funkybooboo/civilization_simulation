@@ -331,3 +331,9 @@ yarn-error.log
 
 # Drawio
 !/docs/uml/.$high_level.drawio.bkp
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
