@@ -1,5 +1,5 @@
 import matplotlib as plot
-from simulation import Simulation
+from Simulation import Simulation
 
 def main():
     for _ in range(10):
