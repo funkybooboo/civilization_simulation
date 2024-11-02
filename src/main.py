@@ -1,7 +1,11 @@
+import matplotlib as plot
 
 
 def main():
-    pass
+    for _ in range(10):
+        simulation = Simulation()
+        stats = simulation.run()
+
 
 if __name__ == "__main__":
     main()
