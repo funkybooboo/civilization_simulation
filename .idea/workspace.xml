@@ -4,54 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d9ae86df-c7fd-46a6-98a7-31468c05c4d6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/people_generator.py" afterDir="false" />
+    <list default="true" id="4d422cf8-e6d6-43a7-b2b2-682cbb5172e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/simulation/grid/building/barn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/grid/building/building.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/grid/building/farm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/grid/building/house.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/grid/building/mine.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/grid/grid.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/people/people.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/memory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/mover.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/person.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/vision.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grid_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/grid_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/town.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/town.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grid_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/grid/grid_generator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/people_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/people/people_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/person.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/simulation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
-      <ProjectState />
-    </projectState>
-  </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="echoes_of_eden" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="echoes_of_eden" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="Class" />
-        <option value="Record" />
         <option value="Python Script" />
       </list>
     </option>
@@ -60,9 +43,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2nqDNobbr4JEq1DmQZpGAIHgBKm" />
+  <component name="ProjectId" id="2oK5lp7GQxmWCRUwnmBFI5rEzFZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -72,8 +55,6 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Gradle.Upgrade Gradle wrapper.executor": "Run",
-    "Gradle.echoes_of_eden:app [:app:org.example.App.main()].executor": "Run",
     "NIXITCH_NIXPKGS_CONFIG": "",
     "NIXITCH_NIX_CONF_DIR": "",
     "NIXITCH_NIX_OTHER_STORES": "",
@@ -81,34 +62,26 @@
     "NIXITCH_NIX_PROFILES": "",
     "NIXITCH_NIX_REMOTE": "",
     "NIXITCH_NIX_USER_PROFILE_DIR": "",
-    "Python.GameMap.executor": "Run",
-    "Python.Map.executor": "Run",
-    "Python.grid_generator.executor": "Run",
-    "Python.main.executor": "Run",
+    "Python.grid.executor": "Debug",
+    "Python.grid_generator.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/nate/Software/School/CS5060/echoes_of_eden",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "settings.editor.selected.configurable": "preferences.editor",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/generators" />
-      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/simulation/grid/building" />
+      <recent name="$PROJECT_DIR$/src/simulation/grid" />
+      <recent name="$PROJECT_DIR$/src/simulation/people" />
       <recent name="$PROJECT_DIR$/src/simulation" />
-      <recent name="$PROJECT_DIR$/src/game_grid" />
-      <recent name="$PROJECT_DIR$/docs/uml" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -122,33 +95,39 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="d9ae86df-c7fd-46a6-98a7-31468c05c4d6" name="Changes" comment="" />
-      <created>1729691674410</created>
+      <changelist id="4d422cf8-e6d6-43a7-b2b2-682cbb5172e8" name="Changes" comment="" />
+      <created>1730605581334</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1729691674410</updated>
-      <workItem from="1729691675427" duration="1698000" />
-      <workItem from="1729699267740" duration="997000" />
-      <workItem from="1729990296027" duration="1909000" />
-      <workItem from="1729992483477" duration="391000" />
-      <workItem from="1730161392362" duration="52000" />
-      <workItem from="1730296713235" duration="332000" />
-      <workItem from="1730421817895" duration="1600000" />
-      <workItem from="1730508581563" duration="2114000" />
-      <workItem from="1730510704951" duration="8778000" />
-      <workItem from="1730588612633" duration="29000" />
-      <workItem from="1730591121717" duration="525000" />
-      <workItem from="1730592167877" duration="6879000" />
+      <updated>1730605581334</updated>
+      <workItem from="1730605582915" duration="242000" />
+      <workItem from="1730649750382" duration="6282000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/simulation/grid/grid_generator.py</url>
+          <line>48</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/echoes_of_eden$main.coverage" NAME="main Coverage Results" MODIFIED="1730512698458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/echoes_of_eden$Map.coverage" NAME="Map Coverage Results" MODIFIED="1730514634726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/echoes_of_eden$GameMap.coverage" NAME="GameMap Coverage Results" MODIFIED="1730593892349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/echoes_of_eden$grid_generator.coverage" NAME="grid_generator Coverage Results" MODIFIED="1730596429665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/echoes_of_eden$grid.coverage" NAME="grid Coverage Results" MODIFIED="1730655950974" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/simulation/grid" />
+    <SUITE FILE_PATH="coverage/echoes_of_eden$grid_generator.coverage" NAME="grid_generator Coverage Results" MODIFIED="1730655948588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/simulation/grid" />
   </component>
 </project>

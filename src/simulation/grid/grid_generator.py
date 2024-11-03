@@ -3,7 +3,7 @@ import random
 class GridGenerator:
     def __init__(self,
              size,
-             tree_density=0.1,
+             tree_density=0.4,
              ca_iterations=40,
         ):
         self._grid = []
@@ -13,10 +13,14 @@ class GridGenerator:
         self._ca_iterations = ca_iterations
         self._end_of_world_char = 'e'
         self._tree_char = '*'
+
+        # TODO generate town
         self.num_houses = 10
         self.num_farms = 3
         self.num_mines = 1
         self.num_barns = 1
+
+        self.generate()
 
     def generate(self):
         self._grid = [[' ' for _ in range(self._width)] for _ in range(self._height)]
@@ -26,7 +30,7 @@ class GridGenerator:
 
     def _place_town_in_center(self):
         # Read town layout from town.txt
-        town_layout = self._read_town_layout('../data/town.txt')
+        town_layout = self._read_town_layout('../../../data/town.txt')
         # Calculate town position
         town_width = len(town_layout[0])
         town_height = len(town_layout)
@@ -39,8 +43,22 @@ class GridGenerator:
 
     @staticmethod
     def _read_town_layout(filename):
+        town_layout = []
+        max_length = 0
+    
+        # Read the file and determine the maximum row length
         with open(filename, 'r') as file:
-            return [line.rstrip('\n') for line in file.readlines()]
+            for line in file.readlines():
+                row = line.rstrip('\n')
+                if row:
+                    town_layout.append(row)
+                    max_length = max(max_length, len(row))
+    
+        # Pad each row to make them the same length
+        for i in range(len(town_layout)):
+            town_layout[i] = town_layout[i].ljust(max_length)
+    
+        return town_layout
 
     def _add_clustered_trees(self):
         self._create_trees()
@@ -81,15 +99,3 @@ class GridGenerator:
                 if self._grid[row + i][col + j] == self._tree_char:
                     count += 1
         return count
-
-    def display_grid(self):
-        for row in self._grid:
-            print(' '.join(row))
-
-if __name__ == '__main__':
-    grid_size = 75
-    tree_density = 0.4  # Control tree density here
-    ca_iterations = 40   # Control cellular automata iterations here
-    grid_generator = GridGenerator(grid_size, tree_density, ca_iterations)
-    generated_grid = grid_generator.generate()
-    grid_generator.display_grid()

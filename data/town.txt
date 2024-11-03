@@ -1,20 +1,17 @@
-                                        
-                       mmmmm            
-                       mmmmm            
-                       mmmmm            
-                    hh mmmmm            
-                 hh hh mmmmm            
-                 hh                     
-        fffff hh     hh hh fffff        
-        fffff hh bbb hh hh fffff        
-        fffff    bbb       fffff        
-        fffff hh bbb hh hh fffff        
-        fffff hh     hh hh fffff        
-                 hh                     
-                 hh hh fffff            
-                    hh fffff            
-                       fffff            
-                       fffff            
-                       fffff            
-                                        
-                                        
+                                  
+                       MMM        
+                    HH MMM        
+                 HH HH MMM        
+                 HH               
+        FFFFF HH     HH HH FFFFF  
+        FFFFF HH BBB HH HH FFFFF  
+        FFFFF    BBB       FFFFF  
+        FFFFF HH BBB HH HH FFFFF  
+        FFFFF HH     HH HH FFFFF  
+                 HH               
+                 HH HH FFFFF      
+                    HH FFFFF      
+                       FFFFF      
+                       FFFFF      
+                       FFFFF      
+                                 

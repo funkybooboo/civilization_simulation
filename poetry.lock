@@ -430,6 +430,17 @@ files = [
 ]
 
 [[package]]
+name = "pathfinding"
+version = "1.0.11"
+description = "Pathfinding algorithms (based on Pathfinding.JS)"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pathfinding-1.0.11-py3-none-any.whl", hash = "sha256:07d039ca66f6c2d66a4a9d48d440fe112f8959b4e5023a3b438ee09e5e9ea693"},
+    {file = "pathfinding-1.0.11.tar.gz", hash = "sha256:99b487449911991ac46b336b983d58eafa528d9c8865e9f6b71857de042001e1"},
+]
+
+[[package]]
 name = "pillow"
 version = "11.0.0"
 description = "Python Imaging Library (Fork)"
@@ -563,4 +574,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "3d77c178397a87c8a5e10ac940d83289ac13d5131481c5981ef85aac8941835e"
+content-hash = "9f23e7eca01945c3b6e1e786227a4cf6385d3cd1b18c94c5e2db03f4b02f3904"
