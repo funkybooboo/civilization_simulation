@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9ae86df-c7fd-46a6-98a7-31468c05c4d6" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameMap.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Person.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Person.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,13 +81,14 @@
     "NIXITCH_NIX_PROFILES": "",
     "NIXITCH_NIX_REMOTE": "",
     "NIXITCH_NIX_USER_PROFILE_DIR": "",
+    "Python.GameMap.executor": "Run",
     "Python.Map.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/nate/Software/Work/TA",
+    "last_opened_file_path": "/home/nate/Software/School/CS5060/echoes_of_eden",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -129,6 +133,8 @@
       <workItem from="1730508581563" duration="2114000" />
       <workItem from="1730510704951" duration="8778000" />
       <workItem from="1730588612633" duration="29000" />
+      <workItem from="1730591121717" duration="525000" />
+      <workItem from="1730592167877" duration="1600000" />
     </task>
     <servers />
   </component>
@@ -138,5 +144,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/echoes_of_eden$main.coverage" NAME="main Coverage Results" MODIFIED="1730512698458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/echoes_of_eden$Map.coverage" NAME="Map Coverage Results" MODIFIED="1730514634726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/echoes_of_eden$GameMap.coverage" NAME="GameMap Coverage Results" MODIFIED="1730593679941" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

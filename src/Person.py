@@ -17,7 +17,7 @@ class Person:
         for task in tasks:
             self.scheduler.addTask(task)
 
-    def move():
+    def move(self):
         # TODO: Move around and remember things as you move
         pass
 
