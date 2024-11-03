@@ -1,14 +1,18 @@
 import random
 
 class GridGenerator:
-    def __init__(self, size, tree_density=0.4, ca_iterations=40, end_of_world_char='e', tree_char='*'):
+    def __init__(self,
+             size,
+             tree_density=0.4,
+             ca_iterations=40,
+         ):
         self.grid = []
         self.width = size
         self.height = size
         self.tree_density = tree_density
         self.ca_iterations = ca_iterations
-        self.end_of_world_char = end_of_world_char
-        self.tree_char = tree_char
+        self.end_of_world_char = 'e'
+        self.tree_char = '*'
 
     def generate(self):
         self.grid = [[' ' for _ in range(self.width)] for _ in range(self.height)]

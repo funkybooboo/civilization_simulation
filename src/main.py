@@ -1,5 +1,5 @@
 import matplotlib as plot
-from Simulation import Simulation
+from simulation import Simulation
 
 
 def main():
