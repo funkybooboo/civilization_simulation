@@ -1,4 +1,3 @@
-import matplotlib as plot
 from simulation import Simulation
 
 
