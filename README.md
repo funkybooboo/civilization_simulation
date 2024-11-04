@@ -14,3 +14,10 @@
    - `poetry run mypy src/**/*.py`
 3. An opinionated code formatter that enforces a consistent style.
    - `poetry run black src/**/*.py`
+
+## Libraries to look into
+
+rich - colors to the terminal
+argparse - run from the terminal
+tqdm - loading bars
+seaborn - plotting
