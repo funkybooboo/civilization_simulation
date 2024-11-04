@@ -10,6 +10,6 @@ class People:
         for person in self._people:
             print(person)
 
-    def take_action(self):
+    def take_actions(self):
         for person in self._people:
             person.take_action()

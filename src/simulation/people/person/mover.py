@@ -10,45 +10,45 @@ class Mover:
         self.person = person
 
     def move(self):
-        self.person.memory.combine(self.person.vision.look_around())
+        self.person._memory.combine(self.person._vision.look_around())
         choice = self.person.thinker.think()
-        l1 = self.person.location
-        if self.person.fear == self.person.simulation.max_fear:
+        l1 = self.person._location
+        if self.person.fear == self.person._simulation.max_fear:
             self.person.number_of_max_fear += 1
         other = None
-        for _ in range(self.person.speed):
+        for _ in range(self.person._speed):
 
             if self.person.is_dead():
                 return other
 
             other = self.person.thinker.make(choice)
 
-            self.person.memory.combine(self.person.vision.look_around())
+            self.person._memory.combine(self.person._vision.look_around())
 
             # hit person
             if other:
                 return other
             # in a fire
-            if self.person.location in self.person.simulation.fire_locations:
-                self.person.health -= 25
+            if self.person._location in self.person._simulation.fire_locations:
+                self.person._health -= 25
                 self.person.end_turn_in_fire = True
                 self.person.number_of_fire_touches += 1
             else:
                 self.person.end_turn_in_fire = False
             # at a stair
-            if self.person.simulation.is_stair(self.person.location):
-                if self.person.location[0] > 0:
-                    self.person.simulation.number_of_stairs += 1
-                    self.person.location = (self.person.location[0] - 1, self.person.location[1], self.person.location[2])
+            if self.person._simulation.is_stair(self.person._location):
+                if self.person._location[0] > 0:
+                    self.person._simulation.number_of_stairs += 1
+                    self.person._location = (self.person._location[0] - 1, self.person._location[1], self.person._location[2])
                     return other
             # at an exit
-            if self.person.simulation.is_exit(self.person.location):
+            if self.person._simulation.is_exit(self.person._location):
                 return other
             # at broken glass
-            if self.person.simulation.is_broken_glass(self.person.location):
+            if self.person._simulation.is_broken_glass(self.person._location):
                 return other
 
-        l2 = self.person.location
+        l2 = self.person._location
         if l1 == l2:
             self.person.times_not_move += 1
         else:
@@ -59,30 +59,30 @@ class Mover:
 
     def explore(self):
         if self.person.is_in_room():
-            closest_door = self.get_closest(self.person.location, self.person.memory.doors)
+            closest_door = self.get_closest(self.person._location, self.person._memory.doors)
             if closest_door:
                 return self.towards(closest_door)
         while True:
             random_location = self.get_random_location()
-            for fire_location in self.person.simulation.fire_locations:
+            for fire_location in self.person._simulation.fire_locations:
                 if self.person.is_near(fire_location, random_location):
                     continue
                 return self.towards(random_location)
 
     def get_random_location(self):
-        floor = self.person.location[0]
+        floor = self.person._location[0]
         while True:
-            x = randint(0, self.person.simulation.grid.x_size - 1)
-            y = randint(0, self.person.simulation.grid.y_size - 1)
+            x = randint(0, self.person._simulation.grid.x_size - 1)
+            y = randint(0, self.person._simulation.grid.y_size - 1)
             location = (floor, x, y)
-            if self.person.simulation.is_valid_location_for_person(location):
+            if self.person._simulation.is_valid_location_for_person(location):
                 break
         return location
 
     def towards(self, location):
         if location is None:
             return None
-        self.person.simulation.is_not_in_building(location)
+        self.person._simulation.is_not_in_building(location)
         n_x = -1
         n_y = -1
         for i in range(4):
@@ -99,22 +99,22 @@ class Mover:
         return self.place(new_location)
 
     def place(self, location):
-        if not self.is_one_away(self.person.location, location):
+        if not self.is_one_away(self.person._location, location):
             raise Exception(f"location is not one away: {location}")
-        if not self.person.simulation.is_valid_location_for_person(location):
+        if not self.person._simulation.is_valid_location_for_person(location):
             raise Exception(
-                f"location is not valid: {location} {self.person.simulation.building.text[location[0]][location[1]][location[2]]}")
-        self.person.location = location
+                f"location is not valid: {location} {self.person._simulation.building.text[location[0]][location[1]][location[2]]}")
+        self.person._location = location
 
     def get_path(self, location, grid):
         if location is None:
             raise Exception("location is None")
         if grid is None:
             raise Exception("grid is None")
-        self.person.simulation.is_not_in_building(self.person.location)
-        self.person.simulation.is_not_in_building(location)
-        x1 = self.person.location[1]
-        y1 = self.person.location[2]
+        self.person._simulation.is_not_in_building(self.person._location)
+        self.person._simulation.is_not_in_building(location)
+        x1 = self.person._location[1]
+        y1 = self.person._location[2]
         start = grid.node(y1, x1)
         x2 = location[1]
         y2 = location[2]
@@ -124,7 +124,7 @@ class Mover:
         return path
 
     def get_grid(self, i):
-        matrix = deepcopy(self.person.simulation.building.matrix)
+        matrix = deepcopy(self.person._simulation.building.matrix)
         if i == 0:
             self._switcher(matrix, -1, -2)
         elif i == 1:
@@ -214,7 +214,7 @@ class Mover:
 
     def is_next_to(self, locations):
         for location in locations:
-            if self.is_one_away(self.person.location, location):
+            if self.is_one_away(self.person._location, location):
                 return True
         return False
 

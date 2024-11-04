@@ -1,7 +1,8 @@
-from mover import Mover
-from scheduler import Scheduler
 from src.simulation.people.person.memory import Memory
-from vision import Vision
+from src.simulation.people.person.mover import Mover
+from src.simulation.people.person.scheduler.scheduler import Scheduler
+from src.simulation.people.person.scheduler.task.task_type import TaskType
+from src.simulation.people.person.vision import Vision
 
 
 class Person:
@@ -10,44 +11,55 @@ class Person:
              name,
              pk,
              location,
-             age,
+             age
          ):
 
-        self.simulation = simulation
-        self.name = name
-        self.pk = pk
-        self.age = age
+        self._simulation = simulation
+        self._name = name
+        self._pk = pk
+        self._age = age
         # how many blocks can the person move in one turn
-        self.speed = 10
+        self._speed = 10
         # how many blocks can the person see
-        self.visibility = 30
+        self._visibility = 30
         # where the person is located
         # (x, y)
-        self.location = location
+        self._location = location
 
-        self.memory = Memory()
+        self._memory = Memory()
 
-        self.vision = Vision(self)
+        self._vision = Vision(self)
 
-        self.mover = Mover(self)
+        self._mover = Mover(self)
 
-        self.health: int = 100
-        self.hunger: int = 100  # when your hunger gets below 25, health starts going down; when it gets above 75, health starts going up
-        self.home = None
-        self.spouse = None
-        self.scheduler = Scheduler()
+        self._health: int = 100
+        self._hunger: int = 100  # when your hunger gets below 25, health starts going down; when it gets above 75, health starts going up
+        self._home = None
+        self._spouse = None
+        self._scheduler = Scheduler()
 
     def take_action(self):
-        tasks = []
-        # if home is None then add a task to find a house
-        # if spouse is None then add a task to find a spouse
-        # if hunger is low then add a task to eat
-
-        for task in tasks:
-            self.scheduler.add(task)
+        self._hunger -= 1 # TODO adjust
+        self._age += 1
+        
+        if not self._home:
+            self._scheduler.add(TaskType.FIND_HOME)
+        if not self._spouse:
+            self._scheduler.add(TaskType.FIND_SPOUSE)
+        else:
+            # TODO chance to have a baby
+            pass
+        if self._hunger < 50:
+            self._scheduler.add(TaskType.EAT)
+        
+        task = self._scheduler.get()
+        task.execute()
 
     def is_dead(self):
-        return self.health <= 0 or self.age >= 80
-
+        return self._health <= 0 or self._age >= 80
+    
+    def eat(self):
+        self._hunger += 5
+    
     def __str__(self):
         pass # TODO implement what to print for a person
