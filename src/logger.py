@@ -19,16 +19,12 @@ logger.add(log_file_path,
            level="DEBUG",          # Log level for the file
            format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")  # Log format
 
-# Optional: Customize exception logging
-logger.add("error.log", level="ERROR", format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
+logger.add("../logs/error.log", level="ERROR", format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}")
 
-# Example function to demonstrate usage
-def log_example():
+
+if __name__ == "__main__":
     logger.info("Logger is set up and ready to use!")
     logger.debug("This is a debug message.")
     logger.warning("This is a warning message.")
     logger.error("This is an error message.")
     logger.critical("This is a critical message.")
-
-if __name__ == "__main__":
-    log_example()
