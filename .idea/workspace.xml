@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d422cf8-e6d6-43a7-b2b2-682cbb5172e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/task/eat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/task/find_home.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/task/find_spouse.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/task/task.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/task/task_factory.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/task/task_type.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation/people/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/people/people.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation/people/person/mover.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/people/person/mover.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation/people/person/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/people/person/person.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation/people/person/scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/people/person/scheduler/scheduler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation/people/person/vision.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/people/person/vision.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/simulation/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/simulation/simulation.py" afterDir="false" />
-    </list>
+    <list default="true" id="4d422cf8-e6d6-43a7-b2b2-682cbb5172e8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,7 +81,7 @@
       <updated>1730605581334</updated>
       <workItem from="1730605582915" duration="242000" />
       <workItem from="1730649750382" duration="6436000" />
-      <workItem from="1730730088977" duration="3102000" />
+      <workItem from="1730730088977" duration="3709000" />
     </task>
     <servers />
   </component>
