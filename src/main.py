@@ -4,6 +4,8 @@ from simulation.simulation import Simulation
 
 
 def main():
+    # TODO logging
+    
     load_dotenv('../env/.env')
     actions_per_day = os.getenv('ACTIONS_PER_DAY', 5)
     days_per_year = os.getenv('DAYS_PER_YEAR', 365)
