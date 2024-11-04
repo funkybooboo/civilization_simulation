@@ -1,5 +1,6 @@
-class Memory:
+# TODO refactor this code
 
+class Memory:
     def __init__(self):
         self.barns = set()
         self.farms = set()
@@ -7,7 +8,6 @@ class Memory:
         self.houses = set()
         self.trees = set()
         self.spaces = set()
-        self.empties = set()
         self.people = set()
         self.items = list(vars(self).keys())
 

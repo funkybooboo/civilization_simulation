@@ -4,6 +4,7 @@ from pathfinding.core.grid import Grid
 from pathfinding.finder.dijkstra import DijkstraFinder
 from copy import deepcopy
 
+# TODO refactor this code
 
 class Mover:
     def __init__(self, person):

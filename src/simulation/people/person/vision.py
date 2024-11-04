@@ -1,5 +1,6 @@
 from memory import Memory
 
+# TODO refactor this code
 
 class Vision:
     def __init__(self, person):
