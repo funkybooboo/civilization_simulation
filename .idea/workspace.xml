@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d422cf8-e6d6-43a7-b2b2-682cbb5172e8" name="Changes" comment="" />
+    <list default="true" id="4d422cf8-e6d6-43a7-b2b2-682cbb5172e8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.pylintrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mypy.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -81,7 +88,8 @@
       <updated>1730605581334</updated>
       <workItem from="1730605582915" duration="242000" />
       <workItem from="1730649750382" duration="6436000" />
-      <workItem from="1730730088977" duration="3798000" />
+      <workItem from="1730730088977" duration="4016000" />
+      <workItem from="1730737523594" duration="681000" />
     </task>
     <servers />
   </component>
@@ -100,7 +108,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/echoes_of_eden$grid.coverage" NAME="grid Coverage Results" MODIFIED="1730656122647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/simulation/grid" />
+    <SUITE FILE_PATH="coverage/echoes_of_eden$grid.coverage" NAME="grid Coverage Results" MODIFIED="1730737541813" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/simulation/grid" />
     <SUITE FILE_PATH="coverage/echoes_of_eden$grid_generator.coverage" NAME="grid_generator Coverage Results" MODIFIED="1730655948588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/simulation/grid" />
   </component>
 </project>
