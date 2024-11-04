@@ -27,7 +27,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-28 |       |           |                                                       |
 | 2024-10-29 | 3     | Nate      | UML meeting                                           |
 | 2024-10-29 | 3     | Ann Marie | UML meeting                                           |
-| 2024-10-30 |       |           |                                                       |
+| 2024-10-30 | 2.5   | Nate      | UML meeting                                           |
 
 ## Sprint 2
 
@@ -36,15 +36,20 @@ Stay organized and on track with your assignments and tasks!
 - **Goals**:
   - get MVP out
     
-| Date       | Hours | Name       | Notes                        |
-|------------|-------|------------|------------------------------|
-| 2024-10-31 |       |            |                              |
-| 2024-11-01 |       |            |                              |
-| 2024-11-04 |       |            |                              |
-| 2024-11-05 |       |            |                              |
-| 2024-11-06 |       |            |                              |
-| 2024-11-07 |       |            |                              |
-| 2024-11-08 |       |            |                              |
+| Date       | Hours | Name      | Notes                           |
+|------------|-------|-----------|---------------------------------|
+| 2024-10-31 | 3     | All       | UML meeting                     |
+| 2024-11-01 | 3     | Nate      | UML meeting                     |
+| 2024-11-01 | 3     | Madi      | UML meeting                     |
+| 2024-11-01 | 3     | Ann Marie | UML meeting                     |
+| 2024-11-01 | 0.5   | Brighton  | UML meeting                     |
+| 2024-11-02 | 2     | Nate      | set up code structure add todos |
+| 2024-11-03 | 2     | Nate      | set up code structure add todos |
+| 2024-11-04 | 2     | Nate      | set up code structure add todos |
+| 2024-11-05 |       |           |                                 |
+| 2024-11-06 |       |           |                                 |
+| 2024-11-07 |       |           |                                 |
+| 2024-11-08 |       |           |                                 |
 
 ## Sprint 3
 
