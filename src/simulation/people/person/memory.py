@@ -1,19 +1,20 @@
-# TODO refactor this code
-
-
 class Memory:
     def __init__(self):
         self.barns = set()
+        self.construction_barns = set()
         self.farms = set()
+        self.construction_farms = set()
         self.mines = set()
-        self.houses = set()
+        self.construction_mines = set()
+        self.homes = set()
+        self.construction_homes = set()
         self.trees = set()
-        self.spaces = set()
+        self.empties = set()
         self.people = set()
         self.items = list(vars(self).keys())
 
     def dont_know_where_anything_is(self):
-        if self.barns or self.farms or self.houses or self.mines:
+        if self.barns or self.farms or self.homes or self.mines:
             return False
         return True
 

@@ -12,7 +12,7 @@ class TaskFactory:
         # TODO add the rest of the tasks
     }
 
-    def __int__(self, simulation, person):
+    def __init__(self, simulation, person):
         self._simulation = simulation
         self._person = person
 

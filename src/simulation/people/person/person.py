@@ -2,29 +2,21 @@ from src.simulation.people.person.memory import Memory
 from src.simulation.people.person.mover import Mover
 from src.simulation.people.person.scheduler.scheduler import Scheduler
 from src.simulation.people.person.scheduler.task.task_type import TaskType
-from src.simulation.people.person.vision import Vision
 
 
 class Person:
     def __init__(self, simulation, name, pk, location, age):
-
-        self._simulation = simulation
         self._name = name
         self._pk = pk
         self._age = age
-        # how many blocks can the person move in one turn
-        self._speed = 10
-        # how many blocks can the person see
-        self._visibility = 30
+
         # where the person is located
         # (x, y)
         self._location = location
 
         self._memory = Memory()
 
-        self._vision = Vision(self)
-
-        self._mover = Mover(self)
+        self._mover = Mover(simulation.get_grid(), self, self._memory, 10)
 
         self._health: int = 100
         self._hunger: int = (
@@ -32,7 +24,7 @@ class Person:
         )
         self._home = None
         self._spouse = None
-        self._scheduler = Scheduler()
+        self._scheduler = Scheduler(simulation, self)
 
     def take_action(self):
         self._hunger -= 1  # TODO adjust
@@ -54,8 +46,14 @@ class Person:
         if self._hunger < 50:
             self._scheduler.add(TaskType.EAT)
 
-        task = self._scheduler.get()
-        task.execute()
+        self._scheduler.execute()
+
+    def get_location(self):
+        return self._location
+
+    def set_location(self, other):
+        # TODO check if its in bounds
+        self._location = other
 
     def is_dead(self):
         return self._health <= 0 or self._age >= 80
@@ -71,6 +69,21 @@ class Person:
 
     def age(self):
         self._age += 1
+
+    def is_home(self):
+        pass
+
+    def go_to_home(self):
+        pass
+
+    def find_farm_to_work_at(self):
+        pass
+
+    def find_mine_to_work_at(self):
+        pass
+
+    def find_barn_to_store_at(self):
+        pass
 
     def __str__(self):
         pass  # TODO implement what to print for a person

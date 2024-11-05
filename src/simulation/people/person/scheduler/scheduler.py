@@ -4,9 +4,9 @@ from src.simulation.people.person.scheduler.task.task_factory import TaskFactory
 
 
 class Scheduler:
-    def __init__(self):
+    def __init__(self, simulation, person):
         # TODO: maybe change how tasks is being stored?
-        self._task_factory = TaskFactory()
+        self._task_factory = TaskFactory(simulation, person)
         self._tasks = []
         self._current_task = None
 
@@ -17,11 +17,18 @@ class Scheduler:
     def _add(self, task):
         heapq.heappush(self._tasks, task)
 
-    def get(self):
-        if not self._tasks:
-            return None
-        task = heapq.heappop(self._tasks)
-        if not task == self._current_task:
-            self.add(self._current_task)
-            self._current_task = task
-        return self._current_task
+    def execute(self):
+        if not self._current_task and not self._tasks:
+            return
+        if not self._current_task and self._tasks:
+            self._current_task = heapq.heappop(self._tasks)
+
+        self.add(self._current_task)
+        next_task = heapq.heappop(self._tasks)
+
+        if self._current_task != next_task:
+            self._current_task = next_task
+
+        self._current_task.execute()
+        if self._current_task.is_finished():
+            self._current_task = None

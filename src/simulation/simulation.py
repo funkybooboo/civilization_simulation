@@ -23,3 +23,6 @@ class Simulation:
                 self._people.age()
 
         return stats
+
+    def get_grid(self):
+        return self._grid
