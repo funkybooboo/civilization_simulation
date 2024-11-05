@@ -2,6 +2,7 @@ from memory import Memory
 
 # TODO refactor this code
 
+
 class Vision:
     def __init__(self, person):
         self.person = person
@@ -65,25 +66,32 @@ class Vision:
         elif self.person._simulation.is_exit_plan(location):
             what_is_around.add("exit_plans", location)
         else:
-            raise Exception(f"I see a char you didn't tell me about: {self.person._simulation.building.text[self.person._location[0]][a][b]}")
+            raise Exception(
+                f"I see a char you didn't tell me about: {self.person._simulation.building.text[self.person._location[0]][a][b]}"
+            )
 
     def _is_out_of_bounds(self, x, y):
-        return x < 0 or y < 0 or x >= self.person._simulation.building.x_size or y >= self.person._simulation.building.y_size
+        return (
+            x < 0
+            or y < 0
+            or x >= self.person._simulation.building.x_size
+            or y >= self.person._simulation.building.y_size
+        )
 
     def _block(self, blocked, i, j, a, b):
         blocked.append((a, b))
         if not self._is_diagonal(i, j):
             direction = self._get_direction(i, j)
-            if direction == 'l':
+            if direction == "l":
                 for k in range(a, 0, -1):
                     blocked.append((a + k, b))
-            elif direction == 'r':
+            elif direction == "r":
                 for k in range(a, self.person._simulation.building.x_size):
                     blocked.append((a + k, b))
-            elif direction == 'd':
+            elif direction == "d":
                 for k in range(b, self.person._simulation.building.y_size):
                     blocked.append((a, b + k))
-            elif direction == 'u':
+            elif direction == "u":
                 for k in range(b, 0, -1):
                     blocked.append((a, b + k))
 
@@ -98,12 +106,12 @@ class Vision:
     @staticmethod
     def _get_direction(i, j):
         if i == 0 and j == 1:
-            return 'r'
+            return "r"
         if i == 0 and j == -1:
-            return 'l'
+            return "l"
         if i == 1 and j == 0:
-            return 'u'
+            return "u"
         if i == -1 and j == 0:
-            return 'd'
+            return "d"
         else:
-            raise Exception('invalid coordinates')
+            raise Exception("invalid coordinates")

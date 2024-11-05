@@ -11,9 +11,10 @@ class TaskFactory:
         TaskType.FIND_SPOUSE: FindSpouse,
         # TODO add the rest of the tasks
     }
+
     def __int__(self, simulation, person):
         self._simulation = simulation
         self._person = person
-    
+
     def create_instance(self, what):
         return self._constructors[what](self._simulation, self._person)

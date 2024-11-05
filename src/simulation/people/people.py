@@ -19,4 +19,3 @@ class People:
     def age(self):
         for person in self._people:
             person.age()
-    

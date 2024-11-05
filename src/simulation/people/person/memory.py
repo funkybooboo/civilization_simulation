@@ -1,5 +1,6 @@
 # TODO refactor this code
 
+
 class Memory:
     def __init__(self):
         self.barns = set()
@@ -12,10 +13,7 @@ class Memory:
         self.items = list(vars(self).keys())
 
     def dont_know_where_anything_is(self):
-        if (self.barns or
-                self.farms or
-                self.houses or
-                self.mines):
+        if self.barns or self.farms or self.houses or self.mines:
             return False
         return True
 

@@ -1,5 +1,6 @@
 from abc import ABC
 
+
 class Building(ABC):
     def __init__(self, grid, x, y, width, height, construction_char, char):
         self._grid = grid

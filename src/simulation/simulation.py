@@ -13,7 +13,7 @@ class Simulation:
         stats = {
             # TODO figure out what we care about
         }
-        
+
         # TODO flesh out this logic
         days = self._years * self._days_per_year
         for day in range(days):

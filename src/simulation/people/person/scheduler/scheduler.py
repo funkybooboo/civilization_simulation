@@ -13,7 +13,7 @@ class Scheduler:
     def add(self, what):
         task = self._task_factory.create_instance(what)
         heapq.heappush(self._tasks, task)
-    
+
     def _add(self, task):
         heapq.heappush(self._tasks, task)
 

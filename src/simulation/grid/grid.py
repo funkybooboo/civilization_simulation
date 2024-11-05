@@ -12,9 +12,9 @@ class Grid:
         return {}
 
     def __str__(self):
-        s = ''
+        s = ""
         for row in self._grid:
-            s += ' '.join(row) + '\n'
+            s += " ".join(row) + "\n"
         return s
 
     def grow_trees(self):
@@ -24,15 +24,16 @@ class Grid:
     def chop_down_tree(self, x, y):
         if not self.is_tree(x, y):
             raise Exception("tried to chop down not a tree")
-        self._grid[y][x] = ' '
+        self._grid[y][x] = " "
         return 100
 
     def is_tree(self, x, y):
-        self._is_item(x, y, '*')
+        self._is_item(x, y, "*")
 
     def _is_item(self, x, y, char):
         return self._grid[y][x] == char
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     grid = Grid(75)
     print(grid)

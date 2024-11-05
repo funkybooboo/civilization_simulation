@@ -6,6 +6,7 @@ from copy import deepcopy
 
 # TODO refactor this code
 
+
 class Mover:
     def __init__(self, person):
         self.person = person
@@ -40,7 +41,11 @@ class Mover:
             if self.person._simulation.is_stair(self.person._location):
                 if self.person._location[0] > 0:
                     self.person._simulation.number_of_stairs += 1
-                    self.person._location = (self.person._location[0] - 1, self.person._location[1], self.person._location[2])
+                    self.person._location = (
+                        self.person._location[0] - 1,
+                        self.person._location[1],
+                        self.person._location[2],
+                    )
                     return other
             # at an exit
             if self.person._simulation.is_exit(self.person._location):
@@ -60,7 +65,9 @@ class Mover:
 
     def explore(self):
         if self.person.is_in_room():
-            closest_door = self.get_closest(self.person._location, self.person._memory.doors)
+            closest_door = self.get_closest(
+                self.person._location, self.person._memory.doors
+            )
             if closest_door:
                 return self.towards(closest_door)
         while True:
@@ -104,7 +111,8 @@ class Mover:
             raise Exception(f"location is not one away: {location}")
         if not self.person._simulation.is_valid_location_for_person(location):
             raise Exception(
-                f"location is not valid: {location} {self.person._simulation.building.text[location[0]][location[1]][location[2]]}")
+                f"location is not valid: {location} {self.person._simulation.building.text[location[0]][location[1]][location[2]]}"
+            )
         self.person._location = location
 
     def get_path(self, location, grid):
@@ -234,4 +242,3 @@ class Mover:
         if path:
             return True
         return False
-

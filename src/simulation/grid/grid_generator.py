@@ -1,18 +1,20 @@
 import random
 
+
 class GridGenerator:
-    def __init__(self,
-             size,
-             tree_density=0.4,
-             ca_iterations=40,
-        ):
+    def __init__(
+        self,
+        size,
+        tree_density=0.4,
+        ca_iterations=40,
+    ):
         self._grid = []
         self._width = size
         self._height = size
         self._tree_density = tree_density
         self._ca_iterations = ca_iterations
-        self._end_of_world_char = 'e'
-        self._tree_char = '*'
+        self._end_of_world_char = "e"
+        self._tree_char = "*"
 
         # TODO generate town
         self.num_houses = 10
@@ -23,14 +25,14 @@ class GridGenerator:
         self.generate()
 
     def generate(self):
-        self._grid = [[' ' for _ in range(self._width)] for _ in range(self._height)]
+        self._grid = [[" " for _ in range(self._width)] for _ in range(self._height)]
         self._add_clustered_trees()
         self._place_town_in_center()
         return self._grid
 
     def _place_town_in_center(self):
         # Read town layout from town.txt
-        town_layout = self._read_town_layout('../../../data/town.txt')
+        town_layout = self._read_town_layout("../../../data/town.txt")
         # Calculate town position
         town_width = len(town_layout[0])
         town_height = len(town_layout)
@@ -45,19 +47,19 @@ class GridGenerator:
     def _read_town_layout(filename):
         town_layout = []
         max_length = 0
-    
+
         # Read the file and determine the maximum row length
-        with open(filename, 'r') as file:
+        with open(filename, "r") as file:
             for line in file.readlines():
-                row = line.rstrip('\n')
+                row = line.rstrip("\n")
                 if row:
                     town_layout.append(row)
                     max_length = max(max_length, len(row))
-    
+
         # Pad each row to make them the same length
         for i in range(len(town_layout)):
             town_layout[i] = town_layout[i].ljust(max_length)
-    
+
         return town_layout
 
     def _add_clustered_trees(self):
@@ -85,8 +87,8 @@ class GridGenerator:
                 for j in range(2, len(self._grid[i]) - 2):
                     count = self._count_number_of_neighbors(i, j)
                     if self._grid[i][j] == self._tree_char and count < 3:
-                        grid_copy[i][j] = ' '
-                    elif self._grid[i][j] == ' ' and count > 4:
+                        grid_copy[i][j] = " "
+                    elif self._grid[i][j] == " " and count > 4:
                         grid_copy[i][j] = self._tree_char
             self._grid = grid_copy
 
@@ -94,7 +96,11 @@ class GridGenerator:
         count = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if (i == 0 and j == 0) or not (0 <= row + i < len(self._grid)) or not (0 <= col + j < len(self._grid[row])):
+                if (
+                    (i == 0 and j == 0)
+                    or not (0 <= row + i < len(self._grid))
+                    or not (0 <= col + j < len(self._grid[row]))
+                ):
                     continue
                 if self._grid[row + i][col + j] == self._tree_char:
                     count += 1

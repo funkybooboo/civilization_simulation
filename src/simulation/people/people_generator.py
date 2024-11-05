@@ -10,7 +10,7 @@ class PeopleGenerator:
 
     @staticmethod
     def _get_names():
-        with open("../../../../data/first_names.txt", 'r') as file:
+        with open("../../../../data/first_names.txt", "r") as file:
             names = [line.strip() for line in file if line.strip()]
         return names
 
@@ -18,7 +18,10 @@ class PeopleGenerator:
         people = []
         for pk in range(self._max_pk):
             name = random.choice(self._names)
-            location = (20, 20) # TODO place them in different valid spots near the town
+            location = (
+                20,
+                20,
+            )  # TODO place them in different valid spots near the town
             age = random.randint(20, 30)
             person = Person(self._simulation, name, pk, location, age)
             people.append(person)
