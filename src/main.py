@@ -3,6 +3,10 @@ from dotenv import load_dotenv
 from logger import setup_logger, logger
 from simulation.simulation import Simulation
 
+# TODO add types to everything
+# TODO run mypy and make sure its happy
+# TODO run pylint and make sure its happy
+
 
 def main():
     # Set up the logger based on the desired environment
