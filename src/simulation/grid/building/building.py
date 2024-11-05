@@ -4,7 +4,16 @@ from src.simulation.grid.grid import Grid
 
 
 class Building(ABC):
-    def __init__(self, grid: Grid, x: int, y: int, width: int, height: int, construction_char: str, char: str) -> None:
+    def __init__(
+        self,
+        grid: Grid,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        construction_char: str,
+        char: str,
+    ) -> None:
         self._grid: Grid = grid
         self._x: int = x
         self._y: int = y

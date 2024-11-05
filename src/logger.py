@@ -2,6 +2,7 @@ from loguru import logger
 import sys
 import os
 
+
 def setup_logger(mode: str = "dev") -> None:
     # Create a logs directory if it doesn't exist
     log_dir: str = "../logs"
@@ -37,6 +38,7 @@ def setup_logger(mode: str = "dev") -> None:
         level="ERROR",
         format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
     )
+
 
 if __name__ == "__main__":
     # Example usage: Pass 'prod' or 'dev' to setup the logger

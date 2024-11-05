@@ -4,10 +4,10 @@ from typing import List
 
 class GridGenerator:
     def __init__(
-            self,
-            size: int,
-            tree_density: float = 0.4,
-            ca_iterations: int = 40,
+        self,
+        size: int,
+        tree_density: float = 0.4,
+        ca_iterations: int = 40,
     ) -> None:
         self._grid: List[List[str]] = []
         self._width: int = size
@@ -96,9 +96,9 @@ class GridGenerator:
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if (
-                        (i == 0 and j == 0)
-                        or not (0 <= row + i < len(self._grid))
-                        or not (0 <= col + j < len(self._grid[row]))
+                    (i == 0 and j == 0)
+                    or not (0 <= row + i < len(self._grid))
+                    or not (0 <= col + j < len(self._grid[row]))
                 ):
                     continue
                 if self._grid[row + i][col + j] == self._tree_char:

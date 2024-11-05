@@ -1,18 +1,20 @@
 from src.simulation.grid.grid import Grid
 from src.simulation.people.people import People
-from typing import Dict
+
+from src.simulation.result.stats import Stats
+
 
 class Simulation:
-    def __init__(self, actions_per_day: int, days_per_year: int, years: int, grid_size: int) -> None:
+    def __init__(
+        self, actions_per_day: int, days_per_year: int, years: int, grid_size: int
+    ) -> None:
         self._days_per_year: int = days_per_year
         self._years: int = years
         self._grid: Grid = Grid(grid_size)
         self._people: People = People(self, actions_per_day)
 
-    def run(self) -> Dict:
-        stats: Dict = {
-            # TODO figure out what we care about
-        }
+    def run(self) -> Stats:
+        stats: Stats = Stats()
 
         # TODO flesh out this logic
         days: int = self._years * self._days_per_year

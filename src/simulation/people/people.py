@@ -2,10 +2,11 @@ from src.simulation.people.people_generator import PeopleGenerator
 from typing import List
 
 from src.simulation.people.person.person import Person
+from src.simulation.simulation import Simulation
 
 
 class People:
-    def __init__(self, simulation: object, actions_per_day: int) -> None:
+    def __init__(self, simulation: Simulation, actions_per_day: int) -> None:
         self._actions_per_day: int = actions_per_day
         people_generator: PeopleGenerator = PeopleGenerator(simulation)
         self._people: List[Person] = people_generator.generate()
