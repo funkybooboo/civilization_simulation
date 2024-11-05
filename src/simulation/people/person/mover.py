@@ -1,6 +1,8 @@
 from random import randint
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid as PathFindingGrid
+from pathfinding.core.node import GridNode as PathFindingGridNode
+
 from src.simulation.grid.grid import Grid
 
 from pathfinding.finder.dijkstra import DijkstraFinder
@@ -9,7 +11,7 @@ from copy import deepcopy
 from src.simulation.people.person.memory import Memory
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.vision import Vision
-from typing import Optional, List, Tuple, Any
+from typing import Optional, List, Tuple
 
 
 class Mover:
@@ -66,7 +68,7 @@ class Mover:
                 break
         return location
 
-    def _get_path(self, location: Tuple[int, int], path_finding_grid: PathFindingGrid) -> List[Any]:
+    def _get_path(self, location: Tuple[int, int], path_finding_grid: PathFindingGrid) -> List[PathFindingGridNode]:
         if location is None:
             raise Exception("location is None")
         if path_finding_grid is None:

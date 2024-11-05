@@ -1,9 +1,8 @@
 from memory import Memory
 from src.simulation.grid.grid import Grid
 from typing import List, Tuple
-
 from src.simulation.people.person.person import Person
-
+from typing import Callable, Dict
 
 class Vision:
     def __init__(self, person: Person, grid: Grid, visibility: int) -> None:
@@ -36,37 +35,32 @@ class Vision:
         location: Tuple[int, int] = (a, b)
         if not self._grid.is_location_in_bounds(location):
             return
-        if self._grid.is_barn(location):
-            what_is_around.add("barns", location)
-            self._block(blocked, i, j, a, b)
-        if self._grid.is_construction_barn(location):
-            what_is_around.add("construction_barns", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_home(location):
-            what_is_around.add("homes", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_construction_home(location):
-            what_is_around.add("construction_homes", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_farm(location):
-            what_is_around.add("farms", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_construction_farm(location):
-            what_is_around.add("construction_farms", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_mine(location):
-            what_is_around.add("mines", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_construction_mine(location):
-            what_is_around.add("construction_mines", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_tree(location):
-            what_is_around.add("trees", location)
-            self._block(blocked, i, j, a, b)
-        elif self._grid.is_empty(location):
+
+        # Create a map of objects that block vision with correct typing for check_fn
+        blocking_objects: Dict[str, Callable[[Tuple[int, int]], bool]] = {
+            "barn": self._grid.is_barn,
+            "construction_barn": self._grid.is_construction_barn,
+            "home": self._grid.is_home,
+            "construction_home": self._grid.is_construction_home,
+            "farm": self._grid.is_farm,
+            "construction_farm": self._grid.is_construction_farm,
+            "mine": self._grid.is_mine,
+            "construction_mine": self._grid.is_construction_mine,
+            "tree": self._grid.is_tree
+        }
+
+        # Handle blocking objects
+        for object_type, check_fn in blocking_objects.items():
+            if check_fn(location):
+                what_is_around.add(f"{object_type}s", location)
+                self._block(blocked, i, j, a, b)
+                return  # Block vision and stop further checks for this location
+
+        # Non-blocking objects (don't call _block)
+        if self._grid.is_empty(location):
             what_is_around.add("empties", location)
         else:
-            raise Exception("I see a char you didn't tell me about")
+            raise Exception(f"I see a char you didn't tell me about: {location}")
 
     def _is_out_of_bounds(self, x: int, y: int) -> bool:
         return (
