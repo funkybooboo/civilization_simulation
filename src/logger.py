@@ -2,21 +2,20 @@ from loguru import logger
 import sys
 import os
 
-
-def setup_logger(mode="dev"):
+def setup_logger(mode: str = "dev") -> None:
     # Create a logs directory if it doesn't exist
-    log_dir = "../logs"
+    log_dir: str = "../logs"
     os.makedirs(log_dir, exist_ok=True)
 
     # Define log file path
-    log_file_path = os.path.join(log_dir, "app.log")
+    log_file_path: str = os.path.join(log_dir, "app.log")
 
     # Remove the default logger
     logger.remove()
 
     # Set log level based on mode
-    console_log_level = "DEBUG" if mode == "dev" else "INFO"
-    file_log_level = "DEBUG"  # Always log DEBUG to file
+    console_log_level: str = "DEBUG" if mode == "dev" else "INFO"
+    file_log_level: str = "DEBUG"  # Always log DEBUG to file
 
     # Configure the logger
     logger.add(
@@ -38,7 +37,6 @@ def setup_logger(mode="dev"):
         level="ERROR",
         format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
     )
-
 
 if __name__ == "__main__":
     # Example usage: Pass 'prod' or 'dev' to setup the logger
