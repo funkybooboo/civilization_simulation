@@ -22,6 +22,8 @@ class Simulation:
             self._people.take_actions_for_day()
             if day % self._days_per_year == 0:
                 self._grid.grow_trees()
+                # todo: add a disaster percentage chance (crops diseased, house burned, cemetary makes zombies, mines collapse, divorce, be preggers 'pregaganant')
+                
                 self._people.age()
 
         return stats

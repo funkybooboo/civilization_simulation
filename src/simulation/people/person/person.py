@@ -32,6 +32,10 @@ class Person:
         self._scheduler: Scheduler = Scheduler(simulation, self)
 
     def take_action(self) -> None:
+        self._determine_actions()
+        self._scheduler.execute()
+
+    def _determine_actions(self) -> None:
         self._hunger -= 1  # TODO adjust
 
         if self._hunger < 20:
@@ -44,14 +48,10 @@ class Person:
 
         if not self._spouse:
             self._scheduler.add(TaskType.FIND_SPOUSE)
-        else:
-            # TODO chance to have a baby
-            pass
-
+        
         if self._hunger < 50:
             self._scheduler.add(TaskType.EAT)
-
-        self._scheduler.execute()
+        # todo figure out other actions 
 
     def get_location(self) -> Location:
         return self._location
@@ -64,7 +64,7 @@ class Person:
         return self._health <= 0 or self._age >= 80
 
     def eat(self) -> None:
-        self._hunger += 10
+        self._hunger = min(self._hunger + 10, 100)
 
     def assign_spouse(self, spouse: 'Person') -> None:
         self._spouse = spouse
