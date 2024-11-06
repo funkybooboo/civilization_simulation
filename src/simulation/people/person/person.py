@@ -78,6 +78,12 @@ class Person:
     def is_home(self) -> bool:
         pass
 
+    def at_barn(self) -> bool:
+        pass
+
+    def at_farm(self) -> bool:
+        pass
+
     def go_to_home(self) -> None:
         pass
 
@@ -91,6 +97,18 @@ class Person:
         pass
 
     def find_barn_to_store_at(self) -> None:
+        pass
+
+    def build_home(self) -> None:
+        pass
+
+    def build_farm(self) -> None:
+        pass
+
+    def build_mine(self) -> None:
+        pass
+
+    def build_barn(self) -> None:
         pass
 
     def __str__(self) -> str:
