@@ -87,6 +87,9 @@ class Person:
     def find_mine_to_work_at(self) -> None:
         pass
 
+    def find_wood_to_chop(self) -> None:
+        pass
+
     def find_barn_to_store_at(self) -> None:
         pass
 
