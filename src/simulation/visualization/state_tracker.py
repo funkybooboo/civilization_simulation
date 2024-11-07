@@ -1,13 +1,13 @@
 from grid_plotter import GridPlotter
 from src.simulation.grid.grid import Grid
 from src.simulation.people.people import People
-from src.simulation.result.simulation_state_plotter import SimulationStatePlotter
+from src.simulation.visualization.state_plotter import StatePlotter
 
 
-class SimulationStateTracker:
+class StateTracker:
     def __init__(self) -> None:
         self._grid_plotter = GridPlotter()
-        self._simulation_state_plotter = SimulationStatePlotter()
+        self._simulation_state_plotter = StatePlotter()
 
     def display_town_slide_show(self) -> None:
         self._grid_plotter.show_slide_show()

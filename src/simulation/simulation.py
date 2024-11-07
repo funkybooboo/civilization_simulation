@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from grid.grid import Grid
 from people.people import People
-from result.simulation_state_tracker import SimulationStateTracker
+from visualization.state_tracker import StateTracker
 
 
 class Simulation:
@@ -15,8 +15,8 @@ class Simulation:
         self._people: People = People(self, actions_per_day)
         self._max_days: int = self._years * self._days_per_year
 
-    def run(self) -> SimulationStateTracker:        
-        tracker: SimulationStateTracker = SimulationStateTracker()
+    def run(self) -> StateTracker:        
+        tracker: StateTracker = StateTracker()
         for day in range(self._max_days):
             self._people.take_actions_for_day()
             

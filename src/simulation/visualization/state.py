@@ -2,7 +2,7 @@ from src.simulation.grid.grid import Grid
 from src.simulation.people.people import People
 
 
-class SimulationState:
+class State:
     def __init__(self, grid: Grid, people: People):
         # people stats
         self._people_count: int = len(people)

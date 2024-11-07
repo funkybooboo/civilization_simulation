@@ -5,7 +5,7 @@ from argparse import ArgumentParser, Namespace
 from dotenv import load_dotenv
 
 from src.logger import logger, setup_logger
-from src.simulation.result.simulation_state_tracker import SimulationStateTracker
+from src.simulation.visualization.state_tracker import StateTracker
 from src.simulation.simulation import Simulation
 
 
@@ -33,7 +33,7 @@ def main() -> None:
         simulation: Simulation = Simulation(
             actions_per_day, days_per_year, years, grid_size
         )
-        tracker: SimulationStateTracker = simulation.run()
+        tracker: StateTracker = simulation.run()
         
         tracker.display_simulation_stats()
         tracker.display_town_slide_show()
