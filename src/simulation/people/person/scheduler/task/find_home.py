@@ -7,7 +7,7 @@ class FindHome(Task):
 
     def execute(self):
         if not self._person.has_home():
-            self._person.find_home()
+            # TODO: find a home for the person
             self._person.assign_home()
         else:
             self._finished()

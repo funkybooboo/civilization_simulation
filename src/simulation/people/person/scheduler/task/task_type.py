@@ -4,6 +4,7 @@ from enum import Enum, auto
 class TaskType(Enum):
     EAT = auto()
     FIND_HOME = auto()
+    FIND_SPOUSE = auto()
 
     WORK_FARM = auto()
     WORK_MINE = auto()

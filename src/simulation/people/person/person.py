@@ -107,12 +107,6 @@ class Person:
     def find_barn_to_store_at(self) -> None:
         pass
 
-    def find_home(self) -> None:
-        # TODO: find a home to occupy
-        # then call self.assign_home() assign the home to the person
-            # or just do that in here and remove the assign_home method
-        pass
-
     def build_home(self) -> None:
         pass
 
