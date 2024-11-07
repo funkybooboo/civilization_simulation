@@ -6,8 +6,9 @@ class FindHome(Task):
         super().__init__(simulation, person, 5)
 
     def execute(self):
-        if not self._person.is_home():
+        if not self._person.has_home():
             self._person.find_home()
+            self._person.assign_home()
         else:
             self._finished()
             

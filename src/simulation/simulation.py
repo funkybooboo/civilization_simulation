@@ -20,6 +20,7 @@ class Simulation:
         days: int = self._years * self._days_per_year
         for day in range(days):
             self._people.take_actions_for_day()
+            self._people.match_people() # TODO: change where this is done?
             if day % self._days_per_year == 0:
                 self._grid.grow_trees()
                 self._people.age()

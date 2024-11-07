@@ -9,4 +9,5 @@ class Explore(Task):
 
     def execute(self) -> None:
         # TODO: write out this logic
+            # ---> how does the person explore exactly?
         pass

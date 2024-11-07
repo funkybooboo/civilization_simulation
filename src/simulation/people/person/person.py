@@ -72,16 +72,25 @@ class Person:
     def assign_home(self, home: Home) -> None:
         self._home = home
 
+    def has_home(self) -> bool:
+        return self._home is not None
+    
+    def has_spouse(self) -> bool:
+        return self._spouse is not None
+
     def age(self) -> None:
         self._age += 1
 
-    def is_home(self) -> bool:
+    def at_home(self) -> bool:
         pass
 
     def at_barn(self) -> bool:
         pass
 
     def at_farm(self) -> bool:
+        pass
+
+    def at_mine(self) -> bool:
         pass
 
     def go_to_home(self) -> None:
@@ -93,10 +102,16 @@ class Person:
     def find_mine_to_work_at(self) -> None:
         pass
 
-    def find_wood_to_chop(self) -> None:
+    def find_tree_to_chop(self) -> None:
         pass
 
     def find_barn_to_store_at(self) -> None:
+        pass
+
+    def find_home(self) -> None:
+        # TODO: find a home to occupy
+        # then call self.assign_home() assign the home to the person
+            # or just do that in here and remove the assign_home method
         pass
 
     def build_home(self) -> None:
@@ -109,6 +124,18 @@ class Person:
         pass
 
     def build_barn(self) -> None:
+        pass
+
+    def work_farm(self) -> None:
+        pass
+
+    def work_mine(self) -> None:
+        pass
+
+    def chop_tree(self) -> None:
+        pass
+
+    def store_stuff(self) -> None:
         pass
 
     def __str__(self) -> str:
