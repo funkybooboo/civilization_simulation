@@ -85,7 +85,7 @@ class Mover:
             location
         ) or not self._grid.is_valid_location_for_person(location):
             raise ValueError(f"Location is not valid: {location}")
-        self._person.set_location((location.x, location.y))
+        self._person.set_location(location)
 
     def _get_random_location(self) -> Location:
         while True:
@@ -103,9 +103,8 @@ class Mover:
         path_finding_grid: PathFindingGrid,
         target: Location,
     ) -> List[PathFindingGridNode]:
-        if not self._grid.is_location_in_bounds(
-            current_location
-        ) or not self._grid.is_valid_location_for_person(current_location):
+        if (not self._grid.is_location_in_bounds(current_location) or 
+                not self._grid.is_valid_location_for_person(current_location)):
             raise ValueError("Person out of bounds")
 
         start_node = path_finding_grid.node(current_location.y, current_location.x)
