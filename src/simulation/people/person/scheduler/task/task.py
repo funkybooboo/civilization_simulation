@@ -10,9 +10,16 @@ class Task(ABC):
         self._person: Person = person
         self._priority: int = priority  # 10 high to 1 low
         self._is_finished: bool = False
+        self._interruptions: int = 0
 
     def __lt__(self, other: "Task") -> bool:
         return self.get_priority() < other.get_priority()
+    
+    def get_interruptions(self) -> int:
+        return self._interruptions
+    
+    def increment_interruptions(self) -> None:
+        self._interruptions += 1
 
     def get_priority(self) -> int:
         return self._priority

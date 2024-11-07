@@ -1,4 +1,4 @@
-from typing import Type
+from typing import Type, Optional
 
 from src.simulation.people.person.person import Person
 from eat import Eat
@@ -21,6 +21,8 @@ class TaskFactory:
         self._simulation = simulation
         self._person = person
 
-    def create_instance(self, what: TaskType) -> Task:
+    def create_instance(self, what: TaskType) -> Optional[Task]:
         task_class: Type = self._constructors[what]
+        if not task_class:
+            return None
         return task_class(self._simulation, self._person)
