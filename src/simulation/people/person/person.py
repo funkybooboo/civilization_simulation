@@ -42,8 +42,6 @@ class Person:
         if not self._home:
             self._scheduler.add(TaskType.FIND_HOME)
 
-        if not self._spouse:
-            self._scheduler.add(TaskType.FIND_SPOUSE)
         else:
             # TODO chance to have a baby
             pass
@@ -75,9 +73,6 @@ class Person:
     def has_home(self) -> bool:
         return self._home is not None
     
-    def has_spouse(self) -> bool:
-        return self._spouse is not None
-
     def age(self) -> None:
         self._age += 1
 
@@ -97,6 +92,10 @@ class Person:
         pass
 
     def find_farm_to_work_at(self) -> None:
+        # make method in memory class to know about barns
+        # query memory, grab all the barns
+        # find closest barn using location.distance(location)
+        # mover.towards(location object x,y of barn)
         pass
 
     def find_mine_to_work_at(self) -> None:

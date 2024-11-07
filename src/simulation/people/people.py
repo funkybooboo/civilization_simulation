@@ -30,12 +30,3 @@ class People:
         for person in self._people:
             person.age()
 
-    def match_people(self) -> None:
-        for person in self._people:
-            if not person.has_spouse():
-                for other in self._people:
-                    if not other.has_spouse():
-                        person.assign_spouse(other)
-                        other.assign_spouse(person)
-                        # TODO: make sure they have the same house
-                        break
