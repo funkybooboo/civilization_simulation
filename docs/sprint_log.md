@@ -49,7 +49,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-05 | 0.5   | Nate      | write asana tickets             |
 | 2024-11-05 | 4     | All       | Code meeting                    |
 | 2024-11-06 | 5     | Nate      | Work on user interface ticket   |
-| 2024-11-07 |       |           |                                 |
+| 2024-11-07 | 2     | Nate      | Work on user interface ticket   |
 | 2024-11-08 |       |           |                                 |
 
 ## Sprint 3
