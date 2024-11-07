@@ -20,4 +20,3 @@
 ## Libraries to look into
 
 rich - colors to the terminal
-tqdm - loading bars
