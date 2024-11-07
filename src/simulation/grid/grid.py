@@ -1,10 +1,23 @@
+from copy import deepcopy
 from typing import Dict, List
 
-from grid_generator import GridGenerator
 from location import Location
-
+from grid_generator import GridGenerator
 
 class Grid:
+    _char_to_num: Dict[str, int] = {
+        'h': 10,
+        'H': 0,
+        'b': 10,
+        'B': 0,
+        'f': 3,
+        'F': 5,
+        'm': 0,
+        'M': 0,
+        ' ': 1,
+        '*': 10
+    }
+    
     def __init__(self, size: int) -> None:
         grid_generator = GridGenerator(size)
         self._width: int = size
@@ -25,13 +38,7 @@ class Grid:
         return buildings
 
     def is_valid_location_for_person(self, location: Location) -> bool:
-        if not self.is_location_in_bounds(location):
-            return False
-        if self.is_tree(location) or any(
-            self.is_building(location, building) for building in self.buildings
-        ):
-            return False
-        return True
+        return self.is_empty(location)
 
     def is_location_in_bounds(self, location: Location) -> bool:
         return 0 <= location.x < self._width and 0 <= location.y < self._height
@@ -55,7 +62,13 @@ class Grid:
         return 100
 
     def get_path_finding_matrix(self) -> List[List[int]]:
-        pass
+        path_finding_matrix: List[List[int | str]] = deepcopy(self._grid)
+        for i in range(len(self._grid)):
+            row = self._grid[i]
+            for j in range(len(row)):
+                cell = row[j]
+                path_finding_matrix[i][j] = self._char_to_num[cell]
+        return path_finding_matrix
 
     def is_tree(self, location: Location) -> bool:
         return self._is_item(location, "*")
