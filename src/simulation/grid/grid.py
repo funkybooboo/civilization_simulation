@@ -9,6 +9,8 @@ from building.building import Building
 from building.farm import Farm
 from building.home import Home
 from building.mine import Mine
+from src.simulation.grid.building.building_factory import BuildingFactory
+from src.simulation.grid.building.building_type import BuildingType
 
 
 class Grid:
@@ -25,22 +27,12 @@ class Grid:
         '*': 10
     }
     
-    _building_info = {
-        'H': (Home, 2, 2),   # Home
-        'F': (Farm, 5, 5),   # Farm
-        'B': (Barn, 3, 3),   # Barn
-        'M': (Mine, 3, 3),   # Mine
-        'h': (Home, 2, 2),   # Under construction Home
-        'f': (Farm, 5, 5),   # Under construction Farm
-        'b': (Barn, 3, 3),   # Under construction Barn
-        'm': (Mine, 3, 3),   # Under construction Mine
-    }
-    
     def __init__(self, size: int) -> None:
         grid_generator = GridGenerator(size)
         self._width: int = size
         self._height: int = size
         self._grid: List[List[str]] = grid_generator.generate()
+        self._building_factory = BuildingFactory(self)
         self._buildings: Dict[Location, Building] = self._find_buildings() # stores the top left corner of every building
         
     def get_grid(self) -> List[List[str]]:
@@ -57,41 +49,79 @@ class Grid:
         for y in range(self._height):
             for x in range(self._width):
                 location: Location = Location(x, y)
-                cell = self._grid[y][x]
     
                 # Skip empty spaces or trees
-                if cell == " " or cell == "*":
+                if self.is_empty(location) or self.is_tree(location):
                     continue
     
                 # Skip if we've already visited this location
                 if location in visited:
                     continue
-    
-                # Determine the type and size of the building
-                if cell in self._building_info:
-                    building_type, width, height = self._building_info[cell]
+                    
+                if self.is_barn(location) or self.is_construction_barn(location):
+                    building_type = BuildingType.BARN
+                elif self.is_home(location) or self.is_construction_home(location):
+                    building_type = BuildingType.HOME
+                elif self.is_mine(location) or self.is_construction_mine(location):
+                    building_type = BuildingType.MINE
+                elif self.is_farm(location) or self.is_construction_farm(location):
+                    building_type = BuildingType.FARM
                 else:
-                    continue  # Unknown building type, skip it
-    
-                # Now, we need to verify that the building occupies the expected area
-                for dy in range(height):
-                    for dx in range(width):
-                        building_location = Location(x + dx, y + dy)
-                        if building_location not in visited:
-                            visited.add(building_location)
+                    continue
     
                 # Create a new building instance and associate it with the first location
                 # (we could use the top-left corner as the "representative" location for each building)
                 if location not in buildings:
-                    building = building_type(location)
+                    building = self._building_factory.create_instance(building_type, location)
+                    if not building:
+                        continue
                     buildings[location] = building
                     # Add all the other locations in the building to map to the same building object
-                    for dy in range(height):
-                        for dx in range(width):
+                    for dy in range(building.get_height()):
+                        for dx in range(building.get_width()):
                             building_location = Location(x + dx, y + dy)
                             buildings[building_location] = building
     
         return buildings
+    
+    def get_char(self, location: Location) -> str:
+        return self._grid[location.y][location.x]
+
+    def is_location_char(self, location: Location, char: str) -> bool:
+        return self._grid[location.y][location.x] == char
+
+    def get_home_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Home))
+
+    def get_construction_home_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Home) and building.is_under_construction())
+
+    def get_barn_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Barn))
+
+    def get_construction_barn_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Barn) and building.is_under_construction())
+
+    def get_farm_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Farm))
+
+    def get_construction_farm_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Farm) and building.is_under_construction())
+
+    def get_mine_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Mine))
+
+    def get_construction_mine_count(self) -> int:
+        return sum(1 for building in self._buildings.values() if isinstance(building, Mine) and building.is_under_construction())
+
+    def get_tree_count(self) -> int:
+        count: int = 0
+        for i in range(len(self._grid)):
+            for j in range(len(self._grid[i])):
+                location: Location = Location(i, j)
+                if self.is_tree(location):
+                    count += 1
+        return count
 
     def is_valid_location_for_person(self, location: Location) -> bool:
         return self.is_empty(location)

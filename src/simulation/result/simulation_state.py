@@ -12,7 +12,14 @@ class SimulationState:
         # TODO completed tasks count for each type
         
         # grid stats
-        # TODO number of each type of buildings
-        # TODO number of trees
+        self._barn_count: int = grid.get_barn_count()
+        self._construction_barn_count: int = grid.get_construction_barn_count()
+        self._farm_count: int = grid.get_farm_count()
+        self._construction_farm_count: int = grid.get_construction_farm_count()
+        self._mine_count: int = grid.get_mine_count()
+        self._construction_mine_count: int = grid.get_construction_mine_count()
+        self._home_count: int = grid.get_home_count()
+        self._construction_home_count: int = grid.get_construction_home_count()
+        self._tree_count: int = grid.get_tree_count()
         # TODO resource count
         # TODO barn capacity
