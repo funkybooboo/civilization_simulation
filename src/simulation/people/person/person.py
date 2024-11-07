@@ -78,22 +78,65 @@ class Person:
     def assign_home(self, home: Home) -> None:
         self._home = home
 
+    def has_home(self) -> bool:
+        return self._home is not None
+    
     def age(self) -> None:
         self._age += 1
 
-    def is_home(self) -> bool:
+    def at_home(self) -> bool:
+        pass
+
+    def at_barn(self) -> bool:
+        pass
+
+    def at_farm(self) -> bool:
+        pass
+
+    def at_mine(self) -> bool:
         pass
 
     def go_to_home(self) -> None:
         pass
 
     def find_farm_to_work_at(self) -> None:
+        # make method in memory class to know about barns
+        # query memory, grab all the barns
+        # find closest barn using location.distance(location)
+        # mover.towards(location object x,y of barn)
         pass
 
     def find_mine_to_work_at(self) -> None:
         pass
 
+    def find_tree_to_chop(self) -> None:
+        pass
+
     def find_barn_to_store_at(self) -> None:
+        pass
+
+    def build_home(self) -> None:
+        pass
+
+    def build_farm(self) -> None:
+        pass
+
+    def build_mine(self) -> None:
+        pass
+
+    def build_barn(self) -> None:
+        pass
+
+    def work_farm(self) -> None:
+        pass
+
+    def work_mine(self) -> None:
+        pass
+
+    def chop_tree(self) -> None:
+        pass
+
+    def store_stuff(self) -> None:
         pass
 
     def __str__(self) -> str:

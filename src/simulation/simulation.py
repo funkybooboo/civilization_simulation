@@ -34,3 +34,6 @@ class Simulation:
     
     def _get_year(self, day: int) -> int:
         return day // self._days_per_year
+    
+    def get_people(self) -> People:
+        return self._people
