@@ -97,6 +97,7 @@ class Person:
         pass
 
     def go_to_home(self) -> None:
+
         pass
 
     def find_farm_to_work_at(self) -> None:
@@ -114,6 +115,9 @@ class Person:
 
     def find_barn_to_store_at(self) -> None:
         pass
+
+    def explore(self) -> None:
+        self._mover.explore()
 
     def build_home(self) -> None:
         pass

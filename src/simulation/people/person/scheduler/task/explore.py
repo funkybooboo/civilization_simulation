@@ -8,6 +8,5 @@ class Explore(Task):
         super().__init__(simulation, person, 1) # very low priority, inessential task for when all else is done
 
     def execute(self) -> None:
-        # TODO: write out this logic
-            # ---> how does the person explore exactly?
-        pass
+        self._person.explore()
+        self._finished()
