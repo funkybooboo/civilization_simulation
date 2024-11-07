@@ -1,6 +1,6 @@
 from typing import List, Dict
-from src.simulation.grid.grid_generator import GridGenerator
-from src.simulation.grid.location import Location
+from grid_generator import GridGenerator
+from location import Location
 
 
 class Grid:
