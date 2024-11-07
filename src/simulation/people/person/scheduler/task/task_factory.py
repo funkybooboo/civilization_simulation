@@ -1,3 +1,5 @@
+from typing import Type, Dict
+
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.people.person.scheduler.task.task_type import TaskType
@@ -19,7 +21,7 @@ from src.simulation.simulation import Simulation
 
 
 class TaskFactory:
-    _constructors: dict[TaskType, Type] = {
+    _constructors: Dict[TaskType, Type] = {
         TaskType.EAT: Eat,
         TaskType.FIND_HOME: FindHome,
         TaskType.FIND_SPOUSE: FindSpouse,

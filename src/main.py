@@ -1,11 +1,12 @@
-import os
 import argparse
-from dotenv import load_dotenv
-from src.logger import setup_logger, logger
-from src.simulation.simulation import Simulation
-from typing import Optional
+import os
+from argparse import ArgumentParser, Namespace
 
-from src.simulation.result.stats import Stats
+from dotenv import load_dotenv
+
+from src.logger import logger, setup_logger
+from src.simulation.visualization.state_tracker import StateTracker
+from src.simulation.simulation import Simulation
 
 
 def main() -> None:
@@ -32,18 +33,20 @@ def main() -> None:
         simulation: Simulation = Simulation(
             actions_per_day, days_per_year, years, grid_size
         )
-        stats: Optional[Stats] = simulation.run()
-        logger.info(f"Simulation {i + 1} completed with stats: {stats}")
-
-        # TODO display stats
+        tracker: StateTracker = simulation.run()
+        
+        tracker.display_simulation_stats()
+        tracker.display_town_slide_show()
+        
+        logger.info(f"Simulation {i + 1} completed")
 
 
 def get_environment() -> str:
-    parser = argparse.ArgumentParser(description="Run the simulation program.")
+    parser: ArgumentParser = argparse.ArgumentParser(description="Run the simulation program.")
     parser.add_argument(
         "--env", type=str, default="dev", help="Specify the environment (default: dev)"
     )
-    args = parser.parse_args()
+    args: Namespace = parser.parse_args()
     return args.environment
 
 

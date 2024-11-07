@@ -1,8 +1,9 @@
-from src.simulation.people.people_generator import PeopleGenerator
 from typing import List
 
-from src.simulation.people.person.person import Person
-from src.simulation.simulation import Simulation
+from people_generator import PeopleGenerator
+from person.person import Person
+
+from ..simulation import Simulation
 
 
 class People:
@@ -29,4 +30,20 @@ class People:
     def age(self) -> None:
         for person in self._people:
             person.age()
-
+            
+    def __len__(self) -> int:
+        return len(self._people)
+    
+    def get_average_health(self) -> float:
+        average_health: float = 0.0
+        for person in self._people:
+            average_health += person.get_health()
+        average_health /= len(self._people)
+        return average_health
+    
+    def get_average_hunger(self) -> float:
+        average_hunger: float = 0.0
+        for person in self._people:
+            average_hunger += person.get_hunger()
+        average_hunger /= len(self._people)
+        return average_hunger
