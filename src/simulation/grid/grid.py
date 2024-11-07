@@ -1,4 +1,5 @@
 from copy import deepcopy
+import random
 from typing import Dict, List
 
 from location import Location
@@ -24,7 +25,6 @@ class Grid:
         '*': 10
     }
     
-    # Define building sizes and types
     _building_info = {
         'H': (Home, 2, 2),   # Home
         'F': (Farm, 5, 5),   # Farm
@@ -43,8 +43,8 @@ class Grid:
         self._grid: List[List[str]] = grid_generator.generate()
         self._buildings: Dict[Location, Building] = self._find_buildings() # stores the top left corner of every building
         
-    def get_grid_deepcopy(self) -> List[List[str]]:
-        return deepcopy(self._grid)
+    def get_grid(self) -> List[List[str]]:
+        return self._grid
     
     def get_buildings_deepcopy(self) -> Dict[Location, Building]:
         return deepcopy(self._buildings)
@@ -99,17 +99,24 @@ class Grid:
     def is_location_in_bounds(self, location: Location) -> bool:
         return 0 <= location.x < self._width and 0 <= location.y < self._height
 
-    def get_width(self) -> int:
-        return self._width
-
-    def get_height(self) -> int:
-        return self._height
-
     def __str__(self) -> str:
         return "\n".join(" ".join(row) for row in self._grid)
 
     def grow_trees(self) -> None:
-        pass
+        chance = 0.10 # 10% chance of having a tree be placed next to an existing tree
+        for i in range(len(self._grid)):
+            for j in range(len(self._grid[i])):
+                location: Location = Location(i, j)
+                if not self.is_tree(location):
+                    continue
+                neighbors = location.get_neighbors()
+                random.shuffle(neighbors)
+                for neighbor in neighbors:
+                    if not self.is_location_in_bounds(neighbor) or not self.is_empty(neighbor):
+                        continue
+                    if random.random() < chance:
+                        self._grid[neighbor.y][neighbor.x] = '*'  # Place a tree here
+                        break
 
     def chop_down_tree(self, location: Location) -> int:
         if not self.is_tree(location):
@@ -162,6 +169,11 @@ class Grid:
     def _is_item(self, location: Location, char: str) -> bool:
         return self._grid[location.y][location.x] == char
 
+    def get_width(self) -> int:
+        return self._width
+
+    def get_height(self) -> int:
+        return self._height
 
 if __name__ == "__main__":
     grid = Grid(75)

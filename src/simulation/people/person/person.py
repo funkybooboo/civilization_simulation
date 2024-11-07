@@ -56,6 +56,12 @@ class Person:
     def get_location(self) -> Location:
         return self._location
 
+    def get_health(self) -> int:
+        return self._health
+    
+    def get_hunger(self) -> int:
+        return self._hunger
+
     def set_location(self, other: Location) -> None:
         # TODO check if its in bounds
         self._location = other
