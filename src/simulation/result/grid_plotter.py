@@ -25,7 +25,7 @@ class GridPlotter:
             self.color_map[char] = hex_color
         return self.color_map[char]
 
-    def add_grid(self, grid: List[List[str]]) -> None:
+    def add(self, grid: List[List[str]]) -> None:
         fig, ax = plt.subplots(figsize=(8, 8))  # Adjust size as needed
         ax.set_title("Grid Snapshot")
         ax.set_xlabel("X Axis (Column index)")
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
     print("Adding grids to plotter...")
     for test_grid in tqdm(test_grids, desc="Adding Grids to Plotter", ncols=100):
-        plotter.add_grid(test_grid)
+        plotter.add(test_grid)
 
     print("Displaying slideshow...")
     plotter.show_slide_show(pause_time=2.0)
