@@ -13,12 +13,16 @@ class Scheduler:
         self._task_factory: TaskFactory = TaskFactory(simulation, person)
         self._tasks: List[Task] = []
         self._current_task: Optional[Task] = None
-        self._interruption_threshold = 3  # Threshold for how many interruptions before "sticking" to the task
+        self._last_added_time = 0  # Timestamp for when the last task was added
+        self._interruption_threshold = 3  # Initial threshold
+        self._max_interruption_threshold = 10  # Cap on how high the threshold can go
+        self._simulation = simulation  # Store the simulation reference to access the time
 
     def add(self, what: TaskType) -> None:
         task: Task = self._task_factory.create_instance(what)
         if task:
             heapq.heappush(self._tasks, task)
+            self._last_added_time = self._get_current_time()
 
     def _add(self, task: Optional[Task]) -> None:
         if task:
@@ -27,31 +31,47 @@ class Scheduler:
     def _pop(self) -> Optional[Task]:
         return heapq.heappop(self._tasks) if self._tasks else None
 
+    def _get_current_time(self) -> int:
+        # Get the current time from the simulation (assumes simulation has a time attribute)
+        return self._simulation.get_day()  # Replace with actual time tracking mechanism in the simulation
+
+    def _calculate_dynamic_threshold(self) -> int:
+        base_threshold = max(1, len(self._tasks) // 2)
+
+        task_addition_rate_factor = 1 if self._get_current_time() - self._last_added_time > 1 else 2
+
+        if self._current_task:
+            priority_factor = 1 if self._current_task.get_priority() == 1 else 3
+        else:
+            priority_factor = 3
+
+        dynamic_threshold = min(self._max_interruption_threshold, base_threshold * task_addition_rate_factor * priority_factor)
+
+        return dynamic_threshold
+
     def execute(self) -> None:
         if not self._current_task and not self._tasks:
-            return  # No tasks to execute
+            return
 
         if not self._current_task and self._tasks:
-            self._current_task = self._pop()  # Get the first task if none is currently being worked on
+            self._current_task = self._pop()
 
-        # If the current task has been interrupted enough times, stick with it
+        self._interruption_threshold = self._calculate_dynamic_threshold()
+
         if self._current_task and self._current_task.get_interruptions() >= self._interruption_threshold:
             self._current_task.execute()
             if self._current_task.is_finished():
-                self._current_task = None  # Task is done, so remove it
+                self._current_task = None
             return
 
-        # Re-add the current task to the queue (if it exists) to check for higher-priority tasks
         self._add(self._current_task)
         next_task: Optional[Task] = self._pop()
 
-        # If the next task is of higher priority, stop the current task and start the new one
         if self._current_task != next_task:
-            self._current_task.increment_interruptions()  # Increment interruptions for the current task
-            self._current_task = next_task  # Switch to the new task
+            self._current_task.increment_interruptions()
+            self._current_task = next_task
 
         self._current_task.execute()
 
-        # If the task is finished, discard it from the scheduler
         if self._current_task.is_finished():
             self._current_task = None
