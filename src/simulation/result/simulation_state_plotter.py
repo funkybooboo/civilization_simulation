@@ -13,4 +13,7 @@ class SimulationStatePlotter:
         self._years: Dict[int, SimulationState] = {}
 
     def add(self, year: int, grid: Grid, people: People):
+        self._years[year] = SimulationState(grid, people)
+    
+    def plot_simulation_states(self):
         pass

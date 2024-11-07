@@ -34,9 +34,11 @@ def main() -> None:
             actions_per_day, days_per_year, years, grid_size
         )
         tracker: SimulationStateTracker = simulation.run()
-        logger.info(f"Simulation {i + 1} completed")
-
+        
+        tracker.display_simulation_stats()
         tracker.display_town_slide_show()
+        
+        logger.info(f"Simulation {i + 1} completed")
 
 
 def get_environment() -> str:

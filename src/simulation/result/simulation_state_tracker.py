@@ -13,7 +13,7 @@ class SimulationStateTracker:
         self._grid_plotter.show_slide_show()
         
     def display_simulation_stats(self):
-        pass
+        self._simulation_state_plotter.plot_simulation_states()
     
     def add(self, year: int, grid: Grid, people: People):
         self._grid_plotter.add(grid.get_grid_deepcopy())
