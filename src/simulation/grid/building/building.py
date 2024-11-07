@@ -35,3 +35,6 @@ class Building(ABC):
     def _start_construction(self) -> None:
         # TODO place construction building on the grid, make sure we aren't overlapping with anything else
         pass
+
+    def _get_location(self) -> Location:
+        return self._location

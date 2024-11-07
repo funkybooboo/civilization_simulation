@@ -70,7 +70,11 @@ class Person:
         return self._health <= 0 or self._age >= 80
 
     def eat(self) -> None:
-        self._hunger = min(self._hunger + 10, 100)
+        if self.at_barn():
+            # TODO: decrease hygiene? decrease health explicitly?
+            self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
+        elif self.at_home():
+            self._hunger = min(self._hunger + 10, 100)
 
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
@@ -85,7 +89,10 @@ class Person:
         self._age += 1
 
     def at_home(self) -> bool:
-        pass
+        if self.has_home():
+            return self._location == self._home._get_location()
+        else:
+            return False
 
     def at_barn(self) -> bool:
         pass
@@ -97,7 +104,11 @@ class Person:
         pass
 
     def go_to_home(self) -> None:
+        if self.has_home():
+            self._mover.towards(self._home._get_location())
 
+    def find_barn_with_food(self) -> None:
+        
         pass
 
     def find_farm_to_work_at(self) -> None:
