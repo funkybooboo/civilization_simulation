@@ -3,7 +3,7 @@ from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.simulation import Simulation
 from src.simulation.grid.grid import Grid
 
-class StartMineConstruction(Task):
+class StartHomeConstruction(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
 
 

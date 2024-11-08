@@ -13,6 +13,9 @@ class BuildBarn(Task):
     def execute(self) -> None:
         # TODO: check if person is in buildable place,
             # if not in buildable place, go to buildable place
+        self._person.
+
+
         build = self.is_clear()
         # check if there is a construction site
         # if not start construction

@@ -12,7 +12,7 @@ class FindSpouse(Task):
 
     def execute(self) -> None:
         if self.spouse:
-            for other in self.simulation.get_people():
+            for other in self._simulation.get_people():
                 if not other.has_spouse():
                     self._person.assign_spouse(other)
                     other.assign_spouse(self._person)
