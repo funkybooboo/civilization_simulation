@@ -17,10 +17,10 @@ class Memory:
         self._empties: Set[Location] = set()
         self._people: Set[Location] = set()
         self._items: List[str] = list(vars(self).keys())
-        
+
     def get_barn_locations(self) -> Set[Location]:
         return self._barns
-    
+
     def get_farm_locations(self) -> Set[Location]:
         return self._farms
 

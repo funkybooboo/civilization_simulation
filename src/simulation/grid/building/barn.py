@@ -1,6 +1,7 @@
 from typing import override
 
 from building import Building
+
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 
@@ -19,6 +20,6 @@ class Barn(Building):
     @override
     def work_time_estimate() -> int:
         pass
-    
+
     def add_food(self, food) -> None:
         self._food = min(self._food_cap, self._food + food)

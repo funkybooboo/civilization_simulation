@@ -2,16 +2,16 @@ from copy import copy
 from random import randint
 from typing import List, Optional
 
+from memory import Memory
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid as PathFindingGrid
 from pathfinding.core.node import GridNode as PathFindingGridNode
 from pathfinding.finder.dijkstra import DijkstraFinder
+from person import Person
+from vision import Vision
 
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
-from memory import Memory
-from person import Person
-from vision import Vision
 
 
 class Mover:
@@ -43,7 +43,9 @@ class Mover:
                 new_location = Location(next_node.y, next_node.x)  # Convert to Location
                 self._place(new_location)
 
-    def get_closest(self, locations: List[Location], current_location = None) -> Optional[Location]:
+    def get_closest(
+        self, locations: List[Location], current_location=None
+    ) -> Optional[Location]:
         if not current_location:
             current_location = self._person.get_location()
         if not locations:
@@ -102,8 +104,9 @@ class Mover:
         path_finding_grid: PathFindingGrid,
         target: Location,
     ) -> List[PathFindingGridNode]:
-        if (not self._grid.is_location_in_bounds(current_location) or 
-                not self._grid.is_valid_location_for_person(current_location)):
+        if not self._grid.is_location_in_bounds(
+            current_location
+        ) or not self._grid.is_valid_location_for_person(current_location):
             raise ValueError("Person out of bounds")
 
         start_node = path_finding_grid.node(current_location.y, current_location.x)

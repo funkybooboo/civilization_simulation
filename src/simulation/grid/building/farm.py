@@ -1,7 +1,8 @@
 from typing import Dict, override
-import numpy as np
 
+import numpy as np
 from building import Building
+
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 from src.simulation.people.person.person import Person
@@ -35,6 +36,6 @@ class Farm(Building):
         if self._workers[person] > Farm._max_work_count:
             return int(self._yield())
         return None
-    
+
     def remove_worker(self, person):
         del self._workers[person]

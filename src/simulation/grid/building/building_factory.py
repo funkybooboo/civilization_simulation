@@ -1,4 +1,4 @@
-from typing import Type, Dict
+from typing import Dict, Type
 
 from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building import Building

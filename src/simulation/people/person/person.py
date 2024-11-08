@@ -1,4 +1,9 @@
-from typing import Optional, Set, List
+from typing import List, Optional, Set
+
+from memory import Memory
+from mover import Mover
+from scheduler.scheduler import Scheduler
+from scheduler.task.task_type import TaskType
 
 from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building import Building
@@ -7,10 +12,6 @@ from src.simulation.grid.building.farm import Farm
 from src.simulation.grid.building.home import Home
 from src.simulation.grid.building.mine import Mine
 from src.simulation.grid.location import Location
-from memory import Memory
-from mover import Mover
-from scheduler.scheduler import Scheduler
-from scheduler.task.task_type import TaskType
 from src.simulation.simulation import Simulation
 
 
@@ -66,7 +67,7 @@ class Person:
 
     def get_health(self) -> int:
         return self._health
-    
+
     def get_hunger(self) -> int:
         return self._hunger
 
@@ -89,10 +90,10 @@ class Person:
 
     def has_home(self) -> bool:
         return self._home is not None
-    
+
     def age(self) -> None:
         self._age += 1
-        
+
     def move_to_home(self) -> Optional[Home]:
         self._moving_to_building_type = BuildingType.HOME
         self._visited_buildings = set()
@@ -101,11 +102,15 @@ class Person:
         if self._location.is_one_away(self._home.get_location()):
             return self._home
         return None
-    
+
     def move_to_time_estimate(self) -> int:
-        if not self._building: # the current building I am trying to get too
-            return 5 # you haven't told me to go to a building_type yet, so I'm guessing 5
-        return self._building.get_location().distance_to(self._location) // 10 # move 10 blocks every action
+        if not self._building:  # the current building I am trying to get too
+            return (
+                5  # you haven't told me to go to a building_type yet, so I'm guessing 5
+            )
+        return (
+            self._building.get_location().distance_to(self._location) // 10
+        )  # move 10 blocks every action
 
     def move_to(self, building_type: BuildingType) -> Optional[Building]:
         # check if types are different
@@ -113,7 +118,7 @@ class Person:
             self._moving_to_building_type = building_type
             self._visited_buildings = set()
             self._building = None
-        
+
         if not self._building:
             if building_type == BuildingType.FARM:
                 self._building = self._move_to(list(self._memory.get_farm_locations()))
@@ -125,7 +130,7 @@ class Person:
                 self._building = self._move_to(list(self._memory.get_home_locations()))
             else:
                 raise Exception("You tried to go to a unknown building")
-        
+
         if self._location.is_one_away(self._building.get_location()):
             if self._building.has_capacity():
                 self._moving_to_building_type = None
@@ -137,8 +142,12 @@ class Person:
         return None
 
     def _move_to(self, locations: List[Location]) -> Building:
-        visited_buildings_locations: List[Location] = [b.get_location() for b in self._visited_buildings]
-        filtered = list(filter(lambda l: not l in visited_buildings_locations, locations))
+        visited_buildings_locations: List[Location] = [
+            b.get_location() for b in self._visited_buildings
+        ]
+        filtered = list(
+            filter(lambda l: not l in visited_buildings_locations, locations)
+        )
         closest = self._mover.get_closest(filtered)
         self._mover.towards(closest)
         return self._simulation.get_grid().get_building(closest)

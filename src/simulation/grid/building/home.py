@@ -1,6 +1,7 @@
 from typing import override
 
 from building import Building
+
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 

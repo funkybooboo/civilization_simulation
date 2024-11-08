@@ -7,6 +7,7 @@ from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.simulation import Simulation
 
+
 class WorkFarm(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
@@ -18,7 +19,7 @@ class WorkFarm(Task):
             self._farm: Optional[Farm] = self._person.move_to(BuildingType.FARM)
         if self._farm:
             food: Optional[int] = self._farm.work(self._person)
-            
+
             # TODO should be abstract away the moving of food?
             if food:
                 barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)

@@ -1,8 +1,9 @@
 from typing import override
 
+from task import Task
+
 from src.simulation.people.person.person import Person
 from src.simulation.simulation import Simulation
-from task import Task
 
 
 class BuildMine(Task):
