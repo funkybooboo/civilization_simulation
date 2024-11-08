@@ -96,6 +96,7 @@ class Person:
     def move_to_home(self) -> Optional[Home]:
         self._moving_to_building_type = BuildingType.HOME
         self._visited_buildings = set()
+        self._building = self._home
         self._mover.towards(self._home.get_location())
         if self._location.is_one_away(self._home.get_location()):
             return self._home
