@@ -1,14 +1,22 @@
-from people.person.person import Person
-from people.person.scheduler.task.task import Task
-from simulation import Simulation
+from typing import override
+
+from src.simulation.people.person.person import Person
+from src.simulation.simulation import Simulation
+from task import Task
+
 
 class ChopTree(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5) # TODO: change the priority?
-    
+        super().__init__(simulation, person, 5)
+
+    @override
     def execute(self) -> None:
-        # TODO: check if person is in a place with trees,
-            # if not in a place with trees, go to a place with trees
-        self._person.chop_tree()
-        self._finished()
-        
+        pass
+
+    @override
+    def _clean_up_task(self) -> None:
+        pass
+
+    @override
+    def get_remaining_time(self) -> int:
+        pass
