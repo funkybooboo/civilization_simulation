@@ -9,6 +9,7 @@ from building.home import Home
 from building.mine import Mine
 from grid_generator import GridGenerator
 from location import Location
+from src.logger import logger
 
 from src.simulation.grid.building.building_factory import BuildingFactory
 from src.simulation.grid.building.building_type import BuildingType
@@ -95,6 +96,14 @@ class Grid:
                             buildings[building_location] = building
 
         return buildings
+
+    def start_building_construction(self, building_type: BuildingType, location: Location) -> None:
+        try:
+            building: Building = self._building_factory.create_instance(building_type, location)
+        except Exception as e:
+            logger.error("Could not start building construction", e)
+            return
+        self._buildings[location] = building
 
     def get_buildings(self) -> Dict[Location, Building]:
         return self._buildings

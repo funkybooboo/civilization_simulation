@@ -21,6 +21,6 @@ class BuildingFactory:
     def __init__(self, grid: Grid) -> None:
         self._grid = grid
 
-    def create_instance(self, building_type, location: Location) -> Building:
+    def create_instance(self, building_type: BuildingType, location: Location) -> Building:
         building_class: Type = self._constructors[building_type]
         return building_class(self._grid, location)
