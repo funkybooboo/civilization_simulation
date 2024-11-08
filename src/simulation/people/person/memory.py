@@ -44,6 +44,9 @@ class Memory:
         if where in getattr(self, what):
             getattr(self, what).remove(where)
 
+    def remember(self, what: str) -> Set[Location]:
+        return getattr(self, what)
+
     def __repr__(self) -> str:
         return str(
             {

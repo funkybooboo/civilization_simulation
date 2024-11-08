@@ -14,12 +14,20 @@ class BuildBarn(Task):
         # TODO: check if person is in buildable place,
             # if not in buildable place, go to buildable place
         self._person.
+        # pseudocode below:
+        #check person memory for construction site
+        # if construction site for barn, go to barn and help build
+        # go do building stuff at barn
+
+        # else search for empty places to build barn
+        # once a place is found, go to it and check
+        # add start barn construction task
+        # call person build barn
+        # call finished when finished
 
 
-        build = self.is_clear()
-        # check if there is a construction site
-        # if not start construction
-        #all tasks need return integer
+
+        #all tasks need return integer of how long its estimated to take
         #
 
         #

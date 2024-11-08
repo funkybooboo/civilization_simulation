@@ -1,4 +1,5 @@
 from typing import Optional
+from typing import List, Set
 
 from src.simulation.grid.building.home import Home
 from src.simulation.grid.location import Location
@@ -43,10 +44,10 @@ class Person:
         elif self._hunger > 80:
             self._health += 1
 
-        if not self._home:
+        if not self.has_home():
             self._scheduler.add(TaskType.FIND_HOME)
 
-        if not self._spouse:
+        if not self.has_spouse():
             self._scheduler.add(TaskType.FIND_SPOUSE)
 
         if self._hunger < 50:
@@ -81,8 +82,14 @@ class Person:
     def assign_home(self, home: Home) -> None:
         self._home = home
 
+    def get_home(self) -> Home:
+        return self._home
+
     def has_home(self) -> bool:
         return self._home is not None
+
+    def get_scheduler(self) -> Scheduler:
+        return self._scheduler
     
     def age(self) -> None:
         self._age += 1
@@ -154,6 +161,40 @@ class Person:
 
     def store_stuff(self) -> None:
         pass
+
+    def remember_barns(self) -> Set[Location]:
+        return self._memory.remember('barns')
+
+    def remember_construction_barns(self) -> Set[Location]:
+        return self._memory.remember('construction_barns')
+
+    def remember_farms(self) -> Set[Location]:
+        return self._memory.remember('farms')
+
+    def remember_construction_farms(self) -> Set[Location]:
+        return self._memory.remember('construction_farms')
+
+    def remember_mines(self) -> Set[Location]:
+        return self._memory.remember('mines')
+
+    def remember_construction_mines(self) -> Set[Location]:
+        return self._memory.remember('construction_mines')
+
+    def remember_homes(self) -> Set[Location]:
+        return self._memory.remember('homes')
+
+    def remember_construction_homes(self) -> Set[Location]:
+        return self._memory.remember('construction_homes')
+
+    def remember_trees(self) -> Set[Location]:
+        return self._memory.remember('trees')
+
+    def remember_empties(self) -> Set[Location]:
+        return self._memory.remember('empties')
+
+    def remember_people(self) -> Set[Location]:
+        return self._memory.remember('people')
+
 
     def __str__(self) -> str:
         pass  # TODO implement what to print for a person
