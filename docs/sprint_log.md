@@ -50,7 +50,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-05 | 4     | All       | Code meeting                                                                                           |
 | 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                          |
 | 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
-| 2024-11-08 |       |           |                                                                                                        |
+| 2024-11-08 | 2     | Nate      | Work on the generate town ticket                                                                       |
 | 2024-11-09 |       |           |                                                                                                        |
 | 2024-11-10 |       |           |                                                                                                        |
 
