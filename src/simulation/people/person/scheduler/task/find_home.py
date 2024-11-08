@@ -1,7 +1,9 @@
-from typing import override
-
+from task import Task
+from src.simulation.grid.building.home import Home
 from task import Task
 
+from src.simulation.people.person.person import Person
+from src.simulation.simulation import Simulation
 
 class FindHome(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
@@ -22,6 +24,7 @@ class FindHome(Task):
             self._person.build_home()
         else:
             self._finished()
+            from typing import override
 
     @override
     def _clean_up_task(self) -> None:
@@ -30,5 +33,4 @@ class FindHome(Task):
     @override
     def get_remaining_time(self) -> int:
         pass
-        
-            
+    
