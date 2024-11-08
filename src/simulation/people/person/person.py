@@ -75,6 +75,9 @@ class Person:
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
 
+    def has_spouse(self) -> bool:
+        return self._spouse is not None
+
     def assign_home(self, home: Home) -> None:
         self._home = home
 
@@ -129,6 +132,16 @@ class Person:
 
     def build_barn(self) -> None:
         pass
+    # query memory of construction barns
+    # start construction
+
+    ## also add has spouse function
+    ## create private build method start construct
+    # query from memory
+
+    # maybe still have start construction class
+
+
 
     def work_farm(self) -> None:
         pass

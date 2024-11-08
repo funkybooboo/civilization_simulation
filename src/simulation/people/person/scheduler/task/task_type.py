@@ -17,3 +17,8 @@ class TaskType(Enum):
     BUILD_BARN = auto()
 
     EXPLORE = auto()
+
+    START_BARN_CONSTRUCTION = auto()
+    START_MINE_CONSTRUCTION = auto()
+    START_FARM_CONSTRUCTION = auto()
+    START_HOME_CONSTRUCTION = auto()
