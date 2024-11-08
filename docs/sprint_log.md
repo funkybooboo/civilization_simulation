@@ -36,21 +36,21 @@ Stay organized and on track with your assignments and tasks!
 - **Goals**:
   - get MVP out
     
-| Date       | Hours | Name      | Notes                           |
-|------------|-------|-----------|---------------------------------|
-| 2024-10-31 | 3     | All       | UML meeting                     |
-| 2024-11-01 | 3     | Nate      | UML meeting                     |
-| 2024-11-01 | 3     | Madi      | UML meeting                     |
-| 2024-11-01 | 3     | Ann Marie | UML meeting                     |
-| 2024-11-01 | 0.5   | Brighton  | UML meeting                     |
-| 2024-11-02 | 2     | Nate      | set up code structure add todos |
-| 2024-11-03 | 2     | Nate      | set up code structure add todos |
-| 2024-11-04 | 5     | Nate      | set up code structure add todos |
-| 2024-11-05 | 0.5   | Nate      | write asana tickets             |
-| 2024-11-05 | 4     | All       | Code meeting                    |
-| 2024-11-06 | 5     | Nate      | Work on user interface ticket   |
-| 2024-11-07 | 5     | Nate      | Work on user interface ticket   |
-| 2024-11-08 |       |           |                                 |
+| Date       | Hours | Name      | Notes                                                                                                  |
+|------------|-------|-----------|--------------------------------------------------------------------------------------------------------|
+| 2024-10-31 | 3     | All       | UML meeting                                                                                            |
+| 2024-11-01 | 3     | Nate      | UML meeting                                                                                            |
+| 2024-11-01 | 3     | Madi      | UML meeting                                                                                            |
+| 2024-11-01 | 3     | Ann Marie | UML meeting                                                                                            |
+| 2024-11-01 | 0.5   | Brighton  | UML meeting                                                                                            |
+| 2024-11-02 | 2     | Nate      | set up code structure add todos                                                                        |
+| 2024-11-03 | 2     | Nate      | set up code structure add todos                                                                        |
+| 2024-11-04 | 5     | Nate      | set up code structure add todos                                                                        |
+| 2024-11-05 | 0.5   | Nate      | write asana tickets                                                                                    |
+| 2024-11-05 | 4     | All       | Code meeting                                                                                           |
+| 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                          |
+| 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
+| 2024-11-08 |       |           |                                                                                                        |
 
 ## Sprint 3
 
