@@ -2,43 +2,94 @@ import heapq
 from typing import List, Optional
 
 from src.simulation.people.person.person import Person
-from task.task import Task
-from task.task_factory import TaskFactory
-from task.task_type import TaskType
+from src.simulation.people.person.scheduler.task.task import Task
+from src.simulation.people.person.scheduler.task.task_factory import TaskFactory
+from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.simulation import Simulation
 
 
 class Scheduler:
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        # TODO: maybe change how tasks are being stored?
         self._task_factory: TaskFactory = TaskFactory(simulation, person)
         self._tasks: List[Task] = []
         self._current_task: Optional[Task] = None
+        self._last_added_time = 0  # Timestamp for when the last task was added
+        self._interruption_threshold = 3  # Initial threshold for interruptions
+        self._max_interruption_threshold = 10  # Maximum interruption threshold
+        self._simulation = simulation  # Store the simulation reference to access the time
 
     def add(self, what: TaskType) -> None:
         task: Task = self._task_factory.create_instance(what)
-        heapq.heappush(self._tasks, task)
+        if task:
+            heapq.heappush(self._tasks, task)
+            self._last_added_time = self._get_current_time()
 
-    def _add(self, task: Task | None) -> None:
-        if not Task:
-            return
-        heapq.heappush(self._tasks, task)
+    def _add(self, task: Optional[Task]) -> None:
+        if task:
+            heapq.heappush(self._tasks, task)
 
-    def _pop(self) -> Task | None:
-        return heapq.heappop(self._tasks)
+    def _pop(self) -> Optional[Task]:
+        return heapq.heappop(self._tasks) if self._tasks else None
+
+    def _get_current_time(self) -> int:
+        return self._simulation.get_current_time()
+
+    def _calculate_dynamic_threshold(self) -> int:
+        # Calculate dynamic interruption threshold based on the current state
+        base_threshold = max(1, len(self._tasks) // 2)
+
+        task_addition_rate_factor = 1 if self._get_current_time() - self._last_added_time > 1 else 2
+
+        if self._current_task:
+            priority_factor = 11 - self._current_task.get_priority()  # Inverse relation: high priority = low threshold
+        else:
+            priority_factor = 6  # Default to mid-range priority factor if no current task
+
+        dynamic_threshold = min(self._max_interruption_threshold, base_threshold * task_addition_rate_factor * priority_factor)
+
+        return dynamic_threshold
+    
+    @staticmethod
+    def _calculate_task_reward(task: Task) -> float:
+        # Reward function: Higher priority tasks have higher rewards
+        priority_weight = 11 - task.get_priority()  # Higher priority = higher weight
+        time_remaining_weight = max(1, 10 - task.get_remaining_time()) # Closer to completion = higher weight
+        interruption_penalty = max(0, task.get_interruptions())  # More interruptions = lower reward
+
+        # Reward formula: Higher priority, less time remaining, fewer interruptions lead to higher reward
+        reward = priority_weight * time_remaining_weight / (1 + interruption_penalty)
+        return reward
 
     def execute(self) -> None:
         if not self._current_task and not self._tasks:
             return
+
         if not self._current_task and self._tasks:
             self._current_task = self._pop()
 
-        self._add(self._current_task)
-        next_task: Task | None = self._pop()
+        # Calculate the dynamic interruption threshold based on the current state
+        self._interruption_threshold = self._calculate_dynamic_threshold()
 
-        if self._current_task != next_task:
+        # Calculate the reward for continuing the current task
+        current_task_reward = self._calculate_task_reward(self._current_task)
+
+        # Evaluate the reward of switching to the next task
+        self._add(self._current_task)
+        next_task: Optional[Task] = self._pop()
+        next_task_reward = self._calculate_task_reward(next_task)
+
+        # Apply the optimal stopping rule: stick to the current task if it has a higher reward
+        if current_task_reward >= next_task_reward:
+            self._current_task.execute()
+            if self._current_task.is_finished():
+                self._current_task = None
+            return
+        else:
+            # If the next task has a higher reward, switch to it
+            self._current_task.increment_interruptions()
             self._current_task = next_task
 
         self._current_task.execute()
+
         if self._current_task.is_finished():
             self._current_task = None

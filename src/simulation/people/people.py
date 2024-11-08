@@ -11,6 +11,7 @@ class People:
         self._actions_per_day: int = actions_per_day
         people_generator: PeopleGenerator = PeopleGenerator(simulation)
         self._people: List[Person] = people_generator.generate()
+        self._time: int = 0
 
     def print(self) -> None:
         for person in self._people:
@@ -18,6 +19,7 @@ class People:
 
     def take_actions_for_day(self) -> None:
         for action in range(self._actions_per_day):
+            self._time += 1
             dead: List[Person] = []
             for person in self._people:
                 if person.is_dead():
@@ -26,6 +28,9 @@ class People:
                 person.take_action()
             for person in dead:
                 self._people.remove(person)
+                
+    def get_time(self) -> int:
+        return self._time
 
     def age(self) -> None:
         for person in self._people:

@@ -1,4 +1,4 @@
-from typing import Type, Dict
+from typing import Type, Optional, Dict
 
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
@@ -40,6 +40,8 @@ class TaskFactory:
         self._simulation = simulation
         self._person = person
 
-    def create_instance(self, what: TaskType) -> Task:
+    def create_instance(self, what: TaskType) -> Optional[Task]:
         task_class: Type = self._constructors[what]
+        if not task_class:
+            return None
         return task_class(self._simulation, self._person)
