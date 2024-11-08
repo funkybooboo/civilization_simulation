@@ -99,6 +99,9 @@ class Person:
     def go_to_home(self) -> None:
         pass
 
+    def go_to_random_spot(self) -> None:
+        self._mover.explore()
+
     def find_farm_to_work_at(self) -> None:
         # make method in memory class to know about barns
         # query memory, grab all the barns

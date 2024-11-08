@@ -37,3 +37,6 @@ class Simulation:
     
     def get_people(self) -> People:
         return self._people
+
+    def get_grid(self) -> Grid:
+        return self._grid
