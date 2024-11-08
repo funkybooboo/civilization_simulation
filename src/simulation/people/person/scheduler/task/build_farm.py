@@ -1,6 +1,6 @@
-from people.person.person import Person
-from people.person.scheduler.task.task import Task
-from simulation import Simulation
+from src.simulation.people.person.person import Person
+from src.simulation.people.person.scheduler.task.task import Task
+from src.simulation.simulation import Simulation
 
 class BuildFarm(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:

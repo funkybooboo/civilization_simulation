@@ -1,6 +1,6 @@
-from people.person.person import Person
-from people.person.scheduler.task.task import Task
-from simulation import Simulation
+from src.simulation.people.person.person import Person
+from src.simulation.people.person.scheduler.task.task import Task
+from src.simulation.simulation import Simulation
 
 class BuildBarn(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
@@ -9,5 +9,6 @@ class BuildBarn(Task):
     def execute(self) -> None:
         # TODO: check if person is in buildable place,
             # if not in buildable place, go to buildable place
+
         self._person.build_barn()
         self._finished()
