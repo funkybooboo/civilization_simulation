@@ -34,6 +34,7 @@ class Farm(Building):
         if len(self._workers) <= Farm._max_worker_count:
             self._workers[person] = 1
         if self._workers[person] > Farm._max_work_count:
+            self.remove_worker(person)
             return int(self._yield())
         return None
 

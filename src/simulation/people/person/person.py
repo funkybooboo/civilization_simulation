@@ -102,6 +102,9 @@ class Person:
         self._building = self._home
         self._mover.towards(self._home.get_location())
         if self._location.is_one_away(self._home.get_location()):
+            self._moving_to_building_type = None
+            self._visited_buildings = set()
+            self._building = None
             return self._home
         return None
 
