@@ -1,11 +1,14 @@
+from typing import override
+
 from task import Task
-from src.simulation.grid.building.home import Home
+
 
 class FindHome(Task):
-    def __init__(self, simulation, person):
+    def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
 
-    def execute(self):
+    @override
+    def execute(self) -> None:
         if not self._person.has_home():
             all_homes = self._simulation.get_grid().get_homes()
             # query the grid to make sure there is a home in that location
@@ -19,4 +22,13 @@ class FindHome(Task):
             self._person.build_home()
         else:
             self._finished()
+
+    @override
+    def _clean_up_task(self) -> None:
+        pass
+
+    @override
+    def get_remaining_time(self) -> int:
+        pass
+        
             

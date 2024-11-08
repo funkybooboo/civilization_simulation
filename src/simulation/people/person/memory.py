@@ -18,7 +18,16 @@ class Memory:
         self._people: Set[Location] = set()
         self._items: List[str] = list(vars(self).keys())
 
-    def get_homes(self) -> Set[Location]:
+    def get_barn_locations(self) -> Set[Location]:
+        return self._barns
+
+    def get_farm_locations(self) -> Set[Location]:
+        return self._farms
+
+    def get_mine_locations(self) -> Set[Location]:
+        return self._mines
+
+    def get_home_locations(self) -> Set[Location]:
         return self._homes
 
     def dont_know_where_anything_is(self) -> bool:
@@ -36,10 +45,10 @@ class Memory:
             return
         for item in self._items:
             if item != what:
-                self.__remove(item, where)
+                self._remove(item, where)
         getattr(self, what).add(where)
 
-    def __remove(self, what: str, where: Location) -> None:
+    def _remove(self, what: str, where: Location) -> None:
         if what is None or where is None:
             return
         if what not in self._items:

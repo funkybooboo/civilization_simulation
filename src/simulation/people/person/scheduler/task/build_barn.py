@@ -1,13 +1,23 @@
-from people.person.person import Person
-from people.person.scheduler.task.task import Task
-from simulation import Simulation
+from typing import override
+
+from task import Task
+
+from src.simulation.people.person.person import Person
+from src.simulation.simulation import Simulation
+
 
 class BuildBarn(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5) # TODO: should the priority really be 5?
-    
+        super().__init__(simulation, person, 5)
+
+    @override
     def execute(self) -> None:
-        # TODO: check if person is in buildable place,
-            # if not in buildable place, go to buildable place
-        self._person.build_barn()
-        self._finished()
+        pass
+
+    @override
+    def _clean_up_task(self) -> None:
+        pass
+
+    @override
+    def get_remaining_time(self) -> int:
+        pass
