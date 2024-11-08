@@ -49,7 +49,9 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-05 | 0.5   | Nate      | write asana tickets                                                                                    |
 | 2024-11-05 | 4     | All       | Code meeting                                                                                           |
 | 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                          |
+| 2024-11-06 | 1.5   | Ann Marie | Work on adding tasks to code                                                                           |
 | 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
+| 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate |
 | 2024-11-08 |       |           |                                                                                                        |
 
 ## Sprint 3
