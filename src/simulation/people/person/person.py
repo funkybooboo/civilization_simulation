@@ -5,12 +5,9 @@ from mover import Mover
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
 
-from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building import Building
 from src.simulation.grid.building.building_type import BuildingType
-from src.simulation.grid.building.farm import Farm
 from src.simulation.grid.building.home import Home
-from src.simulation.grid.building.mine import Mine
 from src.simulation.grid.location import Location
 from src.simulation.simulation import Simulation
 
