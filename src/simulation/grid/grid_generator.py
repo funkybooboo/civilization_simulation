@@ -8,7 +8,7 @@ class GridGenerator:
             size: int,
             tree_density: float = 0.4,
             ca_iterations: int = 40,
-            town_clearance_radius: int = 20,
+            town_clearance_radius: int = 15,
             building_buffer: int = 1
     ) -> None:
         self._grid: List[List[str]] = []

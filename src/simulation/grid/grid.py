@@ -89,6 +89,13 @@ class Grid:
     
         return buildings
     
+    def get_buildings(self) -> Dict[Location, Building]:
+        return self._buildings
+
+    def home_count(self) -> int:
+        # Iterate through the values of the _buildings dictionary and count instances of Home
+        return sum(1 for building in self._buildings.values() if isinstance(building, Home))
+
     def get_char(self, location: Location) -> str:
         return self._grid[location.y][location.x]
 
