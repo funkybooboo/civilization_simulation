@@ -1,75 +1,126 @@
 import random
-from typing import List
+from typing import List, Tuple
 
 
 class GridGenerator:
     def __init__(
-        self,
-        size: int,
-        tree_density: float = 0.4,
-        ca_iterations: int = 40,
+            self,
+            size: int,
+            tree_density: float = 0.4,
+            ca_iterations: int = 40,
+            town_clearance_radius: int = 15,
+            building_buffer: int = 1
     ) -> None:
         self._grid: List[List[str]] = []
         self._width: int = size
         self._height: int = size
         self._tree_density: float = tree_density
         self._ca_iterations: int = ca_iterations
-        self._end_of_world_char: str = "e"
         self._tree_char: str = "*"
 
-        # TODO generate town
-        self.num_houses: int = 10
-        self.num_farms: int = 3
-        self.num_mines: int = 1
-        self.num_barns: int = 1
+        self._num_houses: int = random.randint(5, 10)
+        self._num_farms: int = random.randint(1, 3)
+        self._num_barns: int = random.randint(1, 2)
+        self._num_mines: int = random.randint(1, 2)
+
+        self._building_sizes: dict[str, Tuple[int, int]] = {
+            "H": (2, 2),
+            "F": (5, 5),
+            "B": (3, 3),
+            "M": (3, 3),
+        }
+
+        self._town_clearance_radius: int = town_clearance_radius
+        self._building_buffer: int = building_buffer
 
     def generate(self) -> List[List[str]]:
-        self._grid = [[" " for _ in range(self._width)] for _ in range(self._height)]
+        self._initialize_grid()
         self._add_clustered_trees()
-        self._place_town_in_center()
+        self._generate_town()
         return self._grid
 
-    def _place_town_in_center(self) -> None:
-        town_layout = self._read_town_layout("../../../data/town.txt")
-        town_width = len(town_layout[0])
-        town_height = len(town_layout)
-        town_x = (self._width - town_width) // 2
-        town_y = (self._height - town_height) // 2
+    def _initialize_grid(self) -> None:
+        # Initialize grid with empty spaces
+        self._grid = [[" " for _ in range(self._width)] for _ in range(self._height)]
 
-        # Place the town layout on the grid
-        for y in range(town_height):
-            for x in range(town_width):
-                self._grid[town_y + y][town_x + x] = town_layout[y][x]
+    def _generate_town(self) -> None:
+        center_x, center_y = self._width // 2, self._height // 2
+        self._clear_town_area(center_x, center_y)
 
-    @staticmethod
-    def _read_town_layout(filename: str) -> List[str]:
-        town_layout: List[str] = []
-        max_length: int = 0
+        buildings = [
+            ("H", self._num_houses, 0.9),
+            ("F", self._num_farms, 0.8),
+            ("B", self._num_barns, 0.8),
+            ("M", self._num_mines, 0.8),
+        ]
 
-        with open(filename, "r") as file:
-            for line in file.readlines():
-                row = line.rstrip("\n")
-                if row:
-                    town_layout.append(row)
-                    max_length = max(max_length, len(row))
+        for building_type, count, completion_prob in buildings:
+            if building_type == "B" and count > 0:
+                self._place_building(building_type, center_x, center_y, True)
+                count -= 1
 
-        # Pad each row to make them the same length
-        for i in range(len(town_layout)):
-            town_layout[i] = town_layout[i].ljust(max_length)
+            for _ in range(count):
+                is_completed = random.random() < completion_prob
+                self._place_building_random(building_type, is_completed)
 
-        return town_layout
+    def _clear_town_area(self, center_x: int, center_y: int) -> None:
+        radius = self._town_clearance_radius
+        for dy in range(-radius, radius + 1):
+            for dx in range(-radius, radius + 1):
+                x, y = center_x + dx, center_y + dy
+                if 0 <= x < self._width and 0 <= y < self._height:
+                    self._grid[y][x] = " "
+
+    def _place_building(self, building_type: str, x: int, y: int, is_completed: bool) -> None:
+        building_char = building_type if is_completed else building_type.lower()
+        width, height = self._building_sizes[building_type]
+        if self._can_place_building(x, y, width, height):
+            self._clear_area(x, y, width, height)
+            self._place_on_grid(x, y, width, height, building_char)
+
+    def _place_building_random(self, building_type: str, is_completed: bool) -> None:
+        center_x, center_y = self._width // 2, self._height // 2
+        width, height = self._building_sizes[building_type]
+        for distance in range(1, max(self._width, self._height)):
+            for dy in range(-distance, distance + 1):
+                for dx in range(-distance, distance + 1):
+                    x, y = center_x + dx, center_y + dy
+                    if 0 <= x < self._width and 0 <= y < self._height:
+                        if self._can_place_building(x, y, width, height):
+                            building_char = building_type if is_completed else building_type.lower()
+                            self._clear_area(x, y, width, height)
+                            self._place_on_grid(x, y, width, height, building_char)
+                            return
+
+    def _can_place_building(self, x: int, y: int, width: int, height: int) -> bool:
+        if x + width > self._width or y + height > self._height:
+            return False
+        for dy in range(-self._building_buffer, height + self._building_buffer):
+            for dx in range(-self._building_buffer, width + self._building_buffer):
+                new_x, new_y = x + dx, y + dy
+                if 0 <= new_x < self._width and 0 <= new_y < self._height:
+                    if self._grid[new_y][new_x] != " ":
+                        return False
+        return True
+
+    def _clear_area(self, x: int, y: int, width: int, height: int) -> None:
+        for dy in range(-self._building_buffer, height + self._building_buffer):
+            for dx in range(-self._building_buffer, width + self._building_buffer):
+                new_x, new_y = x + dx, y + dy
+                if 0 <= new_x < self._width and 0 <= new_y < self._height:
+                    if self._grid[new_y][new_x] == self._tree_char:
+                        self._grid[new_y][new_x] = " "
+                    if self._grid[new_y][new_x] == " ":
+                        self._grid[new_y][new_x] = " "
+
+    def _place_on_grid(self, x: int, y: int, width: int, height: int, building_char: str) -> None:
+        for dy in range(height):
+            for dx in range(width):
+                self._grid[y + dy][x + dx] = building_char
 
     def _add_clustered_trees(self) -> None:
-        self._create_outer_wall()
         self._generate_inner_trees()
         self._do_cellular_automata()
-
-    def _create_outer_wall(self) -> None:
-        self._grid[0] = [self._end_of_world_char] * len(self._grid[0])
-        self._grid[-1] = [self._end_of_world_char] * len(self._grid[-1])
-        for i in range(len(self._grid)):
-            self._grid[i][0] = self._end_of_world_char
-            self._grid[i][-1] = self._end_of_world_char
 
     def _generate_inner_trees(self) -> None:
         for i in range(2, len(self._grid) - 2):
@@ -90,15 +141,33 @@ class GridGenerator:
             self._grid = grid_copy
 
     def _count_number_of_neighbors(self, row: int, col: int) -> int:
-        count: int = 0
+        count = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if (
-                    (i == 0 and j == 0)
-                    or not (0 <= row + i < len(self._grid))
-                    or not (0 <= col + j < len(self._grid[row]))
-                ):
+                if (i == 0 and j == 0) or not (0 <= row + i < len(self._grid)) or not (0 <= col + j < len(self._grid[row])):
                     continue
                 if self._grid[row + i][col + j] == self._tree_char:
                     count += 1
         return count
+
+
+def print_grid(grid: List[List[str]]) -> None:
+    # Top border: Adjusted to account for spaces between characters
+    border = "+" + "-" * ((len(grid[0]) - 1) * 2 + 1) + "+"
+    print(border)
+
+    # Print each row with spaces between characters
+    for row in grid:
+        print("|" + " ".join(row) + "|")
+
+    # Bottom border: Same as top border
+    print(border)
+
+
+
+if __name__ == "__main__":
+    grid_size = 200  # You can set any size you want
+    generator = GridGenerator(size=grid_size)
+    generated_grid = generator.generate()
+
+    print_grid(generated_grid)
