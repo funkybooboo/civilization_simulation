@@ -7,19 +7,21 @@ class BuildBarn(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5) # TODO: should the priority really be 5?
         self._grid = simulation.get_grid()
+        self._person = person
         self._location = person.get_location()
 
 
     def execute(self) -> None:
         # TODO: check if person is in buildable place,
             # if not in buildable place, go to buildable place
-        self._person.
+        for construction_site in self._person.remember_construction_barns():
+            self._person.
         # pseudocode below:
         #check person memory for construction site
         # if construction site for barn, go to barn and help build
         # go do building stuff at barn
 
-        # else search for empty places to build barn
+        # else search for empty places to build barn #this goes into the start barn construction
         # once a place is found, go to it and check
         # add start barn construction task
         # call person build barn

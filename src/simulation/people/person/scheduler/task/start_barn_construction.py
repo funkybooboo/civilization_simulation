@@ -5,8 +5,11 @@ from src.simulation.grid.grid import Grid
 
 class StartBarnConstruction(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
+        super().__init__(simulation, person, 6)
+        self._person = person
 
 
     def execute(self) -> None:
+
         # call a function in person
         # which calls a private function to set up the construction site

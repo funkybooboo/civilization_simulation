@@ -27,6 +27,7 @@ class Person:
             100  # when your hunger gets below 25, health starts going down; when it gets above 75, health starts going up
         )
         self._home: Optional[Home] = None  # Home can be None or an object (e.g., Home)
+        # todo self.home needs to be adjusted so that it provides location
         self._spouse: Optional[Person] = (
             None  # Spouse can be None or an object (e.g., Person)
         )
@@ -106,27 +107,35 @@ class Person:
     def at_mine(self) -> bool:
         pass
 
-    def go_to_home(self) -> None:
+    def at_home_construction(self) -> bool:
         pass
+
+    def at_barn_construction(self) -> bool:
+        pass
+
+    def at_mine_construction(self) -> bool:
+        pass
+
+    def at_farm_construction(self) -> bool:
+        pass
+
+    def go_to_home(self) -> None:
+        self._mover.towards(self._home)
 
     def go_to_random_spot(self) -> None:
         self._mover.explore()
 
     def find_farm_to_work_at(self) -> None:
-        # make method in memory class to know about barns
-        # query memory, grab all the barns
-        # find closest barn using location.distance(location)
-        # mover.towards(location object x,y of barn)
-        pass
+        self._mover.towards(self._mover.get_closest(self._location, list(self.remember_farms())))
 
     def find_mine_to_work_at(self) -> None:
-        pass
+        self._mover.towards(self._mover.get_closest(self._location, list(self.remember_mines())))
 
     def find_tree_to_chop(self) -> None:
-        pass
+        self._mover.towards(self._mover.get_closest(self._location, list(self.remember_trees())))
 
     def find_barn_to_store_at(self) -> None:
-        pass
+        self._mover.towards(self._mover.get_closest(self._location, list(self.remember_barns())))
 
     def build_home(self) -> None:
         pass
