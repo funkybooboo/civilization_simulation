@@ -47,6 +47,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-03 | 2     | Nate      | set up code structure add todos                                                                        |
 | 2024-11-04 | 5     | Nate      | set up code structure add todos                                                                        |
 | 2024-11-05 | 0.5   | Nate      | write asana tickets                                                                                    |
+| 2024-11-05 | 1     | Ann Marie | looked over repo for personal understanding, trouble-shooted imports on my side                        |
 | 2024-11-05 | 4     | All       | Code meeting                                                                                           |
 | 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                          |
 | 2024-11-06 | 1.5   | Ann Marie | Work on adding tasks to code                                                                           |
