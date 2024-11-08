@@ -21,6 +21,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-23 | 1.5   | Nate      | Finalize some ideas for the project proposal          |
 | 2024-10-23 | 1.5   | Madi      | Finalize some ideas for the project proposal          |
 | 2024-10-23 | 1.5   | Ann Marie | Finalize some ideas for the project proposal          |
+| 2024-10-23 | .25   | Brighton  | Finalize some ideas for the project proposal          |
 | 2024-10-24 | 0.25  | Nate      | Format project proposal                               |
 | 2024-10-25 |       |           |                                                       |
 | 2024-10-26 | 1     | Nate      | Write methodology for project proposal. Start on uml. |
@@ -28,6 +29,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-29 | 3     | Nate      | UML meeting                                           |
 | 2024-10-29 | 3     | Ann Marie | UML meeting                                           |
 | 2024-10-30 | 2.5   | Nate      | UML meeting                                           |
+| 2024-10-30 | 1.5   | Brighton  | UML catchup / UML edits                               |
 
 ## Sprint 2
 
@@ -51,7 +53,8 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                          |
 | 2024-11-06 | 1.5   | Ann Marie | Work on adding tasks to code                                                                           |
 | 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
-| 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate |
+| 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
+| 2024-11-08 | 1    | Brighton  | Reviewing town logic PR, pushed barn inventory PR                                                      |
 | 2024-11-08 |       |           |                                                                                                        |
 
 ## Sprint 3
