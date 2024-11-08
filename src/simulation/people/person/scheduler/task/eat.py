@@ -11,7 +11,7 @@ class Eat(Task):
     
     @override
     def execute(self) -> None:
-        if not self._person.is_home():
+        if not self._person.at_home():
             self._person.go_to_home()
         else:
             self._person.eat()
