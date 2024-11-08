@@ -1,16 +1,30 @@
-from people.person.person import Person
-from people.person.scheduler.task.task import Task
-from simulation import Simulation
+from typing import Optional
+
+from src.simulation.grid.building.barn import Barn
+from src.simulation.grid.building.building_type import BuildingType
+from src.simulation.grid.building.farm import Farm
+from src.simulation.people.person.person import Person
+from src.simulation.people.person.scheduler.task.task import Task
+from src.simulation.simulation import Simulation
 
 class WorkFarm(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5) # TODO: change priority
+        super().__init__(simulation, person, 5)
+        self._farm: Optional[Farm] = None
     
     def execute(self) -> None:
-        if not self._person.at_farm():
-            self._person.find_farm_to_work_at()
-        else:
-            self._person.work_farm()
-            self._finished()
-            # TODO: do we need to specify here that work_farm might take multiple turns?
-                # --> should that be implemented with a tally or something?
+        if not self._farm:
+            self._farm: Optional[Farm] = self._person.move_to(BuildingType.FARM)
+        if self._farm:
+            food: Optional[int] = self._farm.work(self._person)
+            if food:
+                barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
+                if barn:
+                    barn.add_food(food)
+                self._finished()
+
+    def _clean_up_task(self) -> None:
+        self._farm.remove_worker(self._person)
+    
+    def get_remaining_time(self) -> int:
+        return self._person.move_to_time_estimate() + Farm.work_time_estimate()

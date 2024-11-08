@@ -43,10 +43,9 @@ class Mover:
                 new_location = Location(next_node.y, next_node.x)  # Convert to Location
                 self._place(new_location)
 
-    @staticmethod
-    def get_closest(
-        current_location: Location, locations: List[Location]
-    ) -> Optional[Location]:
+    def get_closest(self, locations: List[Location], current_location = None) -> Optional[Location]:
+        if not current_location:
+            current_location = self._person.get_location()
         if not locations:
             return None
         return min(

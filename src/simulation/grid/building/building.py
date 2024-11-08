@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from ..grid import Grid
 from ..location import Location
@@ -23,6 +23,9 @@ class Building(ABC):
         # todo add resources or somethin' ie. wood obtained vs wood required, etc.
         self._start_construction()
         
+    def get_location(self):
+        return self._location
+        
     def get_height(self) -> int:
         return self._height
 
@@ -34,4 +37,15 @@ class Building(ABC):
 
     def _start_construction(self) -> None:
         # TODO place construction building on the grid, make sure we aren't overlapping with anything else
+        pass
+    
+    @abstractmethod
+    def has_capacity(self) -> bool:
+        # can someone else be in or use the building
+        pass
+
+    @staticmethod
+    @abstractmethod
+    def work_time_estimate():
+        # how long will it take to finish work at this building
         pass

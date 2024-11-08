@@ -20,6 +20,7 @@ class Task(ABC):
     
     def increment_interruptions(self) -> None:
         self._interruptions += 1
+        self._clean_up_task()
 
     def get_priority(self) -> int:
         return self._priority
@@ -39,4 +40,9 @@ class Task(ABC):
     @abstractmethod
     def get_remaining_time(self) -> int:
         # ballpark: how many action cycles will this task take?
+        pass
+
+    @abstractmethod
+    def _clean_up_task(self) -> None:
+        # stop the work you are doing
         pass
