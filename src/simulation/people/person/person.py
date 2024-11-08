@@ -90,6 +90,11 @@ class Person:
 
     def age(self) -> None:
         self._age += 1
+        
+    def find_build_location(self, building_type: BuildingType) -> Location:
+        # check memory for open spots to build
+        # if you cant find any then walk to a place where empty space is likely
+        pass
 
     def move_to_home(self) -> Optional[Home]:
         self._moving_to_building_type = BuildingType.HOME
