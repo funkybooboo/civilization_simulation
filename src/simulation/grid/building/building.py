@@ -46,6 +46,6 @@ class Building(ABC):
 
     @staticmethod
     @abstractmethod
-    def work_time_estimate():
+    def work_time_estimate() -> int:
         # how long will it take to finish work at this building
         pass
