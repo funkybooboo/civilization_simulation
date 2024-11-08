@@ -1,10 +1,12 @@
 import random
 import time
+from typing import List
+
 import matplotlib.pyplot as plt
 import seaborn as sns
-from tqdm import tqdm
-from typing import List
 from matplotlib import colors
+from tqdm import tqdm
+
 
 class GridPlotter:
     def __init__(self):
@@ -43,7 +45,7 @@ class GridPlotter:
         # Plot each grid element with square markers
         square_size = 1  # You can change this if needed
         for row_idx, row in tqdm(
-                enumerate(grid), desc="Adding Grid to Plot", total=num_rows
+            enumerate(grid), desc="Adding Grid to Plot", total=num_rows
         ):
             for col_idx, char in enumerate(row):
                 color = self._get_color_for_char(char)
@@ -59,13 +61,23 @@ class GridPlotter:
     def _add_color_key(self, ax) -> None:
         """Add a color key showing the terrain types and their associated colors."""
         # Dynamically generate terrain types (for example, we use characters 'a', 'b', 'c', etc.)
-        terrain_types = list(self.color_map.keys())  # Use the terrain types from color_map
+        terrain_types = list(
+            self.color_map.keys()
+        )  # Use the terrain types from color_map
 
         # Create a list of scatter objects (one per terrain type)
         handles = []
         for char in terrain_types:
             color = self._get_color_for_char(char)
-            handle = plt.Line2D([0], [0], marker="s", color="w", markerfacecolor=color, markersize=10, label=char)
+            handle = plt.Line2D(
+                [0],
+                [0],
+                marker="s",
+                color="w",
+                markerfacecolor=color,
+                markersize=10,
+                label=char,
+            )
             handles.append(handle)
 
         # Add the legend
@@ -73,10 +85,11 @@ class GridPlotter:
 
     def show_slide_show(self, pause_time: float = 2.0) -> None:
         for _, _ in tqdm(
-                enumerate(self.plots), desc="Displaying Slideshow", total=len(self.plots)
+            enumerate(self.plots), desc="Displaying Slideshow", total=len(self.plots)
         ):
             plt.show()
             time.sleep(pause_time)
+
 
 if __name__ == "__main__":
 
@@ -93,7 +106,7 @@ if __name__ == "__main__":
     num_grids = 3
 
     # Dynamically generate terrain types (characters 'a', 'b', 'c', etc.)
-    terrain_chars = [i for i in ['b', 'B', 'f', 'F', 'm', 'M', 'h', 'H', ' ', '*']]
+    terrain_chars = [i for i in ["b", "B", "f", "F", "m", "M", "h", "H", " ", "*"]]
 
     print(f"Generating {num_grids} test grids of size {grid_size}x{grid_size}...")
     test_grids = [

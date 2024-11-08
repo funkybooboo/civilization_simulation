@@ -6,7 +6,7 @@ from src.simulation.people.person.person import Person
 from src.simulation.simulation import Simulation
 
 
-class BuildBarn(Task):
+class StartBarnConstruction(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
 

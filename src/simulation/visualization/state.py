@@ -10,7 +10,7 @@ class State:
         self._average_hunger: float = people.get_average_hunger()
         # TODO active tasks count for each type
         # TODO completed tasks count for each type
-        
+
         # grid stats
         self._barn_count: int = grid.get_barn_count()
         self._construction_barn_count: int = grid.get_construction_barn_count()

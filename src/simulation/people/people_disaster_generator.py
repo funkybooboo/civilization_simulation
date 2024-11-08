@@ -20,7 +20,7 @@ class PeopleDisasterGenerator:
                 self._death,
                 self._forget_tasks,
                 self._sleepwalk,
-                self._so_many_babies
+                self._so_many_babies,
             ]
 
             # Randomly pick one disaster to trigger
@@ -48,7 +48,9 @@ class PeopleDisasterGenerator:
     def _craving(self, severity: int) -> None:
         """Craving causes hunger to increase."""
         hunger_increase = severity * 3  # Example: severity increases hunger
-        print(f"A person has a craving and eats too much! Hunger increases by {hunger_increase}.")
+        print(
+            f"A person has a craving and eats too much! Hunger increases by {hunger_increase}."
+        )
         # Logic to increase hunger or affect food intake
         # self.person.hunger += hunger_increase
 

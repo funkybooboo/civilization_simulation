@@ -4,12 +4,12 @@ from typing import List, Tuple
 
 class GridGenerator:
     def __init__(
-            self,
-            size: int,
-            tree_density: float = 0.4,
-            ca_iterations: int = 40,
-            town_clearance_radius: int = 15,
-            building_buffer: int = 1
+        self,
+        size: int,
+        tree_density: float = 0.4,
+        ca_iterations: int = 40,
+        town_clearance_radius: int = 15,
+        building_buffer: int = 1,
     ) -> None:
         self._grid: List[List[str]] = []
         self._width: int = size
@@ -71,7 +71,9 @@ class GridGenerator:
                 if 0 <= x < self._width and 0 <= y < self._height:
                     self._grid[y][x] = " "
 
-    def _place_building(self, building_type: str, x: int, y: int, is_completed: bool) -> None:
+    def _place_building(
+        self, building_type: str, x: int, y: int, is_completed: bool
+    ) -> None:
         building_char = building_type if is_completed else building_type.lower()
         width, height = self._building_sizes[building_type]
         if self._can_place_building(x, y, width, height):
@@ -87,7 +89,9 @@ class GridGenerator:
                     x, y = center_x + dx, center_y + dy
                     if 0 <= x < self._width and 0 <= y < self._height:
                         if self._can_place_building(x, y, width, height):
-                            building_char = building_type if is_completed else building_type.lower()
+                            building_char = (
+                                building_type if is_completed else building_type.lower()
+                            )
                             self._clear_area(x, y, width, height)
                             self._place_on_grid(x, y, width, height, building_char)
                             return
@@ -113,7 +117,9 @@ class GridGenerator:
                     if self._grid[new_y][new_x] == " ":
                         self._grid[new_y][new_x] = " "
 
-    def _place_on_grid(self, x: int, y: int, width: int, height: int, building_char: str) -> None:
+    def _place_on_grid(
+        self, x: int, y: int, width: int, height: int, building_char: str
+    ) -> None:
         for dy in range(height):
             for dx in range(width):
                 self._grid[y + dy][x + dx] = building_char
@@ -144,7 +150,11 @@ class GridGenerator:
         count = 0
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if (i == 0 and j == 0) or not (0 <= row + i < len(self._grid)) or not (0 <= col + j < len(self._grid[row])):
+                if (
+                    (i == 0 and j == 0)
+                    or not (0 <= row + i < len(self._grid))
+                    or not (0 <= col + j < len(self._grid[row]))
+                ):
                     continue
                 if self._grid[row + i][col + j] == self._tree_char:
                     count += 1
@@ -162,7 +172,6 @@ def print_grid(grid: List[List[str]]) -> None:
 
     # Bottom border: Same as top border
     print(border)
-
 
 
 if __name__ == "__main__":
