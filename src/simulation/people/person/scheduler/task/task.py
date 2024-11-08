@@ -35,3 +35,8 @@ class Task(ABC):
         # move to the task
         # do the task
         pass
+    
+    @abstractmethod
+    def get_remaining_time(self) -> int:
+        # ballpark: how many action cycles will this task take?
+        pass

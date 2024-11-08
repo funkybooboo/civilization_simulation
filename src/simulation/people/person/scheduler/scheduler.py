@@ -32,7 +32,7 @@ class Scheduler:
         return heapq.heappop(self._tasks) if self._tasks else None
 
     def _get_current_time(self) -> int:
-        return self._simulation.get_current_day() # TODO switch this to what action step we are on
+        return self._simulation.get_current_time()
 
     def _calculate_dynamic_threshold(self) -> int:
         # Calculate dynamic interruption threshold based on the current state
@@ -53,7 +53,7 @@ class Scheduler:
     def _calculate_task_reward(task: Task) -> float:
         # Reward function: Higher priority tasks have higher rewards
         priority_weight = 11 - task.get_priority()  # Higher priority = higher weight
-        time_remaining_weight = max(1, 10 - task.get_remaining_time()) # TODO change this to action step  # Closer to completion = higher weight
+        time_remaining_weight = max(1, 10 - task.get_remaining_time()) # Closer to completion = higher weight
         interruption_penalty = max(0, task.get_interruptions())  # More interruptions = lower reward
 
         # Reward formula: Higher priority, less time remaining, fewer interruptions lead to higher reward
