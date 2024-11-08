@@ -26,11 +26,14 @@ class Simulation:
             if self._has_been_a_year(day):
                 self._people.age()
                 self._grid.grow_trees()
-                # todo: add a disaster percentage chance (crops diseased, house burned, cemetary makes zombies, mines collapse, divorce, be preggers 'pregaganant')
-
+                self._create_disasters()
                 tracker.add(self._get_year(day), deepcopy(self._grid), deepcopy(self._people))
 
         return tracker
+
+    def _create_disasters(self):
+        self._people.generate_disasters()
+        self._grid.generate_disasters()
     
     def _has_been_a_year(self, day):
         return day % self._days_per_year == 0

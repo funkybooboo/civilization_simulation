@@ -11,6 +11,7 @@ from building.home import Home
 from building.mine import Mine
 from src.simulation.grid.building.building_factory import BuildingFactory
 from src.simulation.grid.building.building_type import BuildingType
+from src.simulation.grid.grid_disaster_generator import GridDisasterGenerator
 
 
 class Grid:
@@ -34,7 +35,11 @@ class Grid:
         self._grid: List[List[str]] = grid_generator.generate()
         self._building_factory = BuildingFactory(self)
         self._buildings: Dict[Location, Building] = self._find_buildings() # stores the top left corner of every building
-        
+        self._disaster_generator = GridDisasterGenerator(self)
+    
+    def generate_disasters(self, chance: float = 0.50) -> None:
+        self._disaster_generator.generate(chance)
+
     def get_grid(self) -> List[List[str]]:
         return self._grid
     
@@ -132,8 +137,7 @@ class Grid:
     def __str__(self) -> str:
         return "\n".join(" ".join(row) for row in self._grid)
 
-    def grow_trees(self) -> None:
-        chance = 0.10 # 10% chance of having a tree be placed next to an existing tree
+    def grow_trees(self, chance: int = 0.10) -> None:
         for i in range(len(self._grid)):
             for j in range(len(self._grid[i])):
                 location: Location = Location(i, j)

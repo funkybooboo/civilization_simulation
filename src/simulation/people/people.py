@@ -2,6 +2,7 @@ from typing import List
 
 from people_generator import PeopleGenerator
 from person.person import Person
+from .people_disaster_generator import PeopleDisasterGenerator
 
 from ..simulation import Simulation
 
@@ -11,7 +12,11 @@ class People:
         self._actions_per_day: int = actions_per_day
         people_generator: PeopleGenerator = PeopleGenerator(simulation)
         self._people: List[Person] = people_generator.generate()
+        self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(self)
         self._time: int = 0
+
+    def generate_disasters(self, chance: float = 0.50) -> None:
+        self._disaster_generator.generate(chance)
 
     def print(self) -> None:
         for person in self._people:
