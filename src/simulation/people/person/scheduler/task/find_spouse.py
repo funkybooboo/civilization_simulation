@@ -8,10 +8,11 @@ class FindSpouse(Task):
         super().__init__(simulation, person, 10)
 
     def execute(self) -> None:
-        if person._spouse is None:
-            for other in simulation.get_people():
+        if self._person.has_spouse():
+            for other in self._simulation.get_people_object().get_person_list():
                 if not other.has_spouse():
-                    person.assign_spouse(other)
-                    other.assign_spouse(person)
+                    self._person.assign_spouse(other)
+                    other.assign_spouse(self._person)
                     # TODO: make sure they have the same house
+                    self._finished()
                     break

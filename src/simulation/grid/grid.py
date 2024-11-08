@@ -40,6 +40,9 @@ class Grid:
     
     def get_buildings_deepcopy(self) -> Dict[Location, Building]:
         return deepcopy(self._buildings)
+    
+    def get_homes(self) -> List[Home]:
+        return [building for building in self._buildings.values() if isinstance(building, Home)]
 
     def _find_buildings(self) -> Dict[Location, Building]:
         buildings: Dict[Location, Building] = {}

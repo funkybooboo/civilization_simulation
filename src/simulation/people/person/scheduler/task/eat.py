@@ -20,4 +20,3 @@ class Eat(Task):
             else:
                 self._person.eat()
                 self._finished()
-                

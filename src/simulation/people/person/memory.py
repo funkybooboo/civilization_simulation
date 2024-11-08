@@ -18,6 +18,9 @@ class Memory:
         self._people: Set[Location] = set()
         self._items: List[str] = list(vars(self).keys())
 
+    def get_homes(self) -> Set[Location]:
+        return self._homes
+
     def dont_know_where_anything_is(self) -> bool:
         return not (self._barns or self._farms or self._homes or self._mines)
 

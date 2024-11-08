@@ -47,3 +47,6 @@ class People:
             average_hunger += person.get_hunger()
         average_hunger /= len(self._people)
         return average_hunger
+
+    def get_person_list(self) -> List[Person]:
+        return self._people

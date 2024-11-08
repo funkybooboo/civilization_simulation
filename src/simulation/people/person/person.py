@@ -85,17 +85,27 @@ class Person:
     def has_home(self) -> bool:
         return self._home is not None
     
+    def has_spouse(self) -> bool:
+        return self._spouse is not None
+    
     def age(self) -> None:
         self._age += 1
 
     def at_home(self) -> bool:
         if self.has_home():
-            return self._location == self._home._get_location()
+            return self._mover.is_next_to([self._home._get_location()])
         else:
             return False
 
     def at_barn(self) -> bool:
-        pass
+        is_at_barn: bool = False
+        # find all barns in grid
+        all_barns = self._simulation.get_grid().get_barns()
+        # check if person is next to any of them
+        for barn in all_barns:
+            if self._mover.is_next_to(barn._get_location()):
+                is_at_barn = True
+        return is_at_barn
 
     def at_farm(self) -> bool:
         pass
@@ -108,7 +118,7 @@ class Person:
             self._mover.towards(self._home._get_location())
 
     def find_barn_with_food(self) -> None:
-        
+
         pass
 
     def find_farm_to_work_at(self) -> None:
@@ -131,6 +141,8 @@ class Person:
         self._mover.explore()
 
     def build_home(self) -> None:
+        # TODO: find a location for a house
+        # TODO: add other tasks to gather supplies?
         pass
 
     def build_farm(self) -> None:
