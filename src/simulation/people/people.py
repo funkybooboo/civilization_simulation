@@ -38,6 +38,7 @@ class People:
                     continue
                 person.take_action()
             for person in dead:
+                person.divorce()
                 self._people.remove(person)
 
     def get_time(self) -> int:
