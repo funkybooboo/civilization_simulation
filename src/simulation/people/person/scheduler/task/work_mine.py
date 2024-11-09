@@ -13,6 +13,7 @@ class WorkMine(Task):
         super().__init__(simulation, person, 5)
         self._mine: Optional[Mine] = None
         self._stone: Optional[int] = None
+        self._barn: Optional[Barn] = None
 
     @override
     def execute(self) -> None:
@@ -23,9 +24,9 @@ class WorkMine(Task):
                 self._stone = self._mine.work(self._person)
 
             if self._stone:
-                barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
-                if barn:
-                    barn.add_stone(self._stone)
+                self._barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
+                if self._barn:
+                    self._barn.add_stone(self._stone)
                     self._finished()
 
     @override

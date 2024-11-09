@@ -13,6 +13,7 @@ class WorkFarm(Task):
         super().__init__(simulation, person, 5)
         self._farm: Optional[Farm] = None
         self._food: Optional[int] = None
+        self._barn: Optional[Barn] = None
 
     @override
     def execute(self) -> None:
@@ -23,9 +24,9 @@ class WorkFarm(Task):
                 self._food = self._farm.work(self._person)
 
             if self._food:
-                barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
-                if barn:
-                    barn.add_food(self._food)
+                self._barn = self._person.move_to(BuildingType.BARN)
+                if self._barn:
+                    self._barn.add_food(self._food)
                     self._finished()
 
     @override
