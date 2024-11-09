@@ -1,23 +1,39 @@
-from typing import override
+from typing import override, Set, List, Optional
 
 from task import Task
-
+from src.simulation.grid.building.barn import Barn
+from src.simulation.grid.building.building_type import BuildingType
+from src.simulation.grid.building.tree import Tree
 from src.simulation.people.person.person import Person
 from src.simulation.simulation import Simulation
+from src.simulation.grid.location import Location
 
 
 class ChopTree(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
+        self._tree: Optional[Location] = None
+        self._wood: Optional[int] = None
+        self._barn: Optional[Barn] = None
 
     @override
     def execute(self) -> None:
-        pass
+        if not self._tree:
+            self._tree: Optional[Tree] = self._person.move_to(BuildingType.TREE)
+        if self._tree:
+            if not self._wood:
+                self._wood = self._tree.work(self._person)
+
+            if self._wood:
+                self._barn = self._person.move_to(BuildingType.BARN)
+                if self._barn:
+                    self._barn.add_wood(self._wood)
+                    self._finished()
 
     @override
     def _clean_up_task(self) -> None:
-        pass
+        self._tree.remove_worker(self._person)
 
     @override
     def get_remaining_time(self) -> int:
-        pass
+        return self._person.move_to_time_estimate() + Tree.work_time_estimate()

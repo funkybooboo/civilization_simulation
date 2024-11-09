@@ -1,3 +1,4 @@
+from sched import scheduler
 from typing import List, Optional, Set
 
 from memory import Memory
@@ -5,6 +6,7 @@ from mover import Mover
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
 
+from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building import Building
 from src.simulation.grid.building.building_type import BuildingType
 from src.simulation.grid.building.home import Home
@@ -31,6 +33,8 @@ class Person:
         )
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
+        self._cycles_since_looked_for_spouse: int = 0
+        self._cycles_since_tried_to_eat: int = 0
         self._scheduler: Scheduler = Scheduler(simulation, self)
 
         self._visited_buildings: Set[Building] = set()
@@ -56,7 +60,10 @@ class Person:
             self._scheduler.add(TaskType.FIND_HOME)
 
         if not self._spouse:
-            self._scheduler.add(TaskType.FIND_SPOUSE)
+            self._cycles_since_looked_for_spouse += 1
+            if self._cycles_since_looked_for_spouse > 20: # TODO: change this to check for a spouse every year
+                self._scheduler.add(TaskType.FIND_SPOUSE)
+                self._cycles_since_looked_for_spouse = 0
 
         if self._hunger < 50:
             self._scheduler.add(TaskType.EAT)
@@ -70,6 +77,15 @@ class Person:
 
     def get_hunger(self) -> int:
         return self._hunger
+    
+    def get_home(self) -> Optional[Home]:
+        return self._home
+    
+    def get_spouse(self) -> Optional["Person"]:
+        return self._spouse
+    
+    def get_age(self) -> int:
+        return self._age
 
     def set_location(self, other: Location) -> None:
         if not self._simulation.get_grid().is_location_in_bounds(other):
@@ -79,8 +95,16 @@ class Person:
     def is_dead(self) -> bool:
         return self._health <= 0 or self._age >= 80
 
-    def eat(self) -> None:
-        self._hunger = min(self._hunger + 10, 100)
+    def is_satiated(self) -> bool:
+        return self._person.get_hunger() >= 90
+
+    def eat(self, building: Barn | Home) -> None:
+        if isinstance(building, Home):
+            building.remove_food(3)
+            self._hunger = min(self._hunger + 10, 100)
+        else:
+            building.remove_food(3)
+            self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
 
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
@@ -108,6 +132,12 @@ class Person:
     def has_home(self) -> bool:
         return self._home is not None
 
+    def start_home_construction(self) -> None:
+        self._scheduler.add(TaskType.START_HOME_CONSTRUCTION)
+
+    def has_spouse(self) -> bool:
+        return self._spouse is not None
+    
     def age(self) -> None:
         self._age += 1
         
@@ -115,6 +145,12 @@ class Person:
         # check memory for open spots to build
         # if you cant find any then walk to a place where empty space is likely
         pass
+
+    def get_home_locations(self):
+        return self._memory.get_home_locations()
+
+    def explore(self) -> None:
+        self._mover.explore()
 
     def move_to_home(self) -> Optional[Home]:
         self._moving_to_building_type = BuildingType.HOME
@@ -138,6 +174,8 @@ class Person:
         )  # move 10 blocks every action
 
     def move_to(self, building_type: BuildingType) -> Optional[Building]:
+        # TODO: if you're eating, only go to barns that have food in them
+
         # check if types are different
         if self._moving_to_building_type != building_type:
             self._moving_to_building_type = building_type
@@ -153,6 +191,8 @@ class Person:
                 self._building = self._move_to(list(self._memory.get_barn_locations()))
             elif building_type == BuildingType.HOME:
                 self._building = self._move_to(list(self._memory.get_home_locations()))
+            elif building_type == BuildingType.TREE:
+                self._building = self._move_to(list(self._memory.get_tree_locations()))
             else:
                 raise Exception("You tried to go to a unknown building")
 
@@ -176,3 +216,6 @@ class Person:
         closest = self._mover.get_closest(filtered)
         self._mover.towards(closest)
         return self._simulation.get_grid().get_building(closest)
+    
+    def __str__(self) -> str:
+        pass  # TODO implement what to print for a person

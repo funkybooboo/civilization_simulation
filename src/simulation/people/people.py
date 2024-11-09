@@ -10,9 +10,9 @@ from .people_disaster_generator import PeopleDisasterGenerator
 class People:
     def __init__(self, simulation: "Simulation", actions_per_day: int) -> None:
         self._actions_per_day: int = actions_per_day
-        people_generator: "PeopleGenerator" = PeopleGenerator(simulation)
-        self._people: List["Person"] = people_generator.generate()
-        self._disaster_generator: "PeopleDisasterGenerator" = PeopleDisasterGenerator(
+        self._people_generator: PeopleGenerator = PeopleGenerator(simulation)
+        self._people: List[Person] = self._people_generator.generate()
+        self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(
             self
         )
         self._time: int = 0
@@ -52,6 +52,41 @@ class People:
 
     def __len__(self) -> int:
         return len(self._people)
+
+    def get_average_health(self) -> float:
+        average_health: float = 0.0
+        for person in self._people:
+            average_health += person.get_health()
+        average_health /= len(self._people)
+        return average_health
+
+    def get_average_hunger(self) -> float:
+        average_hunger: float = 0.0
+        for person in self._people:
+            average_hunger += person.get_hunger()
+        average_hunger /= len(self._people)
+        return average_hunger
+
+    def get_person_list(self) -> List[Person]:
+        return self._people
+    
+    def make_babies(self) -> None:
+        visited_people = []
+
+        for person in self._people:
+            if person in visited_people:
+                continue
+            if not person.has_spouse():
+                visited_people.append(person)
+                continue
+            visited_people.append(person)
+            visited_people.append(person.get_spouse())
+            if not person.has_home():
+                continue
+            if (person.get_age() >= 18) and (person.get_age() <= 50) and (person.get_spouse().get_age() >= 18) and (person.get_spouse().get_age() <= 50):
+                # create a baby next to the person's house
+                baby = self._people_generator.make_baby(person.get_home().get_location())
+                self._people.append(baby)
 
     def __iter__(self) -> Iterator['Person']:
         return iter(self._people)

@@ -66,3 +66,6 @@ class Building(ABC):
     def work_time_estimate() -> int:
         # how long will it take to finish work at this building
         pass
+
+    def _get_location(self) -> Location:
+        return self._location
