@@ -1,3 +1,4 @@
+from sched import scheduler
 from typing import List, Optional, Set
 
 from memory import Memory
@@ -114,6 +115,9 @@ class Person:
     def has_home(self) -> bool:
         return self._home is not None
 
+    def start_home_construction(self) -> None:
+        self._scheduler.add(TaskType.START_HOME_CONSTRUCTION)
+
     def has_spouse(self) -> bool:
         return self._spouse is not None
     
@@ -124,6 +128,9 @@ class Person:
         # check memory for open spots to build
         # if you cant find any then walk to a place where empty space is likely
         pass
+
+    def get_home_locations(self):
+        return self._memory.get_home_locations()
 
     def explore(self) -> None:
         self._mover.explore()
