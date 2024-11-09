@@ -8,7 +8,7 @@ from src.simulation.simulation import Simulation
 
 class PeopleGenerator:
     def __init__(self, simulation: Simulation) -> None:
-        home_count: int = simulation.get_grid().home_count()
+        home_count: int = simulation.get_grid().get_home_count()
         # Randomly assign 1 or 2 people per home, then calculate the total number of people
         total_people = sum(random.choice([1, 2]) for _ in range(home_count))
         self._max_pk = total_people

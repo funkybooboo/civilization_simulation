@@ -37,7 +37,7 @@ Stay organized and on track with your assignments and tasks!
 - **Lead**: Nate Stott
 - **Goals**:
   - get MVP out
-    
+
 | Date       | Hours | Name      | Notes                                                                                                  |
 |------------|-------|-----------|--------------------------------------------------------------------------------------------------------|
 | 2024-10-31 | 3     | All       | UML meeting                                                                                            |
@@ -56,7 +56,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
 | 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
 | 2024-11-07 | 2.5   | Madi      | Fix find spouse, start building logic                                                                  |
-| 2024-11-08 | 6     | Nate      | Work on the generate town ticket, reviewing brightons PR, work on task framework                       |
+| 2024-11-08 | 10    | Nate      | Work on the generate town ticket, reviewing brightons PR, work on task framework, meet with ann marie and madi, work on user interface ticket |
 | 2024-11-09 |       |           |                                                                                                        |
 | 2024-11-10 |       |           |                                                                                                        |
 
