@@ -13,7 +13,7 @@ class Tree(Building):
     _max_work_count = 2
 
     def __init__(self, grid: Grid, location: Location) -> None:
-        super().__init__(grid, location, 5, 5, "t", "T")
+        super().__init__(grid, location, 5, 5, "*", "*")
         self._workers: Dict[Person, int] = {}
         mean: float = 3
         std_dev: float = 1
@@ -35,6 +35,7 @@ class Tree(Building):
             self._workers[person] = 1
         if self._workers[person] > Tree._max_work_count:
             self.remove_worker(person)
+            self._grid.remove_tree(self._location)
             return int(self._yield())
         return None
 

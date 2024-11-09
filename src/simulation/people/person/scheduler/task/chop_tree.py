@@ -20,6 +20,7 @@ class ChopTree(Task):
             self._tree: Optional[Tree] = self._person.move_to(BuildingType.TREE)
         if self._tree:
             wood: Optional[int] = self._tree.work(self._person)
+            
 
             if wood:
                 barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
@@ -29,7 +30,7 @@ class ChopTree(Task):
 
     @override
     def _clean_up_task(self) -> None:
-        
+
         pass
 
     @override

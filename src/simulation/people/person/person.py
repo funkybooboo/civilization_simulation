@@ -207,6 +207,8 @@ class Person:
                 self._building = self._move_to(list(self._memory.get_barn_locations()))
             elif building_type == BuildingType.HOME:
                 self._building = self._move_to(list(self._memory.get_home_locations()))
+            elif building_type == BuildingType.TREE:
+                self._building = self._move_to(list(self._memory.get_tree_locations()))
             else:
                 raise Exception("You tried to go to a unknown building")
 

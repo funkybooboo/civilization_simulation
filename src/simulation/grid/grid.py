@@ -113,7 +113,15 @@ class Grid:
         return self._buildings
 
     def get_building(self, location: Location) -> Building:
+        if self._grid[location.y][location.x] == "*" and location in self._buildings:
+            # Create the tree and add it to the buildings list
+            tree = self._building_factory.create_instance(BuildingType.TREE, location)
+            self._buildings[location] = tree
         return self._buildings[location]
+
+    def remove_tree(self, location: Location) -> None:
+        self._grid[location.y][location.x] = " "
+        self._buildings.pop(location)
 
     def home_count(self) -> int:
         # Iterate through the values of the _buildings dictionary and count instances of Home
