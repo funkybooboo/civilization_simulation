@@ -5,6 +5,7 @@ from mover import Mover
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
 
+from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building import Building
 from src.simulation.grid.building.building_type import BuildingType
 from src.simulation.grid.building.home import Home
@@ -92,12 +93,13 @@ class Person:
     def is_dead(self) -> bool:
         return self._health <= 0 or self._age >= 80
 
-    def eat(self) -> None:
-        if self.at_barn():
-            # TODO: decrease hygiene? decrease health explicitly?
-            self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
-        elif self.at_home():
+    def eat(self, building: Barn | Home) -> None:
+        if isinstance(building, Home):
+            building.remove_food(3)
             self._hunger = min(self._hunger + 10, 100)
+        else:
+            building.remove_food(3)
+            self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
 
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
@@ -118,22 +120,6 @@ class Person:
         # check memory for open spots to build
         # if you cant find any then walk to a place where empty space is likely
         pass
-
-    def at_home(self) -> bool:
-        if self.has_home():
-            return self._mover.is_next_to([self._home._get_location()])
-        else:
-            return False
-
-    def at_barn(self) -> bool:
-        is_at_barn: bool = False
-        # find all barns in grid
-        all_barns = self._simulation.get_grid().get_barns()
-        # check if person is next to any of them
-        for barn in all_barns:
-            if self._mover.is_next_to(barn._get_location()):
-                is_at_barn = True
-        return is_at_barn
 
     def explore(self) -> None:
         self._mover.explore()
@@ -174,6 +160,8 @@ class Person:
         )  # move 10 blocks every action
 
     def move_to(self, building_type: BuildingType) -> Optional[Building]:
+        # TODO: if you're eating, only go to barns that have food in them
+
         # check if types are different
         if self._moving_to_building_type != building_type:
             self._moving_to_building_type = building_type

@@ -13,18 +13,20 @@ class ChopTree(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
         self._tree: Optional[Location] = None
+        self._wood: Optional[int] = None
 
     @override
     def execute(self) -> None:
         if not self._tree:
             self._tree: Optional[Tree] = self._person.move_to(BuildingType.TREE)
         if self._tree:
-            wood: Optional[int] = self._tree.work(self._person)
+            if not self._wood:
+                self._wood = self._tree.work(self._person)
 
-            if wood:
+            if self._wood:
                 barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
                 if barn:
-                    barn.add_wood(wood)
+                    barn.add_wood(self._wood)
                     self._finished()
 
     @override

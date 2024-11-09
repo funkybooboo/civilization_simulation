@@ -12,6 +12,7 @@ class Eat(Task):
         super().__init__(simulation, person, 5)
 
         self._barn: Optional[Barn] = None
+        self._food: int = 0
 
     @override
     def execute(self) -> None:        
@@ -19,11 +20,21 @@ class Eat(Task):
             if not self._person.at_home():
                 self._person.move_to_home()
             else:
-                self._person.eat()
-                self._finished()
+                if self._food:
+                    self._person.move_to_home()
+                    self._person.get_home().add_food(self._food)
+                    self._food = 0
+                elif self._person.get_home().has_food():
+                    self._person.eat()
+                    self._finished()
+                else:
+                    if not self._barn: 
+                        self._barn = Optional[Barn] = self._person.move_to(BuildingType.BARN)
+                    if self._barn:
+                        self._food = self._barn.remove_food(self._person.get_home().get_food_capacity())
         else:
             if not self._barn:
-                self._barn: Optional[Barn] = self._person.move_to(BuildingType.BARN) # TODO: make sure this barn has food in it
+                self._barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
             if self._barn:
                 self._person.eat()
                 self._finished()

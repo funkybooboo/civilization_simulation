@@ -12,19 +12,20 @@ class WorkFarm(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
         self._farm: Optional[Farm] = None
+        self._food: Optional[int] = None
 
     @override
     def execute(self) -> None:
         if not self._farm:
             self._farm: Optional[Farm] = self._person.move_to(BuildingType.FARM)
         if self._farm:
-            food: Optional[int] = self._farm.work(self._person)
+            if not self._food:
+                self._food = self._farm.work(self._person)
 
-            # TODO should be abstract away the moving of food?
-            if food:
+            if self._food:
                 barn: Optional[Barn] = self._person.move_to(BuildingType.BARN)
                 if barn:
-                    barn.add_food(food)
+                    barn.add_food(self._food)
                     self._finished()
 
     @override

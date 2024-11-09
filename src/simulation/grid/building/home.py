@@ -12,6 +12,8 @@ class Home(Building):
         super().__init__(grid, location, 2, 2, "h", "H")
 
         self._occupied: bool = False
+        self._food: int = 0
+        self._food_capacity: int = 36
     
     def has_owner(self) -> bool:
         return self._occupied
@@ -21,6 +23,24 @@ class Home(Building):
 
     def remove_owner(self) -> None:
         self._occupied = False
+
+    def has_food(self) -> bool:
+        return self._food > 0
+    
+    def add_food(self, food: int) -> None:
+        self._food = min(self._food_capacity, self._food + food)
+
+    def remove_food(self, food: int) -> int:
+        if self._food >= food:
+            self._food -= food
+            return food
+        else:
+            removed_food = self._food
+            self._food = 0
+            return removed_food
+
+    def get_food_capacity(self) -> int:
+        return self._food_capacity
 
     @override
     def has_capacity(self) -> bool:
