@@ -59,13 +59,13 @@ class Barn(Building):
             self._wood = 0
             return removed_wood
 
-    def get_food(self) -> int:
+    def get_food_stored(self) -> int:
         return self._food
 
-    def get_stone(self) -> int:
+    def get_stone_stored(self) -> int:
         return self._stone
 
-    def get_wood(self) -> int:
+    def get_wood_stored(self) -> int:
         return self._wood
 
     def get_capacity(self) -> int:
