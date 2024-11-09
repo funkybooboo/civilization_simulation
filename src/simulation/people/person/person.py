@@ -31,6 +31,7 @@ class Person:
         )
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
+        self._cycles_since_looked_for_spouse: int = 0
         self._scheduler: Scheduler = Scheduler(simulation, self)
 
         self._visited_buildings: Set[Building] = set()
@@ -53,7 +54,10 @@ class Person:
             self._scheduler.add(TaskType.FIND_HOME)
 
         if not self._spouse:
-            self._scheduler.add(TaskType.FIND_SPOUSE)
+            self._cycles_since_looked_for_spouse += 1
+            if self._cycles_since_looked_for_spouse > 20: # TODO: change this to check for a spouse every year
+                self._scheduler.add(TaskType.FIND_SPOUSE)
+                self._cycles_since_looked_for_spouse = 0
 
         if self._hunger < 50:
             self._scheduler.add(TaskType.EAT)

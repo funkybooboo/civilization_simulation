@@ -1,4 +1,4 @@
-from typing import Dict, override
+from typing import Dict, override, Optional
 
 import numpy as np
 from building import Building
@@ -28,7 +28,7 @@ class Farm(Building):
     def work_time_estimate() -> int:
         return Farm._max_work_count
 
-    def work(self, person) -> int | None:
+    def work(self, person) -> Optional[int]:
         if person in self._workers.keys():
             self._workers[person] += 1
         if len(self._workers) <= Farm._max_worker_count:

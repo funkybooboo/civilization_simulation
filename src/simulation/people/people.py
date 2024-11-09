@@ -62,3 +62,8 @@ class People:
 
     def get_person_list(self) -> List[Person]:
         return self._people
+    
+    def make_babies(self) -> None:
+        # TODO: go through all the couples
+            # if they have a house, there's a chance they have a baby
+        pass

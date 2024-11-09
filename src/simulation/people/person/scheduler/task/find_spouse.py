@@ -24,8 +24,9 @@ class FindSpouse(Task):
                     else:
                         if other.has_home():
                             self._person.assign_home(other.get_home())
-                    self._finished()
                     break
+        # if you have a spouse, or there are no options, finish the task
+        self._finished()
 
     @override
     def _clean_up_task(self) -> None:
