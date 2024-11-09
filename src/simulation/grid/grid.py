@@ -164,6 +164,9 @@ class Grid:
                 path_finding_matrix[i][j] = self._char_to_num[cell]
         return path_finding_matrix
 
+    def get_barns(self) -> List[Barn]:
+        return [building for building in self._buildings.values() if isinstance(building, Barn)]
+
     def is_tree(self, location: Location) -> bool:
         return self._is_item(location, "*")
 
