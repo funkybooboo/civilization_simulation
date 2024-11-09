@@ -20,6 +20,8 @@ class Simulation:
         visualizer: Visualizer = Visualizer()
         for day in range(self._max_days):
             self._current_day += 1
+            if len(self._people) == 0: # all the people dead
+                break
             self._people.take_actions_for_day()
             # TODO check if people are stuck
 

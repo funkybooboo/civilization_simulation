@@ -79,10 +79,7 @@ class PeopleDisasterGenerator:
         affected_people = random.sample(person_list, num_affected)
 
         for person in affected_people:
-            person.set_hunger(-30) # arbitrary decrement value
-
-        # Logic to handle death: Mark the person as dead
-        # self.person.is_dead = True  # Mark the person as dead in your game state
+            person.set_health(-101) # person is dead
 
     def _forget_tasks(self, severity: int) -> None:
         """Person forgets their tasks."""
