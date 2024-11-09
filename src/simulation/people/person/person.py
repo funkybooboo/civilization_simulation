@@ -78,6 +78,9 @@ class Person:
     def get_spouse(self) -> Optional[Person]:
         return self._spouse
 
+    def get_scheduler(self) -> Scheduler:
+        return self._scheduler
+
     def set_location(self, other: Location) -> None:
         if not self._simulation.get_grid().is_location_in_bounds(other):
             raise Exception("You tried to put a person outside of the map")
