@@ -14,12 +14,13 @@ class Task(ABC):
 
     def __lt__(self, other: "Task") -> bool:
         return self.get_priority() < other.get_priority()
-    
+
     def get_interruptions(self) -> int:
         return self._interruptions
-    
+
     def increment_interruptions(self) -> None:
         self._interruptions += 1
+        self._clean_up_task()
 
     def get_priority(self) -> int:
         return self._priority
@@ -35,8 +36,13 @@ class Task(ABC):
         # move to the task
         # do the task
         pass
-    
+
     @abstractmethod
     def get_remaining_time(self) -> int:
         # ballpark: how many action cycles will this task take?
+        pass
+
+    @abstractmethod
+    def _clean_up_task(self) -> None:
+        # stop the work you are doing
         pass

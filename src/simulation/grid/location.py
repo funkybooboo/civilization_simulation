@@ -1,5 +1,6 @@
 from typing import List
 
+
 class Location:
     def __init__(self, x: int, y: int) -> None:
         self.x = x
@@ -16,9 +17,14 @@ class Location:
     def get_neighbors(self) -> List["Location"]:
         # List of relative offsets for all 8 possible neighbors
         neighbor_offsets = [
-            (-1, -1), (0, -1), (1, -1),  # Top-left, Top, Top-right
-            (-1,  0),          (1,  0),  # Left,          Right
-            (-1,  1), (0,  1), (1,  1)   # Bottom-left, Bottom, Bottom-right
+            (-1, -1),
+            (0, -1),
+            (1, -1),  # Top-left, Top, Top-right
+            (-1, 0),
+            (1, 0),  # Left,          Right
+            (-1, 1),
+            (0, 1),
+            (1, 1),  # Bottom-left, Bottom, Bottom-right
         ]
 
         neighbors = []

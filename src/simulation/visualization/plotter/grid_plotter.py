@@ -1,31 +1,33 @@
 import random
 import time
+from typing import List, Dict
+
 import matplotlib.pyplot as plt
 import seaborn as sns
-from tqdm import tqdm
-from typing import List
 from matplotlib import colors
+from tqdm import tqdm
+
 
 class GridPlotter:
     def __init__(self):
-        self.plots: List[plt.Figure] = []
-        self.color_map: dict[str, str] = {}
+        self._years: Dict[int: plt.Figure] = {}
+        self._color_map: dict[str, str] = {}
         # Use a perceptually uniform palette to ensure distinct colors
-        self.palette = sns.color_palette("husl", n_colors=100)  # 100 distinct colors
-        self.salt = 12345  # Fixed salt for consistency
+        self._palette = sns.color_palette("husl", n_colors=100)  # 100 distinct colors
+        self._salt = 12345  # Fixed salt for consistency
 
     def _get_color_for_char(self, char: str) -> str:
-        if char not in self.color_map:
+        if char not in self._color_map:
             # Hash the character with a fixed salt for consistent results
-            hash_value = hash(char + str(self.salt))  # Add salt to the hash
-            color_index = abs(hash_value) % len(self.palette)
-            color_tuple = self.palette[color_index]
+            hash_value = hash(char + str(self._salt))  # Add salt to the hash
+            color_index = abs(hash_value) % len(self._palette)
+            color_tuple = self._palette[color_index]
             # Convert the RGB tuple to a hex color string
             hex_color = colors.to_hex(color_tuple)
-            self.color_map[char] = hex_color
-        return self.color_map[char]
+            self._color_map[char] = hex_color
+        return self._color_map[char]
 
-    def add(self, grid: List[List[str]]) -> None:
+    def add(self, year: int, grid: List[List[str]]) -> None:
         fig, ax = plt.subplots(figsize=(8, 8))  # Adjust size as needed
         ax.set_title("Grid Snapshot")
         ax.set_xlabel("X Axis (Column index)")
@@ -43,7 +45,7 @@ class GridPlotter:
         # Plot each grid element with square markers
         square_size = 1  # You can change this if needed
         for row_idx, row in tqdm(
-                enumerate(grid), desc="Adding Grid to Plot", total=num_rows
+            enumerate(grid), desc="Adding Grid to Plot", total=num_rows
         ):
             for col_idx, char in enumerate(row):
                 color = self._get_color_for_char(char)
@@ -54,18 +56,28 @@ class GridPlotter:
         # Add the color legend (key)
         self._add_color_key(ax)
 
-        self.plots.append(fig)
+        self._years[year] = fig
 
     def _add_color_key(self, ax) -> None:
         """Add a color key showing the terrain types and their associated colors."""
         # Dynamically generate terrain types (for example, we use characters 'a', 'b', 'c', etc.)
-        terrain_types = list(self.color_map.keys())  # Use the terrain types from color_map
+        terrain_types = list(
+            self._color_map.keys()
+        )  # Use the terrain types from color_map
 
         # Create a list of scatter objects (one per terrain type)
         handles = []
         for char in terrain_types:
             color = self._get_color_for_char(char)
-            handle = plt.Line2D([0], [0], marker="s", color="w", markerfacecolor=color, markersize=10, label=char)
+            handle = plt.Line2D(
+                [0],
+                [0],
+                marker="s",
+                color="w",
+                markerfacecolor=color,
+                markersize=10,
+                label=char,
+            )
             handles.append(handle)
 
         # Add the legend
@@ -73,10 +85,11 @@ class GridPlotter:
 
     def show_slide_show(self, pause_time: float = 2.0) -> None:
         for _, _ in tqdm(
-                enumerate(self.plots), desc="Displaying Slideshow", total=len(self.plots)
+            enumerate(self._years), desc="Displaying Slideshow", total=len(self._years)
         ):
             plt.show()
             time.sleep(pause_time)
+
 
 if __name__ == "__main__":
 
@@ -93,7 +106,7 @@ if __name__ == "__main__":
     num_grids = 3
 
     # Dynamically generate terrain types (characters 'a', 'b', 'c', etc.)
-    terrain_chars = [i for i in ['b', 'B', 'f', 'F', 'm', 'M', 'h', 'H', ' ', '*']]
+    terrain_chars = [i for i in ["b", "B", "f", "F", "m", "M", "h", "H", " ", "*"]]
 
     print(f"Generating {num_grids} test grids of size {grid_size}x{grid_size}...")
     test_grids = [
