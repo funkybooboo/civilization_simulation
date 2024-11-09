@@ -33,6 +33,7 @@ class Person:
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
         self._cycles_since_looked_for_spouse: int = 0
+        self._cycles_since_tried_to_eat: int = 0
         self._scheduler: Scheduler = Scheduler(simulation, self)
 
         self._visited_buildings: Set[Building] = set()
@@ -79,7 +80,7 @@ class Person:
     def get_home(self) -> Optional[Home]:
         return self._home
     
-    def get_spouse(self) -> Optional[Person]:
+    def get_spouse(self) -> Optional["Person"]:
         return self._spouse
     
     def get_age(self) -> int:
@@ -123,20 +124,6 @@ class Person:
 
     def explore(self) -> None:
         self._mover.explore()
-
-    def build_home(self) -> None:
-        # TODO: find a location for a house
-        # TODO: add other tasks to gather supplies?
-        pass
-
-    def build_farm(self) -> None:
-        pass
-
-    def build_mine(self) -> None:
-        pass
-
-    def build_barn(self) -> None:
-        pass
 
     def move_to_home(self) -> Optional[Home]:
         self._moving_to_building_type = BuildingType.HOME
