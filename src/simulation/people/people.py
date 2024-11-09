@@ -42,6 +42,9 @@ class People:
 
     def get_time(self) -> int:
         return self._time
+    
+    def get_people_list(self) -> List:
+        return self._people
 
     def age(self) -> None:
         for person in self._people:

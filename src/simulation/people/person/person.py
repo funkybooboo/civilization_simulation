@@ -85,8 +85,23 @@ class Person:
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
 
+    def divorce(self) -> None:
+        self.get_spouse().leave_spouse()
+        self._spouse = None
+
+    def leave_spouse(self) -> None:
+        self._home = None
+        self._spouse = None
+
+    def get_spouse(self) -> Optional["Person"]:
+        return self._spouse
+    
     def assign_home(self, home: Home) -> None:
         self._home = home
+
+    
+    def set_health(self, health: int) -> None:
+        self._health += health
 
     def has_home(self) -> bool:
         return self._home is not None

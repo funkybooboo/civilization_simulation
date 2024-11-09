@@ -10,7 +10,6 @@ class PeopleDisasterGenerator:
     def generate(self, chance: float) -> None:
         """Randomly trigger one of several disasters with a given chance."""
         if random.random() < chance:
-            severity = random.randint(1, 10)  # Severity between 1 and 10
 
             # List of disaster methods
             disaster_methods = [
@@ -23,20 +22,31 @@ class PeopleDisasterGenerator:
                 self._so_many_babies,
             ]
 
-            # Randomly pick one disaster to trigger
-            chosen_disaster = random.choice(disaster_methods)
-            chosen_disaster(severity)  # Call the chosen disaster method with severity
+            # Randomly pick number of disasters to trigger, along with random severities
+            disaster_count = random.ranint(1, len(disaster_methods) // 2)
+            for _ in range(disaster_count):
+                severity = random.randint(1, 10)  # Severity between 1 and 10
+                chosen_disaster = random.choice(disaster_methods)
+                chosen_disaster(severity)  # Call the chosen disaster method with severity
 
     def _divorce(self, severity: int) -> None:
         """Divorce event, causing relationship breakdown."""
         print("A divorce has occurred!")
         # Severity could influence the emotional impact, e.g., a higher severity means more loss (friends, resources)
-        if severity > 5:
-            print("The divorce is messy. Some resources or relationships are lost.")
-        else:
-            print("A calm divorce. Little impact.")
+        percent_affected = severity * 5 / 100
+        married_list = [person for person in self._people.get_people_list() if person.get_spouse()]
+        # Calculate the number of people to affect
+        num_affected = int(len(married_list) * percent_affected)
+        # Randomly select the individuals to be affected by divorce
+        affected_people = random.sample(married_list, num_affected)
+        visited = set()
 
-        # Logic to handle divorce: You might have relationships or resource sharing to update
+        for person in affected_people:
+            if person not in visited:
+                spouse = person.get_spouse()
+                person.divorce()
+                visited.append(person)
+                visited.append(spouse)
 
     def _sickness(self, severity: int) -> None:
         """Person gets sick, losing health."""
