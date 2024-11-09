@@ -35,7 +35,6 @@ class PeopleDisasterGenerator:
     def _divorce(self, severity: int) -> None:
         """Divorce event, causing relationship breakdown."""
         print("A divorce has occurred!")
-        # Severity could influence the emotional impact, e.g., a higher severity means more loss (friends, resources)
         percent_affected = severity * 5 / 100
         married_list = [person for person in self.get_people().get_people_list() if person.get_spouse()]
         # Calculate the number of people to affect
@@ -53,7 +52,7 @@ class PeopleDisasterGenerator:
 
     def _sickness(self, severity: int) -> None:
         """Person gets sick, losing health."""
-        percent_affected = severity * 10 / 100 # Example: severity increases health loss
+        percent_affected = severity * 10 / 100 
         # Logic to reduce health of the affected person
         person_list = random.shuffle(self.get_people().get_people_list())
         num_affected = int(len(person_list) * percent_affected)
@@ -64,21 +63,23 @@ class PeopleDisasterGenerator:
 
     def _craving(self, severity: int) -> None:
         """Craving causes hunger to increase."""
-        hunger_increase = severity * 3  # Example: severity increases hunger
-        print(
-            f"A person has a craving and eats too much! Hunger increases by {hunger_increase}."
-        )
-        # Logic to increase hunger or affect food intake
-        # self.person.hunger += hunger_increase
+        percent_affected = severity * 10 / 100  
+        person_list = random.shuffle(self.get_people().get_people_list())
+        num_affected = int(len(person_list) * percent_affected)
+        affected_people = random.sample(person_list, num_affected)
+
+        for person in affected_people:
+            person.set_hunger(-30) # arbitrary decrement value
 
     def _death(self, severity: int) -> None:
         """A person dies."""
-        print("A person has died!")
-        # You can use severity to determine the cause or impact of the death
-        if severity > 5:
-            print("It was a violent death. Big loss.")
-        else:
-            print("It was a peaceful death.")
+        percent_affected = severity * 10 / 100  
+        person_list = random.shuffle(self.get_people().get_people_list())
+        num_affected = int(len(person_list) * percent_affected)
+        affected_people = random.sample(person_list, num_affected)
+
+        for person in affected_people:
+            person.set_hunger(-30) # arbitrary decrement value
 
         # Logic to handle death: Mark the person as dead
         # self.person.is_dead = True  # Mark the person as dead in your game state

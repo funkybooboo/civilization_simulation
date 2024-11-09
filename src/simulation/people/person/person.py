@@ -106,6 +106,11 @@ class Person:
             building.remove_food(3)
             self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
 
+    def set_hunger(self, hunger: int) -> None:
+        self._hunger += hunger
+        self._hunger = max(self._hunger, 0)
+        self._hunger = min(self._hunger, 100)
+
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
 
@@ -127,7 +132,7 @@ class Person:
     def set_health(self, health: int) -> None:
         self._health += health
         self._health = max(self._health, 0)
-        self.health = min(self._health, 100)
+        self._health = min(self._health, 100)
 
     def has_home(self) -> bool:
         return self._home is not None
