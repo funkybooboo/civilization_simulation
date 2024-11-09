@@ -14,8 +14,10 @@ from src.simulation.people.person.scheduler.task.start_home_construction import 
 from src.simulation.people.person.scheduler.task.start_mine_construction import StartMineConstruction
 from src.simulation.people.person.scheduler.task.work_farm import WorkFarm
 from src.simulation.people.person.scheduler.task.work_mine import WorkMine
+from src.simulation.visualization.state.state import State
 
-class TaskState:
+
+class TaskState(State):
     def __init__(self, people: People):
         self._people = people
 

@@ -1,7 +1,8 @@
 from src.simulation.grid.grid import Grid
+from src.simulation.visualization.state.state import State
 
 
-class ResourceState:
+class ResourceState(State):
     def __init__(self, grid: Grid):
         self._grid = grid
         self._total_food: int = self._get_total_food()

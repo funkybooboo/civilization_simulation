@@ -1,7 +1,8 @@
 from src.simulation.people.people import People
+from src.simulation.visualization.state.state import State
 
 
-class PeopleState:
+class PeopleState(State):
     def __init__(self, people: People):
         self._people: People = people
 

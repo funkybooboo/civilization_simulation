@@ -1,12 +1,16 @@
+from typing import override
+
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.farm import Farm
 from src.simulation.grid.building.home import Home
 from src.simulation.grid.building.mine import Mine
 from src.simulation.grid.location import Location
+from src.simulation.visualization.state.state import State
 
 
-class GridState:
+class GridState(State):
+    @override
     def __init__(self, grid: Grid):
         self._grid = grid
 
@@ -21,6 +25,14 @@ class GridState:
         self._tree_count: int = self._get_tree_count()
         
         del self._grid
+
+    @staticmethod
+    @override
+    def get_title() -> str:
+        """
+        Subclasses should implement this method to return the appropriate title for each state.
+        """
+        return "Grid Stats"
 
     def _get_construction_home_count(self) -> int:
         return sum(
