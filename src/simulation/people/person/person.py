@@ -94,6 +94,9 @@ class Person:
     def is_dead(self) -> bool:
         return self._health <= 0 or self._age >= 80
 
+    def is_satiated(self) -> bool:
+        return self._person.get_hunger() >= 90
+
     def eat(self, building: Barn | Home) -> None:
         if isinstance(building, Home):
             building.remove_food(3)
