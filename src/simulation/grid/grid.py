@@ -123,7 +123,7 @@ class Grid:
         self._grid[location.y][location.x] = " "
         self._buildings.pop(location)
 
-    def home_count(self) -> int:
+    def get_home_count(self) -> int:
         # Iterate through the values of the _buildings dictionary and count instances of Home
         return sum(
             1 for building in self._buildings.values() if isinstance(building, Home)
@@ -134,63 +134,6 @@ class Grid:
 
     def is_location_char(self, location: Location, char: str) -> bool:
         return self._grid[location.y][location.x] == char
-
-    def get_home_count(self) -> int:
-        return sum(
-            1 for building in self._buildings.values() if isinstance(building, Home)
-        )
-
-    def get_construction_home_count(self) -> int:
-        return sum(
-            1
-            for building in self._buildings.values()
-            if isinstance(building, Home) and building.is_under_construction()
-        )
-
-    def get_barn_count(self) -> int:
-        return sum(
-            1 for building in self._buildings.values() if isinstance(building, Barn)
-        )
-
-    def get_construction_barn_count(self) -> int:
-        return sum(
-            1
-            for building in self._buildings.values()
-            if isinstance(building, Barn) and building.is_under_construction()
-        )
-
-    def get_farm_count(self) -> int:
-        return sum(
-            1 for building in self._buildings.values() if isinstance(building, Farm)
-        )
-
-    def get_construction_farm_count(self) -> int:
-        return sum(
-            1
-            for building in self._buildings.values()
-            if isinstance(building, Farm) and building.is_under_construction()
-        )
-
-    def get_mine_count(self) -> int:
-        return sum(
-            1 for building in self._buildings.values() if isinstance(building, Mine)
-        )
-
-    def get_construction_mine_count(self) -> int:
-        return sum(
-            1
-            for building in self._buildings.values()
-            if isinstance(building, Mine) and building.is_under_construction()
-        )
-
-    def get_tree_count(self) -> int:
-        count: int = 0
-        for i in range(len(self._grid)):
-            for j in range(len(self._grid[i])):
-                location: Location = Location(i, j)
-                if self.is_tree(location):
-                    count += 1
-        return count
 
     def is_valid_location_for_person(self, location: Location) -> bool:
         return self.is_empty(location)
@@ -232,6 +175,9 @@ class Grid:
                 cell = row[j]
                 path_finding_matrix[i][j] = self._char_to_num[cell]
         return path_finding_matrix
+
+    def get_barns(self) -> List[Barn]:
+        return [building for building in self._buildings.values() if isinstance(building, Barn)]
 
     def is_tree(self, location: Location) -> bool:
         return self._is_item(location, "*")

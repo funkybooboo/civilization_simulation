@@ -37,6 +37,9 @@ class Person:
         self._visited_buildings: Set[Building] = set()
         self._moving_to_building_type: Optional[BuildingType] = None
         self._building: Optional[Building] = None
+    
+    def get_scheduler(self) -> Scheduler:
+        return self._scheduler
 
     def take_action(self) -> None:
         self._add_tasks()
