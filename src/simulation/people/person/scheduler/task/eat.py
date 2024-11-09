@@ -1,5 +1,6 @@
-from typing import override
-
+from typing import override, Optional
+from src.simulation.grid.building.barn import Barn
+from src.simulation.grid.building.building_type import BuildingType
 from task import Task
 
 from src.simulation.people.person.person import Person
@@ -10,18 +11,20 @@ class Eat(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
 
+        self._barn: Optional[Barn] = None
+
     @override
-    def execute(self) -> None:
+    def execute(self) -> None:        
         if self._person.has_home():
             if not self._person.at_home():
-                self._person.go_to_home()
+                self._person.move_to_home()
             else:
                 self._person.eat()
                 self._finished()
         else:
-            if not self._person.at_barn():
-                self._person.find_barn_with_food()
-            else:
+            if not self._barn:
+                self._barn: Optional[Barn] = self._person.move_to(BuildingType.BARN) # TODO: make sure this barn has food in it
+            if self._barn:
                 self._person.eat()
                 self._finished()
 

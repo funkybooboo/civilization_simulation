@@ -67,6 +67,12 @@ class Person:
 
     def get_hunger(self) -> int:
         return self._hunger
+    
+    def get_home(self) -> Optional[Home]:
+        return self._home
+    
+    def get_spouse(self) -> Optional[Person]:
+        return self._spouse
 
     def set_location(self, other: Location) -> None:
         if not self._simulation.get_grid().is_location_in_bounds(other):
@@ -103,6 +109,9 @@ class Person:
         # if you cant find any then walk to a place where empty space is likely
         pass
 
+    def find_tree_to_chop(self) -> None:
+        pass
+
     def at_home(self) -> bool:
         if self.has_home():
             return self._mover.is_next_to([self._home._get_location()])
@@ -118,6 +127,41 @@ class Person:
             if self._mover.is_next_to(barn._get_location()):
                 is_at_barn = True
         return is_at_barn
+    
+    def at_farm(self) -> bool:
+        pass
+
+    def at_mine(self) -> bool:
+        pass
+
+    def explore(self) -> None:
+        self._mover.explore()
+
+    def build_home(self) -> None:
+        # TODO: find a location for a house
+        # TODO: add other tasks to gather supplies?
+        pass
+
+    def build_farm(self) -> None:
+        pass
+
+    def build_mine(self) -> None:
+        pass
+
+    def build_barn(self) -> None:
+        pass
+
+    def work_farm(self) -> None:
+        pass
+
+    def work_mine(self) -> None:
+        pass
+
+    def chop_tree(self) -> None:
+        pass
+
+    def store_stuff(self) -> None:
+        pass
 
     def move_to_home(self) -> Optional[Home]:
         self._moving_to_building_type = BuildingType.HOME
@@ -180,60 +224,5 @@ class Person:
         self._mover.towards(closest)
         return self._simulation.get_grid().get_building(closest)
     
-    def at_farm(self) -> bool:
-        pass
-
-    def at_mine(self) -> bool:
-        pass
-
-    def find_barn_with_food(self) -> None:
-
-        pass
-
-    def find_farm_to_work_at(self) -> None:
-        # make method in memory class to know about barns
-        # query memory, grab all the barns
-        # find closest barn using location.distance(location)
-        # mover.towards(location object x,y of barn)
-        pass
-
-    def find_mine_to_work_at(self) -> None:
-        pass
-
-    def find_tree_to_chop(self) -> None:
-        pass
-
-    def find_barn_to_store_at(self) -> None:
-        pass
-
-    def explore(self) -> None:
-        self._mover.explore()
-
-    def build_home(self) -> None:
-        # TODO: find a location for a house
-        # TODO: add other tasks to gather supplies?
-        pass
-
-    def build_farm(self) -> None:
-        pass
-
-    def build_mine(self) -> None:
-        pass
-
-    def build_barn(self) -> None:
-        pass
-
-    def work_farm(self) -> None:
-        pass
-
-    def work_mine(self) -> None:
-        pass
-
-    def chop_tree(self) -> None:
-        pass
-
-    def store_stuff(self) -> None:
-        pass
-
     def __str__(self) -> str:
         pass  # TODO implement what to print for a person
