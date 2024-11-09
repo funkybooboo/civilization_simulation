@@ -116,9 +116,6 @@ class Person:
         # if you cant find any then walk to a place where empty space is likely
         pass
 
-    def find_tree_to_chop(self) -> None:
-        pass
-
     def at_home(self) -> bool:
         if self.has_home():
             return self._mover.is_next_to([self._home._get_location()])
@@ -134,12 +131,6 @@ class Person:
             if self._mover.is_next_to(barn._get_location()):
                 is_at_barn = True
         return is_at_barn
-    
-    def at_farm(self) -> bool:
-        pass
-
-    def at_mine(self) -> bool:
-        pass
 
     def explore(self) -> None:
         self._mover.explore()
@@ -156,18 +147,6 @@ class Person:
         pass
 
     def build_barn(self) -> None:
-        pass
-
-    def work_farm(self) -> None:
-        pass
-
-    def work_mine(self) -> None:
-        pass
-
-    def chop_tree(self) -> None:
-        pass
-
-    def store_stuff(self) -> None:
         pass
 
     def move_to_home(self) -> Optional[Home]:
