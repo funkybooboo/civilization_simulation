@@ -64,8 +64,6 @@ class People:
         return self._people
     
     def make_babies(self) -> None:
-        # TODO: go through all the couples
-            # if they have a house, there's a chance they have a baby
         visited_people = []
 
         for person in self._people:
@@ -76,7 +74,9 @@ class People:
                 continue
             visited_people.append(person)
             visited_people.append(person.get_spouse())
-            if person.has_home():
+            if not person.has_home():
+                continue
+            if (person.get_age() >= 18) and (person.get_age() <= 50) and (person.get_spouse().get_age() >= 18) and (person.get_spouse().get_age() <= 50):
                 # create a baby next to the person's house
                 baby = self._people_generator.make_baby(person.get_home().get_location())
                 self._people.append(baby)

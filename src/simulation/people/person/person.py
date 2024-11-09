@@ -77,6 +77,9 @@ class Person:
     
     def get_spouse(self) -> Optional[Person]:
         return self._spouse
+    
+    def get_age(self) -> int:
+        return self._age
 
     def set_location(self, other: Location) -> None:
         if not self._simulation.get_grid().is_location_in_bounds(other):

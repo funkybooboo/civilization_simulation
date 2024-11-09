@@ -13,6 +13,8 @@ class Barn(Building):
         self._food = 0
         self._stone_cap = 35
         self._stone = 0
+        self._wood = 0
+        self._wood_cap = 75
 
     @override
     def has_capacity(self) -> bool:
@@ -28,3 +30,6 @@ class Barn(Building):
 
     def add_stone(self, stone) -> None:
         self._stone = min(self._stone_cap, self._stone + stone)
+
+    def add_wood(self, wood) -> None:
+        self._wood = min(self._wood_cap, self._wood + wood)
