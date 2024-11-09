@@ -254,6 +254,10 @@ class Person:
                 self._visited_buildings.add(self._building)
         return None
 
+    def get_closest(self, what) -> Optional[Location]:
+        return
+
+
     def _move_to(self, locations: List[Location]) -> Building:
         visited_buildings_locations: List[Location] = [
             b.get_location() for b in self._visited_buildings

@@ -24,6 +24,8 @@ class Building(ABC):
         self._required_stone: int = 100        
         self._start_construction()
 
+        ## change so that a construction site creates the instance of
+
     def get_location(self):
         return self._location
 
