@@ -30,6 +30,7 @@ class Simulation:
                 tracker.add(
                     self._get_year(day), deepcopy(self._grid), deepcopy(self._people)
                 )
+                self._people.flush()
 
         return tracker
 
