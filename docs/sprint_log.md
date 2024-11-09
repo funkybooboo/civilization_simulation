@@ -57,6 +57,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
 | 2024-11-07 | 2.5   | Madi      | Fix find spouse, start building logic                                                                  |
 | 2024-11-08 | 10    | Nate      | Work on the generate town ticket, reviewing brightons PR, work on task framework, meet with ann marie and madi, work on user interface ticket |
+| 2024-11-08 | 5.7   | Ann Marie | Work on task ticket, meet with Nate to trouble-shoot, merged changes into branch |
 | 2024-11-09 |       |           |                                                                                                        |
 | 2024-11-10 |       |           |                                                                                                        |
 
