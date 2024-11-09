@@ -25,6 +25,7 @@ class Simulation:
 
             if self._has_been_a_year(day):
                 self._people.age()
+                self._people.make_babies()
                 self._grid.grow_trees()
                 self._create_disasters()
                 tracker.add(

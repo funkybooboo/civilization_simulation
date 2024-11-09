@@ -13,7 +13,6 @@ class PeopleGenerator:
         total_people = sum(random.choice([1, 2]) for _ in range(home_count))
         self._max_pk = total_people
         self._simulation: Simulation = simulation
-        self._names: List[str] = self._get_names()
 
     @staticmethod
     def _get_names() -> List[str]:
@@ -23,8 +22,9 @@ class PeopleGenerator:
 
     def generate(self) -> List[Person]:
         people: List[Person] = []
+        names = self._get_names()
         for pk in range(self._max_pk):
-            name: str = random.choice(self._names)
+            name: str = random.choice(names)
             location: Location = Location(
                 20, 20
             )  # TODO place them in different valid spots near the town
@@ -32,3 +32,10 @@ class PeopleGenerator:
             person: Person = Person(self._simulation, name, pk, location, age)
             people.append(person)
         return people
+    
+    def make_baby(self, location: Location) -> Person:
+        name: str = random.choice(self._get_names())
+        age: int = 0
+        self._max_pk += 1
+        person: Person = Person(self._simulation, name, self._max_pk, location, age)
+        return person

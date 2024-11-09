@@ -10,8 +10,8 @@ from .people_disaster_generator import PeopleDisasterGenerator
 class People:
     def __init__(self, simulation: Simulation, actions_per_day: int) -> None:
         self._actions_per_day: int = actions_per_day
-        people_generator: PeopleGenerator = PeopleGenerator(simulation)
-        self._people: List[Person] = people_generator.generate()
+        self._people_generator: PeopleGenerator = PeopleGenerator(simulation)
+        self._people: List[Person] = self._people_generator.generate()
         self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(
             self
         )
@@ -66,4 +66,17 @@ class People:
     def make_babies(self) -> None:
         # TODO: go through all the couples
             # if they have a house, there's a chance they have a baby
-        pass
+        visited_people = []
+
+        for person in self._people:
+            if person in visited_people:
+                continue
+            if not person.has_spouse():
+                visited_people.append(person)
+                continue
+            visited_people.append(person)
+            visited_people.append(person.get_spouse())
+            if person.has_home():
+                # create a baby next to the person's house
+                baby = self._people_generator.make_baby(person.get_home().get_location())
+                self._people.append(baby)
