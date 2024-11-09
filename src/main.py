@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from src.logger import logger, setup_logger
 from src.simulation.simulation import Simulation
-from src.simulation.visualization.state_tracker import StateTracker
+from src.simulation.visualization.visualizer import Visualizer
 
 
 def main() -> None:
@@ -33,10 +33,9 @@ def main() -> None:
         simulation: Simulation = Simulation(
             actions_per_day, days_per_year, years, grid_size
         )
-        tracker: StateTracker = simulation.run()
-
-        tracker.display_simulation_stats()
-        tracker.display_town_slide_show()
+        visualizer: Visualizer = simulation.run()
+        visualizer.display_town_slide_show()
+        visualizer.display_simulation_stats()
 
         logger.info(f"Simulation {i + 1} completed")
 

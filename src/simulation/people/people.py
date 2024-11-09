@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Iterator
 
 from people_generator import PeopleGenerator
 from person.person import Person
@@ -8,7 +8,7 @@ from .people_disaster_generator import PeopleDisasterGenerator
 
 
 class People:
-    def __init__(self, simulation: Simulation, actions_per_day: int) -> None:
+    def __init__(self, simulation: "Simulation", actions_per_day: int) -> None:
         self._actions_per_day: int = actions_per_day
         self._people_generator: PeopleGenerator = PeopleGenerator(simulation)
         self._people: List[Person] = self._people_generator.generate()
@@ -16,6 +16,10 @@ class People:
             self
         )
         self._time: int = 0
+        
+    def flush(self):
+        for person in self._people:
+            person.get_scheduler().flush()
 
     def generate_disasters(self, chance: float = 0.50) -> None:
         self._disaster_generator.generate(chance)
@@ -80,3 +84,6 @@ class People:
                 # create a baby next to the person's house
                 baby = self._people_generator.make_baby(person.get_home().get_location())
                 self._people.append(baby)
+
+    def __iter__(self) -> Iterator['Person']:
+        return iter(self._people)

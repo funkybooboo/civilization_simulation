@@ -3,8 +3,7 @@ from typing import List, Optional
 
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
-from src.simulation.people.person.scheduler.task.task_factory import \
-    TaskFactory
+from src.simulation.people.person.scheduler.task.task_factory import TaskFactory
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.simulation import Simulation
 
@@ -12,6 +11,7 @@ from src.simulation.simulation import Simulation
 class Scheduler:
     def __init__(self, simulation: Simulation, person: Person) -> None:
         self._task_factory: TaskFactory = TaskFactory(simulation, person)
+        self._all_tasks: List[Task] = []
         self._tasks: List[Task] = []
         self._current_task: Optional[Task] = None
         self._last_added_time = 0  # Timestamp for when the last task was added
@@ -20,10 +20,17 @@ class Scheduler:
         self._simulation = (
             simulation  # Store the simulation reference to access the time
         )
+        
+    def get_all_tasks(self):
+        return self._all_tasks
+    
+    def flush(self):
+        self._all_tasks = []
 
     def add(self, what: TaskType) -> None:
         task: Task = self._task_factory.create_instance(what)
         if task:
+            self._all_tasks.append(task)
             heapq.heappush(self._tasks, task)
             self._last_added_time = self._get_current_time()
 

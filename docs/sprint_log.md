@@ -21,13 +21,17 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-23 | 1.5   | Nate      | Finalize some ideas for the project proposal          |
 | 2024-10-23 | 1.5   | Madi      | Finalize some ideas for the project proposal          |
 | 2024-10-23 | 1.5   | Ann Marie | Finalize some ideas for the project proposal          |
+| 2024-10-23 | .25   | Brighton  | Finalize some ideas for the project proposal          |
 | 2024-10-24 | 0.25  | Nate      | Format project proposal                               |
+| 2024-10-24 | 0.5   | Madi      | Write timeline for proposal                           |
 | 2024-10-25 |       |           |                                                       |
 | 2024-10-26 | 1     | Nate      | Write methodology for project proposal. Start on uml. |
 | 2024-10-28 |       |           |                                                       |
+| 2024-10-29 | 2     | Madi      | UML meeting                                           |
 | 2024-10-29 | 3     | Nate      | UML meeting                                           |
 | 2024-10-29 | 3     | Ann Marie | UML meeting                                           |
 | 2024-10-30 | 2.5   | Nate      | UML meeting                                           |
+| 2024-10-30 | 1.5   | Brighton  | UML catchup / UML edits                               |
 
 ## Sprint 2
 
@@ -35,7 +39,7 @@ Stay organized and on track with your assignments and tasks!
 - **Lead**: Nate Stott
 - **Goals**:
   - get MVP out
-    
+
 | Date       | Hours | Name      | Notes                                                                                                  |
 |------------|-------|-----------|--------------------------------------------------------------------------------------------------------|
 | 2024-10-31 | 3     | All       | UML meeting                                                                                            |
@@ -53,9 +57,14 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-06 | 1.5   | Ann Marie | Work on adding tasks to code                                                                           |
 | 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
 | 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
-| 2024-11-08 | 6     | Nate      | Work on the generate town ticket, reviewing brightons PR, work on task framework                       |
+| 2024-11-07 | 2.5   | Madi      | Fix find spouse, start building logic                                                                  |
+| 2024-11-08 | 10    | Nate      | Work on the generate town ticket, reviewing brightons PR, work on task framework, meet with ann marie and madi, work on user interface ticket |
+| 2024-11-08 | 5.7   | Ann Marie | Work on task ticket, meet with Nate to trouble-shoot, merged changes into branch |
 | 2024-11-09 |       |           |                                                                                                        |
 | 2024-11-10 |       |           |                                                                                                        |
+| 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
+| 2024-11-08 | 1    | Brighton  | Reviewing town logic PR, pushed barn inventory PR                                                      |
+| 2024-11-08 |       |           |                                                                                                        |
 
 ## Sprint 3
 
