@@ -22,9 +22,11 @@ Stay organized and on track with your assignments and tasks!
 | 2024-10-23 | 1.5   | Madi      | Finalize some ideas for the project proposal          |
 | 2024-10-23 | 1.5   | Ann Marie | Finalize some ideas for the project proposal          |
 | 2024-10-24 | 0.25  | Nate      | Format project proposal                               |
+| 2024-10-24 | 0.5   | Madi      | Write timeline for proposal                           |
 | 2024-10-25 |       |           |                                                       |
 | 2024-10-26 | 1     | Nate      | Write methodology for project proposal. Start on uml. |
 | 2024-10-28 |       |           |                                                       |
+| 2024-10-29 | 2     | Madi      | UML meeting                                           |
 | 2024-10-29 | 3     | Nate      | UML meeting                                           |
 | 2024-10-29 | 3     | Ann Marie | UML meeting                                           |
 | 2024-10-30 | 2.5   | Nate      | UML meeting                                           |
@@ -35,27 +37,28 @@ Stay organized and on track with your assignments and tasks!
 - **Lead**: Nate Stott
 - **Goals**:
   - get MVP out
-    
-| Date       | Hours | Name      | Notes                                                                                                                                         |
-|------------|-------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| 2024-10-31 | 3     | All       | UML meeting                                                                                                                                   |
-| 2024-11-01 | 3     | Nate      | UML meeting                                                                                                                                   |
-| 2024-11-01 | 3     | Madi      | UML meeting                                                                                                                                   |
-| 2024-11-01 | 3     | Ann Marie | UML meeting                                                                                                                                   |
-| 2024-11-01 | 0.5   | Brighton  | UML meeting                                                                                                                                   |
-| 2024-11-02 | 2     | Nate      | set up code structure add todos                                                                                                               |
-| 2024-11-03 | 2     | Nate      | set up code structure add todos                                                                                                               |
-| 2024-11-04 | 5     | Nate      | set up code structure add todos                                                                                                               |
-| 2024-11-05 | 0.5   | Nate      | write asana tickets                                                                                                                           |
-| 2024-11-05 | 1     | Ann Marie | looked over repo for personal understanding, trouble-shooted imports on my side                                                               |
-| 2024-11-05 | 4     | All       | Code meeting                                                                                                                                  |
-| 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                                                                 |
-| 2024-11-06 | 1.5   | Ann Marie | Work on adding tasks to code                                                                                                                  |
-| 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi                                        |
-| 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                                                         |
+
+| Date       | Hours | Name      | Notes                                                                                                  |
+|------------|-------|-----------|--------------------------------------------------------------------------------------------------------|
+| 2024-10-31 | 3     | All       | UML meeting                                                                                            |
+| 2024-11-01 | 3     | Nate      | UML meeting                                                                                            |
+| 2024-11-01 | 3     | Madi      | UML meeting                                                                                            |
+| 2024-11-01 | 3     | Ann Marie | UML meeting                                                                                            |
+| 2024-11-01 | 0.5   | Brighton  | UML meeting                                                                                            |
+| 2024-11-02 | 2     | Nate      | set up code structure add todos                                                                        |
+| 2024-11-03 | 2     | Nate      | set up code structure add todos                                                                        |
+| 2024-11-04 | 5     | Nate      | set up code structure add todos                                                                        |
+| 2024-11-05 | 0.5   | Nate      | write asana tickets                                                                                    |
+| 2024-11-05 | 1     | Ann Marie | looked over repo for personal understanding, trouble-shooted imports on my side                        |
+| 2024-11-05 | 4     | All       | Code meeting                                                                                           |
+| 2024-11-06 | 5     | Nate      | Work on user interface ticket                                                                          |
+| 2024-11-06 | 1.5   | Ann Marie | Work on adding tasks to code                                                                           |
+| 2024-11-07 | 6     | Nate      | Work on user interface ticket, optimal stopping ticket, disasters ticket, meet with ann marie and madi |
+| 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
+| 2024-11-07 | 2.5   | Madi      | Fix find spouse, start building logic                                                                  |
 | 2024-11-08 | 10    | Nate      | Work on the generate town ticket, reviewing brightons PR, work on task framework, meet with ann marie and madi, work on user interface ticket |
-| 2024-11-09 |       |           |                                                                                                                                               |
-| 2024-11-10 |       |           |                                                                                                                                               |
+| 2024-11-09 |       |           |                                                                                                        |
+| 2024-11-10 |       |           |                                                                                                        |
 
 ## Sprint 3
 
