@@ -110,7 +110,41 @@ class Person:
     
     def age(self) -> None:
         self._age += 1
-        
+
+    def remember_barns(self) -> Set[Location]:
+        return self._memory.get_barn_locations()
+
+    def remember_construction_barns(self) -> Set[Location]:
+        return self._memory.get_construction_barn_locations()
+
+    def remember_farms(self) -> Set[Location]:
+        return self._memory.get_farm_locations()
+
+    def remember_construction_farms(self) -> Set[Location]:
+        return self._memory.get_construction_farm_locations()
+
+    def remember_mines(self) -> Set[Location]:
+        return self._memory.get_mine_locations()
+
+    def remember_construction_mines(self) -> Set[Location]:
+        return self._memory.get_construction_mine_locations()
+
+    def remember_homes(self) -> Set[Location]:
+        return self._memory.get_home_locations()
+
+    def remember_construction_homes(self) -> Set[Location]:
+        return self._memory.get_construction_home_locations()
+
+    def remember_trees(self) -> Set[Location]:
+        return self._memory.get_tree_locations()
+
+    def remember_empties(self) -> Set[Location]:
+        return self._memory.get_empties_locations()
+
+    def remember_people(self) -> Set[Location]:
+        return self._memory.get_people_locations()
+
+
     def find_build_location(self, building_type: BuildingType) -> Location:
         # check memory for open spots to build
         # if you cant find any then walk to a place where empty space is likely

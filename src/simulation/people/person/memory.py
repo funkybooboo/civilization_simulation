@@ -21,17 +21,35 @@ class Memory:
     def get_barn_locations(self) -> Set[Location]:
         return self._barns
 
+    def get_construction_barn_locations(self) -> Set[Location]:
+        return self._construction_barns
+
     def get_farm_locations(self) -> Set[Location]:
         return self._farms
+
+    def get_construction_farm_locations(self) -> Set[Location]:
+        return self._construction_farms
 
     def get_mine_locations(self) -> Set[Location]:
         return self._mines
 
+    def get_construction_mine_locations(self) -> Set[Location]:
+        return self._construction_mines
+
     def get_home_locations(self) -> Set[Location]:
         return self._homes
+
+    def get_construction_home_locations(self) -> Set[Location]:
+        return self._construction_homes
     
     def get_tree_locations(self) -> Set[Location]:
         return self._trees
+
+    def get_empties_locations(self) -> Set[Location]:
+        return self._empties
+
+    def get_people_locations(self) -> Set[Location]:
+        return self._people
 
     def dont_know_where_anything_is(self) -> bool:
         return not (self._barns or self._farms or self._homes or self._mines)
