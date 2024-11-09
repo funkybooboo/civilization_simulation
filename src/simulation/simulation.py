@@ -25,6 +25,7 @@ class Simulation:
 
             if self._has_been_a_year(day):
                 self._people.age()
+                self._people.make_babies()
                 self._grid.grow_trees()
                 self._create_disasters()
                 visualizer.add(
@@ -51,4 +52,10 @@ class Simulation:
         return self._grid
 
     def get_people(self) -> People:
+        return self._people
+    
+    def get_grid(self) -> Grid:
+        return self._grid
+
+    def get_people_object(self) -> People:
         return self._people

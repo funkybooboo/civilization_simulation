@@ -6,3 +6,4 @@ class BuildingType(Enum):
     BARN = auto()
     FARM = auto()
     MINE = auto()
+    TREE = auto()

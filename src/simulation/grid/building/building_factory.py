@@ -6,6 +6,7 @@ from src.simulation.grid.building.building_type import BuildingType
 from src.simulation.grid.building.farm import Farm
 from src.simulation.grid.building.home import Home
 from src.simulation.grid.building.mine import Mine
+from src.simulation.grid.building.tree import Tree
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 
@@ -16,6 +17,7 @@ class BuildingFactory:
         BuildingType.BARN: Barn,
         BuildingType.MINE: Mine,
         BuildingType.FARM: Farm,
+        BuildingType.TREE: Tree,
     }
 
     def __init__(self, grid: Grid) -> None:

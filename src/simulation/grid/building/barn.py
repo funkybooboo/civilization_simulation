@@ -11,8 +11,10 @@ class Barn(Building):
         super().__init__(grid, location, 3, 3, "b", "B")
         self._cap = 500
         self._food = 0
+        self._stone_cap = 35
         self._stone = 0
         self._wood = 0
+        self._wood_cap = 75
 
     @override
     def has_capacity(self) -> bool:

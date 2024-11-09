@@ -8,35 +8,36 @@ from src.simulation.grid.location import Location
 from src.simulation.people.person.person import Person
 
 
-class Mine(Building):
-    _max_worker_count = 6
-    _max_work_count = 4
+class Tree(Building):
+    _max_worker_count = 1
+    _max_work_count = 2
 
     def __init__(self, grid: Grid, location: Location) -> None:
-        super().__init__(grid, location, 3, 3, "m", "M")
+        super().__init__(grid, location, 5, 5, "*", "*")
         self._workers: Dict[Person, int] = {}
-        mean: float = 4
+        mean: float = 3
         std_dev: float = 1
         self._yield = lambda: np.random.normal(loc=mean, scale=std_dev, size=10)
 
     @override
     def has_capacity(self) -> bool:
-        return len(self._workers) < Mine._max_worker_count
+        return len(self._workers) < Tree._max_worker_count
 
     @staticmethod
     @override
     def work_time_estimate() -> int:
-        return Mine._max_work_count
-    
+        return Tree._max_work_count
+
     def work(self, person) -> Optional[int]:
         if person in self._workers.keys():
             self._workers[person] += 1
-        if len(self._workers) <= Mine._max_worker_count:
+        if len(self._workers) <= Tree._max_worker_count:
             self._workers[person] = 1
-        if self._workers[person] > Mine._max_work_count:
+        if self._workers[person] > Tree._max_work_count:
             self.remove_worker(person)
+            self._grid.remove_tree(self._location)
             return int(self._yield())
         return None
-    
+
     def remove_worker(self, person):
         del self._workers[person]
