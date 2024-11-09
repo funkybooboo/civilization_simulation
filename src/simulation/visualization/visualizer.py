@@ -4,7 +4,7 @@ from src.simulation.visualization.plotter.grid_plotter import GridPlotter
 from src.simulation.visualization.plotter.state_plotter import StatePlotter
 
 
-class StateTracker:
+class Visualizer:
     def __init__(self) -> None:
         self._grid_plotter: GridPlotter = GridPlotter()
         self._state_plotter: StatePlotter = StatePlotter()

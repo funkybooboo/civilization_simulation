@@ -2,7 +2,7 @@ from copy import deepcopy
 
 from grid.grid import Grid
 from people.people import People
-from visualization.state_tracker import StateTracker
+from visualization.visualizer import Visualizer
 
 
 class Simulation:
@@ -16,8 +16,8 @@ class Simulation:
         self._max_days: int = self._years * self._days_per_year
         self._current_day: int = 0
 
-    def run(self) -> StateTracker:
-        tracker: StateTracker = StateTracker()
+    def run(self) -> Visualizer:
+        visualizer: Visualizer = Visualizer()
         for day in range(self._max_days):
             self._current_day += 1
             self._people.take_actions_for_day()
@@ -27,12 +27,12 @@ class Simulation:
                 self._people.age()
                 self._grid.grow_trees()
                 self._create_disasters()
-                tracker.add(
+                visualizer.add(
                     self._get_year(day), deepcopy(self._grid), deepcopy(self._people)
                 )
                 self._people.flush()
 
-        return tracker
+        return visualizer
 
     def _create_disasters(self):
         self._people.generate_disasters()
