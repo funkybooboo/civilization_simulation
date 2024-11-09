@@ -102,6 +102,8 @@ class Person:
     
     def set_health(self, health: int) -> None:
         self._health += health
+        self._health = max(self._health, 0)
+        self.health = min(self._health, 100)
 
     def has_home(self) -> bool:
         return self._home is not None

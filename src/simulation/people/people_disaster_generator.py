@@ -6,6 +6,9 @@ from src.simulation.people.people import People
 class PeopleDisasterGenerator:
     def __init__(self, people: People):
         self._people = people
+    
+    def get_people(self) -> People:
+        return self._people
 
     def generate(self, chance: float) -> None:
         """Randomly trigger one of several disasters with a given chance."""
@@ -34,7 +37,7 @@ class PeopleDisasterGenerator:
         print("A divorce has occurred!")
         # Severity could influence the emotional impact, e.g., a higher severity means more loss (friends, resources)
         percent_affected = severity * 5 / 100
-        married_list = [person for person in self._people.get_people_list() if person.get_spouse()]
+        married_list = [person for person in self.get_people().get_people_list() if person.get_spouse()]
         # Calculate the number of people to affect
         num_affected = int(len(married_list) * percent_affected)
         # Randomly select the individuals to be affected by divorce
@@ -50,10 +53,14 @@ class PeopleDisasterGenerator:
 
     def _sickness(self, severity: int) -> None:
         """Person gets sick, losing health."""
-        health_loss = severity * 2  # Example: severity increases health loss
-        print(f"A person is sick! They lose {health_loss} health.")
+        percent_affected = severity * 10 / 100 # Example: severity increases health loss
         # Logic to reduce health of the affected person
-        # self.person.health -= health_loss
+        person_list = random.shuffle(self.get_people().get_people_list())
+        num_affected = int(len(person_list) * percent_affected)
+        affected_people = random.sample(person_list, num_affected)
+
+        for person in affected_people:
+            person.set_health(-30) # arbitrary decrement value
 
     def _craving(self, severity: int) -> None:
         """Craving causes hunger to increase."""
