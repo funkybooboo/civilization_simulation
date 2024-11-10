@@ -59,6 +59,7 @@ class Person:
         if not self._home:
             self._scheduler.add(TaskType.FIND_HOME)
 
+        # TODO: when do you work mine, explore, chop tree
 
         if self._simulation.get_people().get_time() % self._max_time == 0:
             if not self._spouse:
@@ -117,6 +118,9 @@ class Person:
 
     def start_home_construction(self) -> None:
         self._scheduler.add(TaskType.START_HOME_CONSTRUCTION)
+
+    def work_farm(self) -> None:
+        self._scheduler.add(TaskType.WORK_FARM)
 
     def has_spouse(self) -> bool:
         return self._spouse is not None

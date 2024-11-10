@@ -53,6 +53,9 @@ class Eat(Task):
 
         if self._barn:
             self._food = self._barn.remove_food(self._home.get_food_capacity())
+            # if the barn has no food, start working a farm to get food
+            if self._food <= 0:
+                self._person.work_farm()
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
