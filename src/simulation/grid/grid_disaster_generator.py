@@ -38,7 +38,7 @@ class GridDisasterGenerator:
         buildings_burned = (
             severity // 2
         )  # Each point of severity could burn down 0.5 buildings
-        # Logic to decrement building count (or other effects)
+        # Logic to decrement structure count (or other effects)
         # self.buildings -= buildings_burned
 
     def _disease_farm(self, severity: int) -> None:

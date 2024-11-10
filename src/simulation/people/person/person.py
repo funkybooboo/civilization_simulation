@@ -1,15 +1,14 @@
-from sched import scheduler
 from typing import List, Optional, Set
 
 from memory import Memory
 from mover import Mover
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
+from src.simulation.grid.structure.store.barn import Barn
+from src.simulation.grid.structure.store.home import Home
 
-from src.simulation.grid.building.barn import Barn
-from src.simulation.grid.building.building import Building
-from src.simulation.grid.building.building_type import BuildingType
-from src.simulation.grid.building.home import Home
+from src.simulation.grid.structure.structure import Structure
+from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.location import Location
 from src.simulation.simulation import Simulation
 
@@ -37,9 +36,9 @@ class Person:
         self._cycles_since_tried_to_eat: int = 0
         self._scheduler: Scheduler = Scheduler(simulation, self)
 
-        self._visited_buildings: Set[Building] = set()
-        self._moving_to_building_type: Optional[BuildingType] = None
-        self._building: Optional[Building] = None
+        self._visited_buildings: Set[Structure] = set()
+        self._moving_to_building_type: Optional[StructureType] = None
+        self._building: Optional[Structure] = None
     
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
@@ -96,15 +95,14 @@ class Person:
         return self._health <= 0 or self._age >= 80
 
     def is_satiated(self) -> bool:
-        return self._person.get_hunger() >= 90
+        return self.get_hunger() >= 90
 
     def eat(self, building: Barn | Home) -> None:
         if isinstance(building, Home):
-            building.remove_food(3)
             self._hunger = min(self._hunger + 10, 100)
         else:
-            building.remove_food(3)
             self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
+        building.remove_resource("food", 3)
 
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
@@ -124,7 +122,7 @@ class Person:
     def age(self) -> None:
         self._age += 1
         
-    def find_build_location(self, building_type: BuildingType) -> Location:
+    def find_build_location(self, building_type: StructureType) -> Location:
         # check memory for open spots to build
         # if you cant find any then walk to a place where empty space is likely
         pass
@@ -136,7 +134,7 @@ class Person:
         self._mover.explore()
 
     def move_to_home(self) -> Optional[Home]:
-        self._moving_to_building_type = BuildingType.HOME
+        self._moving_to_building_type = StructureType.HOME
         self._visited_buildings = set()
         self._building = self._home
         self._mover.towards(self._home.get_location())
@@ -148,7 +146,7 @@ class Person:
         return None
 
     def move_to_time_estimate(self) -> int:
-        if not self._building:  # the current building I am trying to get too
+        if not self._building:  # the current structure I am trying to get too
             return (
                 5  # you haven't told me to go to a building_type yet, so I'm guessing 5
             )
@@ -156,8 +154,9 @@ class Person:
             self._building.get_location().distance_to(self._location) // 10
         )  # move 10 blocks every action
 
-    def move_to(self, building_type: BuildingType) -> Optional[Building]:
+    def move_to(self, building_type: StructureType) -> Optional[Structure]:
         # TODO: if you're eating, only go to barns that have food in them
+        # TODO: when you get to a construction site there is different work that could be done, deliver resources, or work on the construction, deal with this
 
         # check if types are different
         if self._moving_to_building_type != building_type:
@@ -166,18 +165,18 @@ class Person:
             self._building = None
 
         if not self._building:
-            if building_type == BuildingType.FARM:
+            if building_type == StructureType.FARM:
                 self._building = self._move_to(list(self._memory.get_farm_locations()))
-            elif building_type == BuildingType.MINE:
+            elif building_type == StructureType.MINE:
                 self._building = self._move_to(list(self._memory.get_mine_locations()))
-            elif building_type == BuildingType.BARN:
+            elif building_type == StructureType.BARN:
                 self._building = self._move_to(list(self._memory.get_barn_locations()))
-            elif building_type == BuildingType.HOME:
+            elif building_type == StructureType.HOME:
                 self._building = self._move_to(list(self._memory.get_home_locations()))
-            elif building_type == BuildingType.TREE:
+            elif building_type == StructureType.TREE:
                 self._building = self._move_to(list(self._memory.get_tree_locations()))
             else:
-                raise Exception("You tried to go to a unknown building")
+                raise Exception("You tried to go to a unknown structure")
 
         if self._location.is_one_away(self._building.get_location()):
             if self._building.has_capacity():
@@ -189,7 +188,7 @@ class Person:
                 self._visited_buildings.add(self._building)
         return None
 
-    def _move_to(self, locations: List[Location]) -> Building:
+    def _move_to(self, locations: List[Location]) -> Structure:
         visited_buildings_locations: List[Location] = [
             b.get_location() for b in self._visited_buildings
         ]
@@ -198,7 +197,4 @@ class Person:
         )
         closest = self._mover.get_closest(filtered)
         self._mover.towards(closest)
-        return self._simulation.get_grid().get_building(closest)
-    
-    def __str__(self) -> str:
-        pass  # TODO implement what to print for a person
+        return self._simulation.get_grid().get_structure(closest)

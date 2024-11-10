@@ -15,19 +15,19 @@ class ResourceState(State):
     def _get_total_food(self) -> int:
         total_food = 0
         for barn in self._grid.get_barns():
-            total_food += barn.get_food_stored()
+            total_food += barn.get_resource("food")
         return total_food
 
     def _get_total_stone(self) -> int:
         total_stone = 0
         for barn in self._grid.get_barns():
-            total_stone += barn.get_stone_stored()
+            total_stone += barn.get_resource("stone")
         return total_stone
 
     def _get_total_wood(self) -> int:
         total_wood = 0
         for barn in self._grid.get_barns():
-            total_wood += barn.get_wood_stored()
+            total_wood += barn.get_resource("wood")
         return total_wood
 
     def _get_total_barn_capacity(self) -> int:

@@ -2,17 +2,15 @@ import random
 from copy import deepcopy
 from typing import Dict, List
 
-from building.barn import Barn
-from building.building import Building
-from building.farm import Farm
-from building.home import Home
-from building.mine import Mine
+from src.simulation.grid.structure.store.barn import Barn
+from src.simulation.grid.structure.store.home import Home
+from structure.structure import Structure
 from grid_generator import GridGenerator
 from location import Location
 from src.logger import logger
 
-from src.simulation.grid.building.building_factory import BuildingFactory
-from src.simulation.grid.building.building_type import BuildingType
+from src.simulation.grid.structure.structure_factory import StructureFactory
+from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.grid_disaster_generator import GridDisasterGenerator
 
 
@@ -35,10 +33,10 @@ class Grid:
         self._width: int = size
         self._height: int = size
         self._grid: List[List[str]] = grid_generator.generate()
-        self._building_factory = BuildingFactory(self)
-        self._buildings: Dict[Location, Building] = (
+        self._building_factory = StructureFactory(self)
+        self._buildings: Dict[Location, Structure] = (
             self._find_buildings()
-        )  # stores the top left corner of every building
+        )  # stores the top left corner of every structure
         self._disaster_generator = GridDisasterGenerator(self)
 
     def generate_disasters(self, chance: float = 0.50) -> None:
@@ -47,15 +45,15 @@ class Grid:
     def get_grid(self) -> List[List[str]]:
         return self._grid
 
-    def get_buildings_deepcopy(self) -> Dict[Location, Building]:
+    def get_buildings_deepcopy(self) -> Dict[Location, Structure]:
         return deepcopy(self._buildings)
     
     def get_home_locations(self) -> List[Location]:
         home_locations = [location for location, building in self._buildings.items() if isinstance(building, Home)]
         return home_locations
     
-    def _find_buildings(self) -> Dict[Location, Building]:
-        buildings: Dict[Location, Building] = {}
+    def _find_buildings(self) -> Dict[Location, Structure]:
+        buildings: Dict[Location, Structure] = {}
         visited: set[Location] = (
             set()
         )  # Keep track of visited locations to avoid double-counting
@@ -73,19 +71,27 @@ class Grid:
                 if location in visited:
                     continue
 
-                if self.is_barn(location) or self.is_construction_barn(location):
-                    building_type = BuildingType.BARN
-                elif self.is_home(location) or self.is_construction_home(location):
-                    building_type = BuildingType.HOME
-                elif self.is_mine(location) or self.is_construction_mine(location):
-                    building_type = BuildingType.MINE
-                elif self.is_farm(location) or self.is_construction_farm(location):
-                    building_type = BuildingType.FARM
+                if self.is_barn(location):
+                    building_type = StructureType.BARN
+                elif self.is_home(location):
+                    building_type = StructureType.HOME
+                elif self.is_mine(location):
+                    building_type = StructureType.MINE
+                elif self.is_farm(location):
+                    building_type = StructureType.FARM
+                elif self.is_construction_barn(location):
+                    building_type = StructureType.CONSTRUCTION_BARN
+                elif self.is_construction_farm(location):
+                    building_type = StructureType.CONSTRUCTION_FARM
+                elif self.is_construction_home(location):
+                    building_type = StructureType.CONSTRUCTION_HOME
+                elif self.is_construction_mine(location):
+                    building_type = StructureType.CONSTRUCTION_MINE
                 else:
                     continue
 
-                # Create a new building instance and associate it with the first location
-                # (we could use the top-left corner as the "representative" location for each building)
+                # Create a new structure instance and associate it with the first location
+                # (we could use the top-left corner as the "representative" location for each structure)
                 if location not in buildings:
                     building = self._building_factory.create_instance(
                         building_type, location
@@ -93,35 +99,45 @@ class Grid:
                     if not building:
                         continue
                     buildings[location] = building
-                    # Add all the other locations in the building to map to the same building object
-                    for dy in range(building.get_height()):
-                        for dx in range(building.get_width()):
-                            building_location = Location(x + dx, y + dy)
-                            buildings[building_location] = building
 
         return buildings
 
-    def start_building_construction(self, building_type: BuildingType, location: Location) -> None:
+    def start_building_construction(self, building_type: StructureType, location: Location) -> None:
         try:
-            building: Building = self._building_factory.create_instance(building_type, location)
+            building: Structure = self._building_factory.create_instance(building_type, location)
         except Exception as e:
-            logger.error("Could not start building construction", e)
+            logger.error("Could not start structure construction", e)
             return
         self._buildings[location] = building
 
-    def get_buildings(self) -> Dict[Location, Building]:
+    def turn_completed_constructions_to_buildings(self):
+        locations: List[Location] = list(self._buildings.keys())
+        for location in locations:
+            if self.is_construction_barn(location):
+                building_type = StructureType.BARN
+            elif self.is_construction_farm(location):
+                building_type = StructureType.FARM
+            elif self.is_construction_home(location):
+                building_type = StructureType.HOME
+            elif self.is_construction_mine(location):
+                building_type = StructureType.MINE
+            else:
+                continue
+            if self._buildings[location].has_capacity():
+                continue
+            self._buildings[location] = self._building_factory.create_instance(building_type, location)
+
+    def get_buildings(self) -> Dict[Location, Structure]:
         return self._buildings
 
-    def get_building(self, location: Location) -> Building:
+    def get_structure(self, location: Location) -> Structure:
         if self._grid[location.y][location.x] == "*" and location in self._buildings:
             # Create the tree and add it to the buildings list
-            tree = self._building_factory.create_instance(BuildingType.TREE, location)
-            self._buildings[location] = tree
+            return self._building_factory.create_instance(StructureType.TREE, location)
         return self._buildings[location]
 
     def remove_tree(self, location: Location) -> None:
         self._grid[location.y][location.x] = " "
-        self._buildings.pop(location)
 
     def get_home_count(self) -> int:
         # Iterate through the values of the _buildings dictionary and count instances of Home

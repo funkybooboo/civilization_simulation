@@ -1,7 +1,8 @@
 from typing import override, Optional
-from src.simulation.grid.building.barn import Barn
-from src.simulation.grid.building.building_type import BuildingType
-from src.simulation.grid.building.home import Home
+
+from src.simulation.grid.structure.store.barn import Barn
+from src.simulation.grid.structure.store.home import Home
+from src.simulation.grid.structure.structure_type import StructureType
 from task import Task
 
 from src.simulation.people.person.person import Person
@@ -33,14 +34,14 @@ class Eat(Task):
         if self._home:
             if self._food:
                 self._deposit_food_at_home()
-            elif self._home.has_food():
+            elif not self._home.has_capacity():
                 self._eat_at_home()
             else:
                 self._acquire_food_from_barn()
 
     def _deposit_food_at_home(self) -> None:
         self._person.move_to_home()
-        self._home.add_food(self._food)
+        self._home.add_resource("food", self._food)
         self._food = 0
 
     def _eat_at_home(self) -> None:
@@ -49,14 +50,14 @@ class Eat(Task):
 
     def _acquire_food_from_barn(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to(BuildingType.BARN)
+            self._barn = self._person.move_to(StructureType.BARN)
 
         if self._barn:
-            self._food = self._barn.remove_food(self._home.get_food_capacity())
+            self._food = self._barn.remove_resource("food", self._home.get_capacity())
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to(BuildingType.BARN)
+            self._barn = self._person.move_to(StructureType.BARN)
 
         if self._barn:
             self._person.eat(self._barn)

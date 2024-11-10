@@ -21,6 +21,7 @@ class Simulation:
         for day in range(self._max_days):
             self._current_day += 1
             self._people.take_actions_for_day()
+            self._grid.turn_completed_constructions_to_buildings()
             # TODO check if people are stuck
 
             if self._has_been_a_year(day):
@@ -53,9 +54,6 @@ class Simulation:
 
     def get_people(self) -> People:
         return self._people
-    
-    def get_grid(self) -> Grid:
-        return self._grid
 
     def get_people_object(self) -> People:
         return self._people
