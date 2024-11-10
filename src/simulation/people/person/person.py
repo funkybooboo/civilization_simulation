@@ -65,7 +65,8 @@ class Person:
 
         # TODO: add WORK_MINE or CHOP_TREE task if you find no wood/stone in the barn during a build task?
 
-        if len(self._scheduler.get_all_tasks()) == 0: # If you've got nothing else to do, explore
+        # If you've got nothing else to do, explore
+        if len(self._scheduler.get_all_tasks()) == 0:
             self._scheduler.add(TaskType.EXPLORE)
 
     def get_location(self) -> Location:
