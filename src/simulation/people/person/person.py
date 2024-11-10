@@ -1,11 +1,9 @@
-from sched import scheduler
 from typing import List, Optional, Set
 
 from memory import Memory
 from mover import Mover
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
-
 from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building import Building
 from src.simulation.grid.building.building_type import BuildingType
@@ -33,13 +31,13 @@ class Person:
         )
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
-        self._cycles_since_looked_for_spouse: int = 0
-        self._cycles_since_tried_to_eat: int = 0
         self._scheduler: Scheduler = Scheduler(simulation, self)
+        self._max_time: int = 10
 
         self._visited_buildings: Set[Building] = set()
         self._moving_to_building_type: Optional[BuildingType] = None
         self._building: Optional[Building] = None
+        self._searched_building_count: int = 0
     
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
@@ -59,15 +57,17 @@ class Person:
         if not self._home:
             self._scheduler.add(TaskType.FIND_HOME)
 
-        if not self._spouse:
-            self._cycles_since_looked_for_spouse += 1
-            if self._cycles_since_looked_for_spouse > 20: # TODO: change this to check for a spouse every year
+        if self._simulation.get_people().get_time() % self._max_time == 0:
+            if not self._spouse:
                 self._scheduler.add(TaskType.FIND_SPOUSE)
-                self._cycles_since_looked_for_spouse = 0
+            if self._hunger < 50:
+                self._scheduler.add(TaskType.EAT)
 
-        if self._hunger < 50:
-            self._scheduler.add(TaskType.EAT)
-        # todo figure out other actions
+        # TODO: add WORK_MINE or CHOP_TREE task if you find no wood/stone in the barn during a build task?
+
+        # If you've got nothing else to do, explore
+        if len(self._scheduler.get_all_tasks()) == 0:
+            self._scheduler.add(TaskType.EXPLORE)
 
     def get_location(self) -> Location:
         return self._location
@@ -96,7 +96,7 @@ class Person:
         return self._health <= 0 or self._age >= 80
 
     def is_satiated(self) -> bool:
-        return self._person.get_hunger() >= 90
+        return self.get_hunger() >= 90
 
     def eat(self, building: Barn | Home) -> None:
         if isinstance(building, Home):
@@ -117,6 +117,9 @@ class Person:
 
     def start_home_construction(self) -> None:
         self._scheduler.add(TaskType.START_HOME_CONSTRUCTION)
+
+    def work_farm(self) -> None:
+        self._scheduler.add(TaskType.WORK_FARM)
 
     def has_spouse(self) -> bool:
         return self._spouse is not None
@@ -167,17 +170,26 @@ class Person:
 
         if not self._building:
             if building_type == BuildingType.FARM:
-                self._building = self._move_to(list(self._memory.get_farm_locations()))
+                buildings: List[Location] = list(self._memory.get_farm_locations())
+                construction_type: TaskType = TaskType.START_FARM_CONSTRUCTION
             elif building_type == BuildingType.MINE:
-                self._building = self._move_to(list(self._memory.get_mine_locations()))
+                buildings: List[Location] = list(self._memory.get_mine_locations())
+                construction_type: TaskType = TaskType.START_MINE_CONSTRUCTION
             elif building_type == BuildingType.BARN:
-                self._building = self._move_to(list(self._memory.get_barn_locations()))
+                buildings: List[Location] = list(self._memory.get_barn_locations())
+                construction_type: TaskType = TaskType.START_BARN_CONSTRUCTION
             elif building_type == BuildingType.HOME:
-                self._building = self._move_to(list(self._memory.get_home_locations()))
+                buildings: List[Location] = list(self._memory.get_home_locations())
+                construction_type: TaskType = TaskType.START_HOME_CONSTRUCTION
             elif building_type == BuildingType.TREE:
                 self._building = self._move_to(list(self._memory.get_tree_locations()))
             else:
                 raise Exception("You tried to go to a unknown building")
+
+            self._building = self._move_to(buildings)
+            if not building_type == BuildingType.TREE and not self._building and self._searched_building_count >= (len(buildings) * 0.37):
+                self._scheduler.add(construction_type)
+
 
         if self._location.is_one_away(self._building.get_location()):
             if self._building.has_capacity():
