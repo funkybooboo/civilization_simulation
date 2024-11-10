@@ -28,7 +28,7 @@ class FindHome(Task):
                         self._finished()
                         return
 
-            # if all homes have owners, build a home (add build_home task)
+            # if all homes have owners, construction a home (add build_home task)
             self._person.start_home_construction()
         else:
             self._finished()

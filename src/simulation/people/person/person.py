@@ -123,7 +123,7 @@ class Person:
         self._age += 1
         
     def find_build_location(self, building_type: StructureType) -> Location:
-        # check memory for open spots to build
+        # check memory for open spots to construction
         # if you cant find any then walk to a place where empty space is likely
         pass
 
@@ -154,9 +154,8 @@ class Person:
             self._building.get_location().distance_to(self._location) // 10
         )  # move 10 blocks every action
 
-    def move_to(self, building_type: StructureType) -> Optional[Structure]:
+    def move_to_workable_structure(self, building_type: StructureType) -> Optional[Structure]:
         # TODO: if you're eating, only go to barns that have food in them
-        # TODO: when you get to a construction site there is different work that could be done, deliver resources, or work on the construction, deal with this
 
         # check if types are different
         if self._moving_to_building_type != building_type:

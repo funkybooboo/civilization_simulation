@@ -47,6 +47,18 @@ class Construction(Work, ABC):
         if self._delivered_stone > self._required_stone:
             self._delivered_stone = self._required_stone  # Cap the delivery at the required amount
     
+    def needs_stone(self) -> bool:
+        return self._delivered_stone < self._required_stone
+    
+    def needs_wood(self) -> bool:
+        return self._delivered_wood < self._required_wood
+
+    def how_much_stone(self) -> int:
+        return self._required_stone - self._delivered_stone
+    
+    def how_much_wood(self) -> int:
+        return self._required_wood - self._delivered_wood
+
     @override
     def work(self, person: Person) -> Optional[int]:
         """

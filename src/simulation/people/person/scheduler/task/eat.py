@@ -50,14 +50,14 @@ class Eat(Task):
 
     def _acquire_food_from_barn(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to(StructureType.BARN)
+            self._barn = self._person.move_to_workable_structure(StructureType.BARN)
 
         if self._barn:
             self._food = self._barn.remove_resource("food", self._home.get_capacity())
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to(StructureType.BARN)
+            self._barn = self._person.move_to_workable_structure(StructureType.BARN)
 
         if self._barn:
             self._person.eat(self._barn)
