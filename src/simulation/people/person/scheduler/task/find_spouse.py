@@ -34,4 +34,4 @@ class FindSpouse(Task):
 
     @override
     def get_remaining_time(self) -> int:
-        pass
+        return 1

@@ -33,6 +33,12 @@ class Memory:
     def get_tree_locations(self) -> Set[Location]:
         return self._trees
 
+    def get_empty_locations(self) -> Set[Location]:
+        return self._empties
+    
+    def get_building_locations(self) -> Set[Location]:
+        return self._barns | self._farms | self._mines | self._homes | self._trees
+
     def dont_know_where_anything_is(self) -> bool:
         return not (self._barns or self._farms or self._homes or self._mines)
 

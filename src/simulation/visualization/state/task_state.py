@@ -1,19 +1,21 @@
 from src.simulation.people.people import People
-from src.simulation.people.person.scheduler.task.build_barn import BuildBarn
-from src.simulation.people.person.scheduler.task.build_farm import BuildFarm
-from src.simulation.people.person.scheduler.task.build_home import BuildHome
-from src.simulation.people.person.scheduler.task.build_mine import BuildMine
-from src.simulation.people.person.scheduler.task.chop_tree import ChopTree
+from src.simulation.people.person.scheduler.task.construction.build_barn import BuildBarn
+from src.simulation.people.person.scheduler.task.construction.build_farm import BuildFarm
+from src.simulation.people.person.scheduler.task.construction.build_home import BuildHome
+from src.simulation.people.person.scheduler.task.construction.build_mine import BuildMine
 from src.simulation.people.person.scheduler.task.eat import Eat
 from src.simulation.people.person.scheduler.task.explore import Explore
 from src.simulation.people.person.scheduler.task.find_home import FindHome
 from src.simulation.people.person.scheduler.task.find_spouse import FindSpouse
-from src.simulation.people.person.scheduler.task.start_barn_construction import StartBarnConstruction
-from src.simulation.people.person.scheduler.task.start_farm_construction import StartFarmConstruction
-from src.simulation.people.person.scheduler.task.start_home_construction import StartHomeConstruction
-from src.simulation.people.person.scheduler.task.start_mine_construction import StartMineConstruction
-from src.simulation.people.person.scheduler.task.work_farm import WorkFarm
-from src.simulation.people.person.scheduler.task.work_mine import WorkMine
+from src.simulation.people.person.scheduler.task.start_construction.start_barn_construction import StartBarnConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_farm_construction import StartFarmConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_home_construction import StartHomeConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_mine_construction import StartMineConstruction
+
+from src.simulation.people.person.scheduler.task.transport import Transport
+from src.simulation.people.person.scheduler.task.work.chop_tree import ChopTree
+from src.simulation.people.person.scheduler.task.work.work_farm import WorkFarm
+from src.simulation.people.person.scheduler.task.work.work_mine import WorkMine
 from src.simulation.visualization.state.state import State
 
 
@@ -53,6 +55,8 @@ class TaskState(State):
         self._average_complete_work_farm_task_count: float = self._get_average_complete_work_farm_task_count()
         self._average_active_work_mine_task_count: float = self._get_average_active_work_mine_task_count()
         self._average_complete_work_mine_task_count: float = self._get_average_complete_work_mine_task_count()
+        self._average_active_transport_task_count: float = self._get_average_active_transport_task_count()
+        self._average_complete_transport_task_count: float = self._get_average_complete_transport_task_count()
 
         del self._people
 
@@ -221,4 +225,14 @@ class TaskState(State):
     def _get_average_complete_work_mine_task_count(self) -> float:
         return self._get_average_task_count_with_predicate(
             lambda task: isinstance(task, WorkMine) and task.is_finished()
+        )
+
+    def _get_average_active_transport_task_count(self) -> float:
+        return self._get_average_task_count_with_predicate(
+            lambda task: isinstance(task, Transport) and not task.is_finished()
+        )
+
+    def _get_average_complete_transport_task_count(self) -> float:
+        return self._get_average_task_count_with_predicate(
+            lambda task: isinstance(task, Transport) and task.is_finished()
         )
