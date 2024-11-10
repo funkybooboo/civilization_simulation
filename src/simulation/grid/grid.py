@@ -5,6 +5,8 @@ from typing import Dict, List
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
 from src.simulation.grid.structure.work.work import Work
+from src.simulation.grid.tempurature import get_temperature_for_day
+from src.simulation.simulation import Simulation
 from structure.structure import Structure
 from grid_generator import GridGenerator
 from location import Location
@@ -29,7 +31,8 @@ class Grid:
         "*": 10,
     }
 
-    def __init__(self, size: int) -> None:
+    def __init__(self, simulation: Simulation, size: int) -> None:
+        self._simulation: Simulation = simulation
         grid_generator = GridGenerator(size)
         self._width: int = size
         self._height: int = size
@@ -39,6 +42,16 @@ class Grid:
             self._find_buildings()
         )  # stores the top left corner of every structure
         self._disaster_generator = GridDisasterGenerator(self)
+        
+        self._day: int = 0
+        self._temp: float = 0
+
+    def get_temp_for_day(self) -> int:
+        other_day = self._simulation.get_day()
+        if other_day != self._day:
+            self._day = other_day
+            self._temp = get_temperature_for_day(self._day)
+        return self._temp
 
     def generate_disasters(self, chance: float = 0.50) -> None:
         self._disaster_generator.generate(chance)
@@ -245,5 +258,5 @@ class Grid:
 
 
 if __name__ == "__main__":
-    grid = Grid(75)
+    grid = Grid(None, 75)
     print(grid)
