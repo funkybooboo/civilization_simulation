@@ -65,7 +65,7 @@ class Eat(Task):
 
         if self._barn:
             # if the barn is out of food, go work the farm to get some food
-            if self._barn.get_food_stored() <= 0:
+            if self._barn.get_resource("food") <= 0:
                 self._person.work_farm()
             else:
                 self._person.eat(self._barn)
