@@ -4,6 +4,7 @@ from typing import Dict, List
 
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
+from src.simulation.grid.structure.work.work import Work
 from structure.structure import Structure
 from grid_generator import GridGenerator
 from location import Location
@@ -101,6 +102,11 @@ class Grid:
                     buildings[location] = building
 
         return buildings
+    
+    def work_structures_exchange_memories(self):
+        work_structures: List[Work] = list(filter(lambda b: not isinstance(b, Work), self._buildings.values()))
+        for work_structure in work_structures:
+            work_structure.exchange_worker_memories()
 
     def start_building_construction(self, building_type: StructureType, location: Location) -> None:
         try:

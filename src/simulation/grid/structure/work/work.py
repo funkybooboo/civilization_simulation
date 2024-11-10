@@ -1,5 +1,6 @@
+import itertools
 from abc import ABC, abstractmethod
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Tuple
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 from src.simulation.grid.structure.structure import Structure
@@ -61,3 +62,9 @@ class Work(Structure, ABC):
         Each subclass should define how to generate the yield, if needed.
         """
         pass
+    
+    def exchange_worker_memories(self):
+        workers: List[Person] = list(self._workers.keys())
+        pairs: List[Tuple[Person, Person]] = list(itertools.combinations(workers, 2))
+        for pair in pairs:
+            pair[0].exchange_memories(pair[1])

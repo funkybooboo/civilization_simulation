@@ -22,6 +22,7 @@ class Simulation:
             self._current_day += 1
             self._people.take_actions_for_day()
             self._grid.turn_completed_constructions_to_buildings()
+            self._people.spouses_share_memory() # end of day spouses talk
             # TODO check if people are stuck
 
             if self._has_been_a_year(day):

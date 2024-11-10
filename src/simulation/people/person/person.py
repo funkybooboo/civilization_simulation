@@ -40,6 +40,15 @@ class Person:
         self._building: Optional[Structure] = None
         self._searched_building_count: int = 0
         
+    def get_memory(self) -> Memory:
+        return self._memory
+        
+    def exchange_memories(self, other: 'Person') -> None:
+        if not other:
+            return 
+        self._memory.combine(other.get_memory())
+        other.get_memory().combine(self._memory)
+        
     def get_empties(self) -> List[Location]:
         return list(self._memory.get_empty_locations())
     
