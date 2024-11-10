@@ -17,3 +17,4 @@ class TaskType(Enum):
     START_BARN_CONSTRUCTION = auto()
     START_MINE_CONSTRUCTION = auto()
     START_FARM_CONSTRUCTION = auto()
+    TRANSPORT = auto()

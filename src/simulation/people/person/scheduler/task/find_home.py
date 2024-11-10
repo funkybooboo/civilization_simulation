@@ -1,7 +1,6 @@
+from src.simulation.grid.structure.store.home import Home
 from task import Task
-from src.simulation.grid.building.home import Home
-from task import Task
-from typing import Optional, override
+from typing import override
 
 from src.simulation.people.person.person import Person
 from src.simulation.simulation import Simulation
@@ -17,7 +16,7 @@ class FindHome(Task):
             # query the grid to make sure there is a home in that location
             for home_location in self._person.get_home_locations():
                 if home_location in all_home_locations:
-                    home: Home = self._simulation.get_grid().get_building(home_location)
+                    home: Home = self._simulation.get_grid().get_structure(home_location)
 
                     if not home.has_owner():
                         self._person.assign_home(home)
@@ -29,7 +28,7 @@ class FindHome(Task):
                         self._finished()
                         return
 
-            # if all homes have owners, build a home (add build_home task)
+            # if all homes have owners, construction a home (add build_home task)
             self._person.start_home_construction()
         else:
             self._finished()

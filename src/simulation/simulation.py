@@ -11,7 +11,7 @@ class Simulation:
     ) -> None:
         self._days_per_year: int = days_per_year
         self._years: int = years
-        self._grid: Grid = Grid(grid_size)
+        self._grid: Grid = Grid(self, grid_size)
         self._people: People = People(self, actions_per_day)
         self._max_days: int = self._years * self._days_per_year
         self._current_day: int = 0
@@ -23,6 +23,8 @@ class Simulation:
             if len(self._people) == 0: # all the people dead
                 break
             self._people.take_actions_for_day()
+            self._grid.turn_completed_constructions_to_buildings()
+            self._people.spouses_share_memory() # end of day spouses talk
             # TODO check if people are stuck
 
             if self._has_been_a_year(day):
@@ -36,6 +38,9 @@ class Simulation:
                 self._people.flush()
 
         return visualizer
+    
+    def get_day(self) -> int:
+        return self._current_day
 
     def _create_disasters(self):
         self._people.generate_disasters()
@@ -55,9 +60,6 @@ class Simulation:
 
     def get_people(self) -> People:
         return self._people
-    
-    def get_grid(self) -> Grid:
-        return self._grid
 
     def get_people_object(self) -> People:
         return self._people
