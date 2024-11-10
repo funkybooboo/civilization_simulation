@@ -31,7 +31,12 @@ class People:
                 self._grid.work_structures_exchange_memories()
             for person in dead:
                 self._people.remove(person)
-                
+
+    def check_for_stuck_people(self) -> None:
+        for person in self._people:
+            if person.is_stuck():
+                person.kill() # they got stuck and died
+
     def spouses_share_memory(self):
         for person in self._get_married_people():
             person.exchange_memories(person.get_spouse())

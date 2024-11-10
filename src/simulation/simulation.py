@@ -23,9 +23,10 @@ class Simulation:
             self._people.take_actions_for_day()
             self._grid.turn_completed_constructions_to_buildings()
             self._people.spouses_share_memory() # end of day spouses talk
-            # TODO check if people are stuck
+            self._people.check_for_stuck_people()
 
             if self._has_been_a_year(day):
+                # TODO swap houses
                 self._people.age()
                 self._people.make_babies()
                 self._grid.grow_trees()

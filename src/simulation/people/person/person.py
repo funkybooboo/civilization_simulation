@@ -63,6 +63,15 @@ class Person:
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
     
+    def kill(self):
+        self._health = 0
+    
+    def is_stuck(self) -> bool:
+        location: Optional[Location] = self._simulation.get_grid().get_open_spot_next_to_town()
+        if not location:
+            return True
+        return self._mover.can_get_to_location(location)
+    
     def go_to_location(self, location: Location):
         self._moving_to_building_type = None
         self._visited_buildings = set()

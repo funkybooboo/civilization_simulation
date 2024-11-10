@@ -1,6 +1,6 @@
 import random
 from copy import deepcopy
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
@@ -59,9 +59,6 @@ class Grid:
     def get_grid(self) -> List[List[str]]:
         return self._grid
 
-    def get_buildings_deepcopy(self) -> Dict[Location, Structure]:
-        return deepcopy(self._buildings)
-    
     def get_home_locations(self) -> List[Location]:
         home_locations = [location for location, building in self._buildings.items() if isinstance(building, Home)]
         return home_locations
@@ -155,6 +152,24 @@ class Grid:
             return self._building_factory.create_instance(StructureType.TREE, location)
         return self._buildings[location]
 
+    def get_open_spot_next_to_town(self) -> Optional[Location]:
+        # List of possible directions to check (up, down, left, right)
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    
+        # Iterate over all the buildings
+        for location in self._buildings:
+            # Check all adjacent locations
+            for dx, dy in directions:
+                neighbor = Location(location.x + dx, location.y + dy)
+    
+                # Check if the neighbor is within bounds and is empty
+                if self.is_location_in_bounds(neighbor) and self.is_empty(neighbor):
+                    return neighbor
+    
+        # If no open spot was found, return None
+        return None
+
+
     def remove_tree(self, location: Location) -> None:
         self._grid[location.y][location.x] = " "
 
@@ -164,20 +179,11 @@ class Grid:
             1 for building in self._buildings.values() if isinstance(building, Home)
         )
 
-    def get_char(self, location: Location) -> str:
-        return self._grid[location.y][location.x]
-
-    def is_location_char(self, location: Location, char: str) -> bool:
-        return self._grid[location.y][location.x] == char
-
     def is_valid_location_for_person(self, location: Location) -> bool:
         return self.is_empty(location)
 
     def is_location_in_bounds(self, location: Location) -> bool:
         return 0 <= location.x < self._width and 0 <= location.y < self._height
-
-    def __str__(self) -> str:
-        return "\n".join(" ".join(row) for row in self._grid)
 
     def grow_trees(self, chance: int = 0.10) -> None:
         for i in range(len(self._grid)):
@@ -195,12 +201,6 @@ class Grid:
                     if random.random() < chance:
                         self._grid[neighbor.y][neighbor.x] = "*"  # Place a tree here
                         break
-
-    def chop_down_tree(self, location: Location) -> int:
-        if not self.is_tree(location):
-            raise Exception(f"Tried to chop down a non-tree at location {location}")
-        self._grid[location.y][location.x] = " "
-        return 100
 
     def get_path_finding_matrix(self) -> List[List[int]]:
         path_finding_matrix: List[List[int | str]] = deepcopy(self._grid)
@@ -244,9 +244,6 @@ class Grid:
     def is_empty(self, location: Location) -> bool:
         return self._is_item(location, " ")
 
-    def is_building(self, location: Location, building_char: str) -> bool:
-        return self._is_item(location, building_char)
-
     def _is_item(self, location: Location, char: str) -> bool:
         return self._grid[location.y][location.x] == char
 
@@ -256,7 +253,3 @@ class Grid:
     def get_height(self) -> int:
         return self._height
 
-
-if __name__ == "__main__":
-    grid = Grid(None, 75)
-    print(grid)

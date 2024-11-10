@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import override, List, Optional, Set
+from typing import override, List, Optional
 
 from src.simulation.grid.location import Location
 from src.simulation.grid.structure.structure_type import StructureType
@@ -36,7 +36,6 @@ class StartConstruction(Task, ABC):
     def _get_closest_edge_of_town(self) -> Location:
         # Get the current location of the person
         current_location: Location = self._person.get_location()
-        current_x, current_y = current_location.x, current_location.y
     
         # Get the list of locations occupied by buildings
         building_locations: List[Location] = self._person.get_buildings()
