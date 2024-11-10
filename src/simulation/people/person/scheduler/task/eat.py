@@ -20,10 +20,6 @@ class Eat(Task):
         self._barn: Optional[Barn] = None
         self._food: int = 0
 
-        self._home: Optional[Home] = None
-        self._barn: Optional[Barn] = None
-        self._food: int = 0
-
     @override
     def execute(self) -> None:
         if self._person.is_satiated():
@@ -70,19 +66,19 @@ class Eat(Task):
             self._barn = self._person.move_to(BuildingType.BARN)
 
         if self._barn:
-            self._person.eat(self._barn)
-            self._finished()
+            # if the barn is out of food, go work the farm to get some food
+            if self._barn.get_food_stored() <= 0:
+                self._person.work_farm()
+            else:
+                self._person.eat(self._barn)
+                self._finished()
 
     @override
     def _clean_up_task(self) -> None:
         self._home = None
         self._barn = None
         self._food = 0
-        self._home = None
-        self._barn = None
-        self._food = 0
 
     @override
     def get_remaining_time(self) -> int:
-        return self._person.move_to_time_estimate() + 1
         return self._person.move_to_time_estimate() + 1
