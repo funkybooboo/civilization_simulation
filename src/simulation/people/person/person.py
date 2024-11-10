@@ -10,6 +10,7 @@ from src.simulation.grid.structure.store.home import Home
 from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.location import Location
+from src.simulation.people.person.backpack import Backpack
 from src.simulation.simulation import Simulation
 
 
@@ -21,8 +22,9 @@ class Person:
         self._pk: int = pk
         self._age: int = age
         self._simulation = simulation
-
         self._location: Location = location
+        
+        self._backpack = Backpack()
         self._memory: Memory = Memory()
         self._mover: Mover = Mover(simulation.get_grid(), self, self._memory, 10)
 
@@ -39,6 +41,9 @@ class Person:
         self._moving_to_building_type: Optional[StructureType] = None
         self._building: Optional[Structure] = None
         self._searched_building_count: int = 0
+        
+    def get_backpack(self) -> Backpack:
+        return self._backpack
         
     def get_memory(self) -> Memory:
         return self._memory
@@ -78,12 +83,17 @@ class Person:
 
         if not self._home:
             self._scheduler.add(TaskType.FIND_HOME)
+            
+        if self._backpack.has_items():
+            self._scheduler.add(TaskType.TRANSPORT)
 
         if self._simulation.get_people().get_time() % self._max_time == 0:
             if not self._spouse:
                 self._scheduler.add(TaskType.FIND_SPOUSE)
             if self._hunger < 50:
                 self._scheduler.add(TaskType.EAT)
+        
+        # TODO only try to do WORK if there is space in the backpack
 
         # TODO: add WORK_MINE or CHOP_TREE task if you find no wood/stone in the barn during a build task?
 

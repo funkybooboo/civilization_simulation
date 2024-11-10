@@ -18,28 +18,21 @@ class Work(Task, ABC):
             person: Person, 
             priority: int,
             work_structure: StructureType, 
-            store_structure: Optional[StructureType],
             resource_name: str
     ) -> None:
         super().__init__(simulation, person, priority)
         self._work_structure: StructureType = work_structure
-        self._store_structure: StructureType = store_structure
         self._resource_name: str = resource_name
         
         self._work: Optional[WorkStructure] = None
-        self._resource: Optional[int] = None
-        self._store: Optional[Store] = None
 
     @override
     def execute(self) -> None:
         if self._work:
-            if not self._resource:
-                self._resource = self._work.work(self._person)
-                if self._resource:
-                    self._store: Optional[Store] = self._person.move_to_workable_structure(self._store_structure)
-                    if self._store:
-                        self._store.add_resource(self._resource_name, self._resource)
-                        self._finished()
+            resource: Optional[int] = self._work.work(self._person)
+            if resource:
+                self._person.get_backpack().add_resource(self._resource_name, resource)
+                self._finished()
         else:
             self._work: Optional[WorkStructure] = self._person.move_to_workable_structure(self._work_structure)
 

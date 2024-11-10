@@ -6,4 +6,4 @@ from src.simulation.simulation import Simulation
 
 class ChopTree(Work):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5, StructureType.TREE, StructureType.BARN, "wood")
+        super().__init__(simulation, person, 5, StructureType.TREE, "wood")

@@ -6,4 +6,4 @@ from src.simulation.simulation import Simulation
 
 class WorkFarm(Work):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5, StructureType.FARM, StructureType.BARN, "food")
+        super().__init__(simulation, person, 5, StructureType.FARM, "food")
