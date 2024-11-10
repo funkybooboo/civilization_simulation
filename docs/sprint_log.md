@@ -65,7 +65,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-08 |       |            |                                                                                                                                               |
 | 2024-11-09 | 8.25  | Ann Marie  | Finished up logic for non-build tasks, added calls to schedule those tasks                                                                    |
 | 2024-11-09 | 10    | Nate Stott | Finished up the build tasks                                                                                                                   |
-| 2024-11-10 |       |            |                                                                                                                                               |
+| 2024-11-10 | 4     | Nate Stott | Complete a bunch of tickets                                                                                                                   |
 
 ## Sprint 3
 
