@@ -18,7 +18,7 @@ class GridGenerator:
         self._ca_iterations: int = ca_iterations
         self._tree_char: str = "*"
 
-        self._num_houses: int = random.randint(5, 10)
+        self._num_houses: int = random.randint(3, 8)
         self._num_farms: int = random.randint(1, 3)
         self._num_barns: int = random.randint(1, 2)
         self._num_mines: int = random.randint(1, 2)
@@ -48,18 +48,15 @@ class GridGenerator:
         self._clear_town_area(center_x, center_y)
 
         buildings = [
-            ("H", self._num_houses, 0.9),
+            ("H", self._num_houses, 0.8),
             ("F", self._num_farms, 0.8),
             ("B", self._num_barns, 0.8),
             ("M", self._num_mines, 0.8),
         ]
 
         for building_type, count, completion_prob in buildings:
-            if building_type == "B" and count > 0:
-                self._place_building(building_type, center_x, center_y, True)
-                count -= 1
-
-            for _ in range(count):
+            self._place_building_random(building_type, True)
+            for _ in range(count - 1):
                 is_completed = random.random() < completion_prob
                 self._place_building_random(building_type, is_completed)
 
@@ -70,15 +67,6 @@ class GridGenerator:
                 x, y = center_x + dx, center_y + dy
                 if 0 <= x < self._width and 0 <= y < self._height:
                     self._grid[y][x] = " "
-
-    def _place_building(
-        self, building_type: str, x: int, y: int, is_completed: bool
-    ) -> None:
-        building_char = building_type if is_completed else building_type.lower()
-        width, height = self._building_sizes[building_type]
-        if self._can_place_building(x, y, width, height):
-            self._clear_area(x, y, width, height)
-            self._place_on_grid(x, y, width, height, building_char)
 
     def _place_building_random(self, building_type: str, is_completed: bool) -> None:
         center_x, center_y = self._width // 2, self._height // 2
@@ -175,7 +163,7 @@ def print_grid(grid: List[List[str]]) -> None:
 
 
 if __name__ == "__main__":
-    grid_size = 200  # You can set any size you want
+    grid_size = 50  # You can set any size you want
     generator = GridGenerator(size=grid_size)
     generated_grid = generator.generate()
 
