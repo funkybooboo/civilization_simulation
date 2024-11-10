@@ -2,6 +2,10 @@ from typing import override, Optional
 from src.simulation.grid.building.barn import Barn
 from src.simulation.grid.building.building_type import BuildingType
 from src.simulation.grid.building.home import Home
+from typing import override, Optional
+from src.simulation.grid.building.barn import Barn
+from src.simulation.grid.building.building_type import BuildingType
+from src.simulation.grid.building.home import Home
 from task import Task
 
 from src.simulation.people.person.person import Person
@@ -11,6 +15,10 @@ from src.simulation.simulation import Simulation
 class Eat(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
+
+        self._home: Optional[Home] = None
+        self._barn: Optional[Barn] = None
+        self._food: int = 0
 
         self._home: Optional[Home] = None
         self._barn: Optional[Barn] = None
@@ -70,7 +78,11 @@ class Eat(Task):
         self._home = None
         self._barn = None
         self._food = 0
+        self._home = None
+        self._barn = None
+        self._food = 0
 
     @override
     def get_remaining_time(self) -> int:
+        return self._person.move_to_time_estimate() + 1
         return self._person.move_to_time_estimate() + 1
