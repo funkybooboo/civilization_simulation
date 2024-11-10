@@ -3,6 +3,7 @@ from typing import override, Optional
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
 from src.simulation.grid.structure.structure_type import StructureType
+
 from task import Task
 
 from src.simulation.people.person.person import Person
@@ -54,14 +55,21 @@ class Eat(Task):
 
         if self._barn:
             self._food = self._barn.remove_resource("food", self._home.get_capacity())
+            # if the barn has no food, start working a farm to get food
+            if self._food <= 0:
+                self._person.work_farm()
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
             self._barn = self._person.move_to_workable_structure(StructureType.BARN)
 
         if self._barn:
-            self._person.eat(self._barn)
-            self._finished()
+            # if the barn is out of food, go work the farm to get some food
+            if self._barn.get_food_stored() <= 0:
+                self._person.work_farm()
+            else:
+                self._person.eat(self._barn)
+                self._finished()
 
     @override
     def _clean_up_task(self) -> None:

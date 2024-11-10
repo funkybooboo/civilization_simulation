@@ -16,17 +16,6 @@ class People:
             self
         )
         self._time: int = 0
-        
-    def flush(self):
-        for person in self._people:
-            person.get_scheduler().flush()
-
-    def generate_disasters(self, chance: float = 0.50) -> None:
-        self._disaster_generator.generate(chance)
-
-    def print(self) -> None:
-        for person in self._people:
-            print(person)
 
     def take_actions_for_day(self) -> None:
         for action in range(self._actions_per_day):
@@ -42,6 +31,17 @@ class People:
 
     def get_time(self) -> int:
         return self._time
+        
+    def flush(self):
+        for person in self._people:
+            person.get_scheduler().flush()
+
+    def generate_disasters(self, chance: float = 0.50) -> None:
+        self._disaster_generator.generate(chance)
+
+    def print(self) -> None:
+        for person in self._people:
+            print(person)
 
     def age(self) -> None:
         for person in self._people:
