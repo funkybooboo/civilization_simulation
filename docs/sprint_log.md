@@ -65,6 +65,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-07 | 5     | Ann Marie | Worked on adding tasks to code, reviewing pull request, met with Nate                                  |
 | 2024-11-08 | 1    | Brighton  | Reviewing town logic PR, pushed barn inventory PR                                                      |
 | 2024-11-08 |       |           |                                                                                                        |
+| 2024-11-09 | 8.25  | Ann Marie | Finished up logic for non-build tasks, added calls to schedule those tasks                             |
 
 ## Sprint 3
 
