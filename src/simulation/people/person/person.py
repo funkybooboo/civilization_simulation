@@ -39,9 +39,21 @@ class Person:
         self._moving_to_building_type: Optional[StructureType] = None
         self._building: Optional[Structure] = None
         self._searched_building_count: int = 0
+        
+    def get_empties(self) -> List[Location]:
+        return list(self._memory.get_empty_locations())
+    
+    def get_buildings(self) -> List[Location]:
+        return list(self._memory.get_building_locations())
     
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
+    
+    def go_to_location(self, location: Location):
+        self._moving_to_building_type = None
+        self._visited_buildings = set()
+        self._building = None
+        self._mover.towards(location)
 
     def take_action(self) -> None:
         self._add_tasks()
@@ -127,11 +139,6 @@ class Person:
     def age(self) -> None:
         self._age += 1
         
-    def find_build_location(self, building_type: StructureType) -> Location:
-        # check memory for open spots to construction
-        # if you cant find any then walk to a place where empty space is likely
-        pass
-
     def get_home_locations(self):
         return self._memory.get_home_locations()
 
@@ -196,7 +203,7 @@ class Person:
                 raise Exception("You tried to go to a unknown structure")
 
             self._building = self._move_to(buildings)
-            if not building_type == BuildingType.TREE and not self._building and self._searched_building_count >= (len(buildings) * 0.37):
+            if not building_type == StructureType.TREE and not self._building and self._searched_building_count >= (len(buildings) * 0.37):
                 self._scheduler.add(construction_type)
 
 
