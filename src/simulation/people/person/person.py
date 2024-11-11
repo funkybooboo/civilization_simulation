@@ -214,6 +214,9 @@ class Person:
     def move_to_home(self) -> Optional[Home]:
         """Move towards home, if it's set."""
         return self._navigator.move_to_home()
+    
+    def get_simulation(self) -> Simulation:
+        return self._simulation
 
     def move_to_workable_structure(
         self, building_type: StructureType, resource_name: Optional[str] = None

@@ -1,6 +1,8 @@
 import random
 
 from src.simulation.people.people import People
+from src.simulation.people.person.scheduler.scheduler import Scheduler
+
 
 
 class PeopleDisasterGenerator:
@@ -52,46 +54,32 @@ class PeopleDisasterGenerator:
 
     def _sickness(self, severity: int) -> None:
         """Person gets sick, losing health."""
-        percent_affected = severity * 10 / 100 
-        # Logic to reduce health of the affected person
-        person_list = random.shuffle(self.get_people().get_people_list())
-        num_affected = int(len(person_list) * percent_affected)
-        affected_people = random.sample(person_list, num_affected)
+        affected_people = self._get_affected_people(severity, 0.1)
 
         for person in affected_people:
             person.set_health(-30) # arbitrary decrement value
 
     def _craving(self, severity: int) -> None:
         """Craving causes hunger to increase."""
-        percent_affected = severity * 10 / 100  
-        person_list = random.shuffle(self.get_people().get_people_list())
-        num_affected = int(len(person_list) * percent_affected)
-        affected_people = random.sample(person_list, num_affected)
+        affected_people = self._get_affected_people(severity, 0.1)
 
         for person in affected_people:
             person.set_hunger(-30) # arbitrary decrement value
 
     def _death(self, severity: int) -> None:
         """A person dies."""
-        percent_affected = severity * 10 / 100  
-        person_list = random.shuffle(self.get_people().get_people_list())
-        num_affected = int(len(person_list) * percent_affected)
-        affected_people = random.sample(person_list, num_affected)
+        affected_people = self._get_affected_people(severity, 0.1)
 
         for person in affected_people:
             person.set_health(-101) # person is dead
 
     def _forget_tasks(self, severity: int) -> None:
         """Person forgets their tasks."""
-        print("Someone has forgotten their tasks!")
-        # Severity could affect how many tasks are forgotten or how long it lasts
-        if severity > 5:
-            print("They've forgotten all their tasks for the week!")
-        else:
-            print("They forgot a few tasks, but it's manageable.")
+        affected_people = self._get_affected_people(severity, 0.1)
 
-        # Logic to clear or reset their task list
-        # self.person.tasks.clear()
+        for person in affected_people:
+            person = Scheduler(person.get_simulation(), person)
+            person.flush()
 
     def _sleepwalk(self, severity: int) -> None:
         """A person sleepwalks into the woods."""
@@ -119,3 +107,9 @@ class PeopleDisasterGenerator:
         # Example corners for a 2D map
         corners = [(0, 0), (0, 10), (10, 0), (10, 10)]
         return random.choice(corners)
+
+    def _get_affected_people(self, severity: int, percent: float) -> List[Person]:
+        percent_affected = severity * percent
+        person_list = random.shuffle(self.get_people().get_people_list())
+        num_affected = int(len(person_list) * percent_affected)
+        return random.sample(person_list, num_affected)
