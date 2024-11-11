@@ -1,6 +1,7 @@
 from typing import override, Optional
 
 from src.simulation.grid.structure.store.store import Store
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.backpack import Backpack
 from src.simulation.people.person.person import Person
@@ -49,3 +50,7 @@ class Transport(Task):
     @override
     def get_remaining_time(self) -> int:
         return 3
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return self._store

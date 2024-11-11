@@ -63,6 +63,14 @@ class Person:
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
     
+    def get_work_structures(self) -> List[Location]:
+        structures: List[Structure] = []
+        for task in self._scheduler.get_all_tasks():
+            structure: Structure = task.get_work_structure()
+            if structure:
+                structures.append(structure)
+        return list(map(lambda s: s.get_location(), structures))
+    
     def kill(self):
         self._health = 0
     
@@ -150,7 +158,12 @@ class Person:
         self._spouse = spouse
 
     def assign_home(self, home: Home) -> None:
+        if self._home == home:
+            return 
         self._home = home
+        home.assign_owner()
+        if self.has_spouse():
+            self.get_spouse().assign_home(home)
 
     def has_home(self) -> bool:
         return self._home is not None

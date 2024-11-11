@@ -2,6 +2,7 @@ from typing import override, Optional
 
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 
 from task import Task
@@ -80,3 +81,7 @@ class Eat(Task):
     @override
     def get_remaining_time(self) -> int:
         return self._person.move_to_time_estimate() + 1
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return None

@@ -1,6 +1,7 @@
 from src.simulation.grid.structure.store.home import Home
+from src.simulation.grid.structure.structure import Structure
 from task import Task
-from typing import override
+from typing import override, Optional
 
 from src.simulation.people.person.person import Person
 from src.simulation.simulation import Simulation
@@ -20,14 +21,8 @@ class FindHome(Task):
 
                     if not home.has_owner():
                         self._person.assign_home(home)
-
-                        if self._person.has_spouse():
-                            self._person.get_spouse().assign_home(home)
-                        
-                        home.assign_owner()
                         self._finished()
                         return
-
             # if all homes have owners, construction a home (add build_home task)
             self._person.start_home_construction()
         else:
@@ -40,3 +35,7 @@ class FindHome(Task):
     @override
     def get_remaining_time(self) -> int:
         return 0
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return None

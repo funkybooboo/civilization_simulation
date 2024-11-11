@@ -2,6 +2,7 @@ from abc import ABC
 from typing import override, Optional
 
 from src.simulation.grid.structure.store.store import Store
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.structure.work.construction.construction import Construction
 from src.simulation.people.person.person import Person
@@ -57,3 +58,7 @@ class Build(Task, ABC):
     @override
     def get_remaining_time(self) -> int:
         return self._person.move_to_time_estimate() + self._build.work_time_estimate() if self._build else 3
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return self._build
