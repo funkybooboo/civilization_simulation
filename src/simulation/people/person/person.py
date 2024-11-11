@@ -1,7 +1,5 @@
-from typing import List, Optional, Set
+from typing import List, Optional, Set, Dict, Callable
 
-from memory import Memory
-from mover import Mover
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
 from src.simulation.grid.structure.store.barn import Barn
@@ -11,6 +9,8 @@ from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.location import Location
 from src.simulation.people.person.backpack import Backpack
+from src.simulation.people.person.memory import Memory
+from src.simulation.people.person.movement.navigator import Navigator
 from src.simulation.simulation import Simulation
 
 
@@ -26,7 +26,7 @@ class Person:
         
         self._backpack = Backpack()
         self._memory: Memory = Memory()
-        self._mover: Mover = Mover(simulation.get_grid(), self, self._memory, 10)
+        self._navigator: Navigator = Navigator(simulation, self)
 
         self._health: int = 100
         self._hunger: int = (
@@ -73,18 +73,6 @@ class Person:
     
     def kill(self):
         self._health = 0
-    
-    def is_stuck(self) -> bool:
-        location: Optional[Location] = self._simulation.get_grid().get_open_spot_next_to_town()
-        if not location:
-            return True
-        return self._mover.can_get_to_location(location)
-    
-    def go_to_location(self, location: Location):
-        self._moving_to_building_type = None
-        self._visited_buildings = set()
-        self._building = None
-        self._mover.towards(location)
 
     def take_action(self) -> None:
         self._hunger -= 1
@@ -188,88 +176,25 @@ class Person:
     def get_home_locations(self):
         return self._memory.get_home_locations()
 
+    def is_stuck(self) -> bool:
+        return self._navigator.is_stuck()
+
+    def go_to_location(self, location: Location) -> None:
+        self._navigator.go_to_location(location)
+
     def explore(self) -> None:
-        self._mover.explore()
+        """Explore the area to search for buildings."""
+        self._navigator.explore()
 
     def move_to_home(self) -> Optional[Home]:
-        self._moving_to_building_type = StructureType.HOME
-        self._visited_buildings = set()
-        self._building = self._home
-        self._mover.towards(self._home.get_location())
-        if self._location.is_one_away(self._home.get_location()):
-            self._moving_to_building_type = None
-            self._visited_buildings = set()
-            self._building = None
-            return self._home
-        return None
+        """Move towards home, if it's set."""
+        return self._navigator.move_to_home()
+
+    def move_to_workable_structure(self, building_type: StructureType, resource_name: Optional[str] = None) -> Optional[Structure]:
+        """Move to a building that is workable (e.g., has capacity or resources)."""
+        return self._navigator.move_to_workable_structure(building_type, resource_name)
 
     def move_to_time_estimate(self) -> int:
-        if not self._building:  # the current structure I am trying to get too
-            return (
-                5  # you haven't told me to go to a building_type yet, so I'm guessing 5
-            )
-        return (
-            self._building.get_location().distance_to(self._location) // 10
-        )  # move 10 blocks every action
-
-    def move_to_workable_structure(self, building_type: StructureType) -> Optional[Structure]:
-        # TODO: if you're eating, only go to barns that have food in them
-
-        # check if types are different
-        if self._moving_to_building_type != building_type:
-            self._moving_to_building_type = building_type
-            self._visited_buildings = set()
-            self._building = None
-
-        if not self._building:
-            if building_type == StructureType.FARM:
-                self._building = self._move_to(list(self._memory.get_farm_locations()))
-            elif building_type == StructureType.MINE:
-                self._building = self._move_to(list(self._memory.get_mine_locations()))
-            elif building_type == StructureType.BARN:
-                self._building = self._move_to(list(self._memory.get_barn_locations()))
-            elif building_type == StructureType.HOME:
-                self._building = self._move_to(list(self._memory.get_home_locations()))
-            elif building_type == StructureType.TREE:
-                self._building = self._move_to(list(self._memory.get_tree_locations()))
-
-            if building_type == StructureType.FARM:
-                buildings: List[Location] = list(self._memory.get_farm_locations())
-                construction_type: TaskType = TaskType.START_FARM_CONSTRUCTION
-            elif building_type == StructureType.MINE:
-                buildings: List[Location] = list(self._memory.get_mine_locations())
-                construction_type: TaskType = TaskType.START_MINE_CONSTRUCTION
-            elif building_type == StructureType.BARN:
-                buildings: List[Location] = list(self._memory.get_barn_locations())
-                construction_type: TaskType = TaskType.START_BARN_CONSTRUCTION
-            elif building_type == StructureType.HOME:
-                buildings: List[Location] = list(self._memory.get_home_locations())
-                construction_type: TaskType = TaskType.START_HOME_CONSTRUCTION
-            else:
-                raise Exception("You tried to go to a unknown structure")
-
-            self._building = self._move_to(buildings)
-            if not building_type == StructureType.TREE and not self._building and self._searched_building_count >= (len(buildings) * 0.37):
-                self._scheduler.add(construction_type)
-
-
-        if self._location.is_one_away(self._building.get_location()):
-            if self._building.has_capacity():
-                self._moving_to_building_type = None
-                self._visited_buildings = set()
-                self._building = None
-                return self._building
-            else:
-                self._visited_buildings.add(self._building)
-        return None
-
-    def _move_to(self, locations: List[Location]) -> Structure:
-        visited_buildings_locations: List[Location] = [
-            b.get_location() for b in self._visited_buildings
-        ]
-        filtered = list(
-            filter(lambda l: not l in visited_buildings_locations, locations)
-        )
-        closest = self._mover.get_closest(filtered)
-        self._mover.towards(closest)
-        return self._simulation.get_grid().get_structure(closest)
+        """Estimate the time to move to the current building."""
+        return self.move_to_time_estimate()
+    
