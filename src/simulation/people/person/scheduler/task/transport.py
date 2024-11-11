@@ -4,6 +4,7 @@ from src.simulation.grid.structure.store.store import Store
 from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.backpack import Backpack
+from src.simulation.people.person.movement.move_result import MoveResult
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.simulation import Simulation
@@ -33,9 +34,13 @@ class Transport(Task):
                 self._store = None
                 self._finished()
             else:
-                self._store: Optional[Store] = self._person.move_to_workable_structure(
+                move_result: MoveResult = self._person.move_to_workable_structure(
                     self._store_structure
                 )
+                if move_result.has_failed():
+                    self._finished()
+                    return
+                self._store: Optional[Store] = move_result.get_structure()
         else:
             self._what_resource = self._backpack.what_resource()
             amount = self._backpack.get_resource(self._what_resource)

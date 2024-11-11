@@ -5,6 +5,7 @@ from src.simulation.grid.structure.store.store import Store
 from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.structure.work.construction.construction import Construction
+from src.simulation.people.person.movement.move_result import MoveResult
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.simulation import Simulation
@@ -51,16 +52,24 @@ class Build(Task, ABC):
                         )
                     self._finished()
                 else:
-                    self._store: Optional[Store] = (
+                    move_result: MoveResult = (
                         self._person.move_to_workable_structure(self._store_structure)
                     )
+                    if move_result.has_failed():
+                        self._finished()
+                        return 
+                    self._store: Optional[Store] = move_result.get_structure()
             else:
                 if self._build.work(self._person):
                     self._finished()
         else:
-            self._build: Optional[Construction] = (
+            move_result: MoveResult = (
                 self._person.move_to_workable_structure(self._build_structure)
             )
+            if move_result.has_failed():
+                self._finished()
+                return 
+            self._build: Optional[Construction] = move_result.get_structure()
 
     @override
     def _clean_up_task(self) -> None:

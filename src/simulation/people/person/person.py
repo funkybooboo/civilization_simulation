@@ -1,4 +1,4 @@
-from typing import List, Optional, Set, Dict, Callable
+from typing import List, Optional, Set, Dict, Callable, Tuple
 
 from scheduler.scheduler import Scheduler
 from scheduler.task.task_type import TaskType
@@ -10,6 +10,7 @@ from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.location import Location
 from src.simulation.people.person.backpack import Backpack
 from src.simulation.people.person.memory import Memory
+from src.simulation.people.person.movement.move_result import MoveResult
 from src.simulation.people.person.movement.navigator import Navigator
 from src.simulation.simulation import Simulation
 
@@ -194,7 +195,7 @@ class Person:
 
     def move_to_workable_structure(
         self, building_type: StructureType, resource_name: Optional[str] = None
-    ) -> Optional[Structure]:
+    ) -> MoveResult:
         """Move to a building that is workable (e.g., has capacity or resources)."""
         return self._navigator.move_to_workable_structure(building_type, resource_name)
 

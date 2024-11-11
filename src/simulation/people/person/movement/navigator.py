@@ -1,9 +1,10 @@
-from typing import Optional, List, Dict, Callable, Set
+from typing import Optional, List, Dict, Callable, Set, Tuple
 from src.simulation.grid.location import Location
 from src.simulation.grid.structure.store.home import Home
 from src.simulation.grid.structure.store.store import Store
 from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
+from src.simulation.people.person.movement.move_result import MoveResult
 from src.simulation.people.person.movement.mover import Mover
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task_type import TaskType
@@ -18,7 +19,7 @@ class Navigator:
         self._moving_to_building_type: Optional[str] = None
         self._visited_buildings: Set[Structure] = set()
         self._searched_building_count: int = 0
-        self._building: Optional[Structure] = None
+        self._structure: Optional[Structure] = None
         self._mover: Mover = Mover(
             simulation.get_grid(), person, self._person.get_memory(), 10
         )
@@ -35,7 +36,7 @@ class Navigator:
     def go_to_location(self, location: Location):
         """Move directly to the specified location."""
         self._reset_moving_state(None)
-        self._building = None
+        self._structure = None
         self._mover.towards(location)
 
     def explore(self) -> None:
@@ -47,50 +48,52 @@ class Navigator:
 
     def move_to_time_estimate(self) -> int:
         """Estimate the time to move to the current building."""
-        if not self._building:
+        if not self._structure:
             return 5  # Default estimate if no building is set
         return (
-            self._building.get_location().distance_to(self._person.get_location()) // 10
+                self._structure.get_location().distance_to(self._person.get_location()) // 10
         )
 
     def move_to_home(self) -> Optional[Home]:
         """Move towards home, if it's set."""
         self._moving_to_building_type = StructureType.HOME
         self._visited_buildings.clear()
-        self._building = self._person.get_home()
-        self._mover.towards(self._building.get_location())
+        self._structure = self._person.get_home()
+        self._mover.towards(self._structure.get_location())
 
         # Check if already at home
-        if self._person.get_location().is_one_away(self._building.get_location()):
+        if self._person.get_location().is_one_away(self._structure.get_location()):
             self._reset_moving_state(None)
-            return self._building  # Return the home structure
+            return self._structure  # Return the home structure
         return None
 
     def move_to_workable_structure(
-        self, building_type: StructureType, resource_name: Optional[str] = None
-    ) -> Optional[Structure]:
+        self, structure_type: StructureType, resource_name: Optional[str] = None
+    ) -> MoveResult:
         """Move to a building that is workable (e.g., has capacity or resources)."""
-        if self._moving_to_building_type != building_type:
-            self._reset_moving_state(building_type)
+        if self._moving_to_building_type != structure_type:
+            self._reset_moving_state(structure_type)
 
-        if not self._building:
-            self._building = self._find_and_move_to_building(building_type)
+        if not self._structure:
+            failed, self._structure = self._find_and_move_to_structure(structure_type)
+            if failed:
+                return MoveResult(failed, None)
 
-        if self._is_building_nearby_and_has_capacity(resource_name):
-            return self._building
+        if self._is_structure_nearby_and_has_capacity(resource_name):
+            return MoveResult(False, self._structure)
 
-        return None
+        return MoveResult(False, None)
 
     def _reset_moving_state(self, building_type: Optional[StructureType]) -> None:
         """Reset the state when moving to a different building type."""
         self._moving_to_building_type = building_type
         self._visited_buildings.clear()
         self._searched_building_count = 0
-        self._building = None
+        self._structure = None
 
-    def _find_and_move_to_building(
+    def _find_and_move_to_structure(
         self, building_type: StructureType
-    ) -> Optional[Structure]:
+    ) -> Tuple[bool, Optional[Structure]]:
         """Find and move to the specified building type."""
         building_data: Dict[StructureType, Callable[[], Set[Location]]] = (
             self._get_structure_locations()
@@ -113,8 +116,9 @@ class Navigator:
             and self._searched_building_count >= (len(buildings) * 0.37)
         ):
             self._person.get_scheduler().add(construction_type)
+            return True, None
 
-        return building
+        return False, building
 
     def _get_structure_locations(
         self,
@@ -138,18 +142,18 @@ class Navigator:
             StructureType.HOME: TaskType.START_HOME_CONSTRUCTION,
         }
 
-    def _is_building_nearby_and_has_capacity(
+    def _is_structure_nearby_and_has_capacity(
         self, resource_name: Optional[str]
     ) -> bool:
         """Check if the building is nearby and has capacity."""
-        if self._person.get_location().is_one_away(self._building.get_location()):
-            if resource_name and isinstance(self._building, Store):
-                return self._building.get_resource(resource_name) > 0
-            elif self._building.has_capacity():
+        if self._person.get_location().is_one_away(self._structure.get_location()):
+            if resource_name and isinstance(self._structure, Store):
+                return self._structure.get_resource(resource_name) > 0
+            elif self._structure.has_capacity():
                 self._reset_moving_state(None)
                 return True
             else:
-                self._visited_buildings.add(self._building)
+                self._visited_buildings.add(self._structure)
         return False
 
     def _move_to(self, locations: List[Location]) -> Optional[Structure]:
