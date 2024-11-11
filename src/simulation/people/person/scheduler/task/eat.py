@@ -62,7 +62,7 @@ class Eat(Task):
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to_workable_structure(StructureType.BARN)
+            self._barn = self._person.move_to_workable_structure(StructureType.BARN, "food")
 
         if self._barn:
             # if the barn is out of food, go work the farm to get some food
