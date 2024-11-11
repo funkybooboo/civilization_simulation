@@ -2,7 +2,9 @@ from typing import override, Optional
 
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
+from src.simulation.people.person.movement.move_result import MoveResult
 
 from task import Task
 
@@ -51,7 +53,11 @@ class Eat(Task):
 
     def _acquire_food_from_barn(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to_workable_structure(StructureType.BARN)
+            move_result: MoveResult = self._person.move_to_workable_structure(StructureType.BARN, "food")
+            if move_result.has_failed():
+                self._finished()
+                return 
+            self._barn = move_result.get_structure()
 
         if self._barn:
             self._food = self._barn.remove_resource("food", self._home.get_capacity())
@@ -61,7 +67,13 @@ class Eat(Task):
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
-            self._barn = self._person.move_to_workable_structure(StructureType.BARN)
+            move_result: MoveResult = self._person.move_to_workable_structure(
+                StructureType.BARN, "food"
+            )
+            if move_result.has_failed():
+                self._finished()
+                return 
+            self._barn = move_result.get_structure()
 
         if self._barn:
             # if the barn is out of food, go work the farm to get some food
@@ -80,3 +92,7 @@ class Eat(Task):
     @override
     def get_remaining_time(self) -> int:
         return self._person.move_to_time_estimate() + 1
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return None

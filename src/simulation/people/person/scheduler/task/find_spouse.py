@@ -1,5 +1,6 @@
-from typing import override
+from typing import override, Optional
 
+from src.simulation.grid.structure.structure import Structure
 from task import Task
 
 from src.simulation.people.person.person import Person
@@ -17,7 +18,7 @@ class FindSpouse(Task):
                 if not other.has_spouse():
                     self._person.assign_spouse(other)
                     other.assign_spouse(self._person)
-                    
+
                     # make sure they have the same house
                     if self._person.has_home():
                         other.assign_home(self._person.get_home())
@@ -35,3 +36,7 @@ class FindSpouse(Task):
     @override
     def get_remaining_time(self) -> int:
         return 1
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return None

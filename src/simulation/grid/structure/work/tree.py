@@ -12,7 +12,7 @@ class Tree(Work):
         max_worker_count = 1
         max_work_count = 2
         super().__init__(grid, location, 1, 1, "*", max_worker_count, max_work_count)
-    
+
     @override
     def _get_yield(self) -> float:
         """

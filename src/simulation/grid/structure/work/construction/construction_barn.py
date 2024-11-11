@@ -5,4 +5,15 @@ from src.simulation.grid.structure.work.construction.construction import Constru
 
 class ConstructionBarn(Construction):
     def __init__(self, grid: Grid, location: Location):
-        super().__init__(grid, location, 3, 3, "b", required_wood=60, required_stone=30, max_work_count=3, max_worker_count=3, finished_completion_level=5)
+        super().__init__(
+            grid,
+            location,
+            3,
+            3,
+            "b",
+            required_wood=60,
+            required_stone=30,
+            max_work_count=3,
+            max_worker_count=3,
+            finished_completion_level=5,
+        )

@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 class GridPlotter:
     def __init__(self):
-        self._years: Dict[int: plt.Figure] = {}
+        self._years: Dict[int : plt.Figure] = {}
         self._color_map: dict[str, str] = {}
         # Use a perceptually uniform palette to ensure distinct colors
         self._palette = sns.color_palette("husl", n_colors=100)  # 100 distinct colors

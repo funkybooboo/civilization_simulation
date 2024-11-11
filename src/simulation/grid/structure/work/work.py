@@ -6,16 +6,17 @@ from src.simulation.grid.location import Location
 from src.simulation.grid.structure.structure import Structure
 from src.simulation.people.person.person import Person
 
+
 class Work(Structure, ABC):
     def __init__(
-            self,
-            grid: Grid,
-            location: Location,  # top left corner
-            width: int,
-            height: int,
-            char: str,
-            max_worker_count: int,
-            max_work_count: int,
+        self,
+        grid: Grid,
+        location: Location,  # top left corner
+        width: int,
+        height: int,
+        char: str,
+        max_worker_count: int,
+        max_work_count: int,
     ):
         super().__init__(grid, location, width, height, char)
         self._max_worker_count = max_worker_count
@@ -45,7 +46,9 @@ class Work(Structure, ABC):
 
         if self._workers[person] > self._max_work_count:
             self.remove_worker(person)
-            return int(self._get_yield())  # Return the generated yield amount as an integer.
+            return int(
+                self._get_yield()
+            )  # Return the generated yield amount as an integer.
 
         return None
 
@@ -62,7 +65,7 @@ class Work(Structure, ABC):
         Each subclass should define how to generate the yield, if needed.
         """
         pass
-    
+
     def exchange_worker_memories(self):
         workers: List[Person] = list(self._workers.keys())
         pairs: List[Tuple[Person, Person]] = list(itertools.combinations(workers, 2))

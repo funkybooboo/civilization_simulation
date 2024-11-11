@@ -3,9 +3,10 @@ from typing import override
 
 from typing_extensions import Optional
 
-from src.simulation.grid.structure.store.store import Store
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.structure.work.work import Work as WorkStructure
+from src.simulation.people.person.movement.move_result import MoveResult
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.simulation import Simulation
@@ -13,17 +14,17 @@ from src.simulation.simulation import Simulation
 
 class Work(Task, ABC):
     def __init__(
-            self, 
-            simulation: Simulation, 
-            person: Person, 
-            priority: int,
-            work_structure: StructureType, 
-            resource_name: str
+        self,
+        simulation: Simulation,
+        person: Person,
+        priority: int,
+        work_structure: StructureType,
+        resource_name: str,
     ) -> None:
         super().__init__(simulation, person, priority)
         self._work_structure: StructureType = work_structure
         self._resource_name: str = resource_name
-        
+
         self._work: Optional[WorkStructure] = None
 
     @override
@@ -34,7 +35,13 @@ class Work(Task, ABC):
                 self._person.get_backpack().add_resource(self._resource_name, resource)
                 self._finished()
         else:
-            self._work: Optional[WorkStructure] = self._person.move_to_workable_structure(self._work_structure)
+            move_result: MoveResult = (
+                self._person.move_to_workable_structure(self._work_structure)
+            )
+            if move_result.has_failed():
+                self._finished()
+                return
+            self._work: Optional[WorkStructure] = move_result.get_structure()
 
     @override
     def _clean_up_task(self) -> None:
@@ -43,4 +50,12 @@ class Work(Task, ABC):
 
     @override
     def get_remaining_time(self) -> int:
-        return self._person.move_to_time_estimate() + self._work.work_time_estimate() if self._work else 3
+        return (
+            self._person.move_to_time_estimate() + self._work.work_time_estimate()
+            if self._work
+            else 3
+        )
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return self._work

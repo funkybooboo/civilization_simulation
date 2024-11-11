@@ -8,7 +8,7 @@ class Visualizer:
     def __init__(self) -> None:
         self._grid_plotter: GridPlotter = GridPlotter()
         self._state_plotter: StatePlotter = StatePlotter()
-        
+
     def display_town_slide_show(self) -> None:
         self._grid_plotter.show_slide_show()
 
