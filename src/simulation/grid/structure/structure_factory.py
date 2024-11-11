@@ -6,10 +6,18 @@ from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
-from src.simulation.grid.structure.work.construction.construction_barn import ConstructionBarn
-from src.simulation.grid.structure.work.construction.construction_farm import ConstructionFarm
-from src.simulation.grid.structure.work.construction.construction_home import ConstructionHome
-from src.simulation.grid.structure.work.construction.construction_mine import ConstructionMine
+from src.simulation.grid.structure.work.construction.construction_barn import (
+    ConstructionBarn,
+)
+from src.simulation.grid.structure.work.construction.construction_farm import (
+    ConstructionFarm,
+)
+from src.simulation.grid.structure.work.construction.construction_home import (
+    ConstructionHome,
+)
+from src.simulation.grid.structure.work.construction.construction_mine import (
+    ConstructionMine,
+)
 from src.simulation.grid.structure.work.farm import Farm
 from src.simulation.grid.structure.work.mine import Mine
 from src.simulation.grid.structure.work.tree import Tree
@@ -31,6 +39,8 @@ class StructureFactory:
     def __init__(self, grid: Grid) -> None:
         self._grid = grid
 
-    def create_instance(self, building_type: StructureType, location: Location) -> Structure:
+    def create_instance(
+        self, building_type: StructureType, location: Location
+    ) -> Structure:
         building_class: Type = self._constructors[building_type]
         return building_class(self._grid, location)

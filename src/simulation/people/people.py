@@ -15,7 +15,9 @@ class People:
         self._actions_per_day: int = actions_per_day
         self._people_generator: PeopleGenerator = PeopleGenerator(simulation)
         self._people: List[Person] = self._people_generator.generate()
-        self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(self)
+        self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(
+            self
+        )
         self._home_manager: HomeManager = HomeManager(self)
         self._time: int = 0
 
@@ -38,7 +40,7 @@ class People:
     def kill_stuck(self) -> None:
         for person in self._people:
             if person.is_stuck():
-                person.kill() # they got stuck and died
+                person.kill()  # they got stuck and died
 
     def spouses_share_memory(self):
         for person in self.get_married_people():
@@ -46,7 +48,7 @@ class People:
 
     def get_time(self) -> int:
         return self._time
-        
+
     def flush(self):
         for person in self._people:
             person.get_scheduler().flush()
@@ -81,20 +83,27 @@ class People:
 
     def get_person_list(self) -> List[Person]:
         return self._people
-    
+
     def make_babies(self) -> None:
         for person in self.get_married_people():
-            if (person.get_age() >= 18) and (person.get_age() <= 50) and (person.get_spouse().get_age() >= 18) and (person.get_spouse().get_age() <= 50):
+            if (
+                (person.get_age() >= 18)
+                and (person.get_age() <= 50)
+                and (person.get_spouse().get_age() >= 18)
+                and (person.get_spouse().get_age() <= 50)
+            ):
                 # create a baby next to the person's house
-                baby = self._people_generator.make_baby(person.get_home().get_location())
+                baby = self._people_generator.make_baby(
+                    person.get_home().get_location()
+                )
                 self._people.append(baby)
-    
+
     def get_married_people(self) -> List[Person]:
         married_people: List[Person] = []
         visited_people: List[Person] = []
         for person in self._people:
             if person in visited_people:
-                    continue
+                continue
             if not person.has_spouse():
                 visited_people.append(person)
                 continue
@@ -105,5 +114,5 @@ class People:
             married_people.append(person)
         return married_people
 
-    def __iter__(self) -> Iterator['Person']:
+    def __iter__(self) -> Iterator["Person"]:
         return iter(self._people)

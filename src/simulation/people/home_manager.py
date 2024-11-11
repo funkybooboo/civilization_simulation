@@ -28,7 +28,9 @@ class HomeManager:
         self._swap_home_assignments(matches)
 
     @staticmethod
-    def _remove_matched_people(far_people: Dict[Person, Location], matches: List[Tuple[Person, Person]]) -> None:
+    def _remove_matched_people(
+        far_people: Dict[Person, Location], matches: List[Tuple[Person, Person]]
+    ) -> None:
         """Remove matched people from the far_people list"""
         for person1, person2 in matches:
             far_people.pop(person1, None)
@@ -43,7 +45,9 @@ class HomeManager:
             person2.assign_home(home1)
 
     @staticmethod
-    def _find_matches(far_people: Dict[Person, Location], distance: int) -> List[Tuple[Person, Person]]:
+    def _find_matches(
+        far_people: Dict[Person, Location], distance: int
+    ) -> List[Tuple[Person, Person]]:
         """Find pairs of people whose homes are within the given distance"""
         matches = []
         matched_people = set()
@@ -63,10 +67,13 @@ class HomeManager:
         return matches
 
     @staticmethod
-    def _filter_people_near_centers(far_people: Dict[Person, Location]) -> Dict[Person, Location]:
+    def _filter_people_near_centers(
+        far_people: Dict[Person, Location]
+    ) -> Dict[Person, Location]:
         """Remove people whose homes are already near their work centers"""
         to_remove = [
-            person for person, center in far_people.items()
+            person
+            for person, center in far_people.items()
             if person.get_home().get_location().is_near(center, 30)
         ]
 
@@ -88,7 +95,9 @@ class HomeManager:
 
         for person in self._people.get_married_people():
             person_center = self._calculate_center(person.get_work_structures())
-            spouse_center = self._calculate_center(person.get_spouse().get_work_structures())
+            spouse_center = self._calculate_center(
+                person.get_spouse().get_work_structures()
+            )
             combined_center = self._calculate_center([person_center, spouse_center])
 
             if combined_center:
@@ -102,7 +111,9 @@ class HomeManager:
         if not structures:
             return None
 
-        total_x, total_y = sum(loc.x for loc in structures), sum(loc.y for loc in structures)
+        total_x, total_y = sum(loc.x for loc in structures), sum(
+            loc.y for loc in structures
+        )
         avg_x, avg_y = total_x // len(structures), total_y // len(structures)
 
         return Location(avg_x, avg_y)

@@ -6,6 +6,6 @@ class GridDisasterState(State):
     def __init__(self, grid: Grid):
         self._grid = grid
 
-        # TODO    
+        # TODO
 
         del self._grid

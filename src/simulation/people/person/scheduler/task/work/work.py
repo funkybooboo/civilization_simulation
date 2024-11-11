@@ -13,17 +13,17 @@ from src.simulation.simulation import Simulation
 
 class Work(Task, ABC):
     def __init__(
-            self, 
-            simulation: Simulation, 
-            person: Person, 
-            priority: int,
-            work_structure: StructureType, 
-            resource_name: str
+        self,
+        simulation: Simulation,
+        person: Person,
+        priority: int,
+        work_structure: StructureType,
+        resource_name: str,
     ) -> None:
         super().__init__(simulation, person, priority)
         self._work_structure: StructureType = work_structure
         self._resource_name: str = resource_name
-        
+
         self._work: Optional[WorkStructure] = None
 
     @override
@@ -34,7 +34,9 @@ class Work(Task, ABC):
                 self._person.get_backpack().add_resource(self._resource_name, resource)
                 self._finished()
         else:
-            self._work: Optional[WorkStructure] = self._person.move_to_workable_structure(self._work_structure)
+            self._work: Optional[WorkStructure] = (
+                self._person.move_to_workable_structure(self._work_structure)
+            )
 
     @override
     def _clean_up_task(self) -> None:
@@ -43,7 +45,11 @@ class Work(Task, ABC):
 
     @override
     def get_remaining_time(self) -> int:
-        return self._person.move_to_time_estimate() + self._work.work_time_estimate() if self._work else 3
+        return (
+            self._person.move_to_time_estimate() + self._work.work_time_estimate()
+            if self._work
+            else 3
+        )
 
     @override
     def get_work_structure(self) -> Optional[Structure]:

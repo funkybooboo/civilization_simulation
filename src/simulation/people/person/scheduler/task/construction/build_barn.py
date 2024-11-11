@@ -6,4 +6,6 @@ from src.simulation.simulation import Simulation
 
 class BuildBarn(Build):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5, StructureType.CONSTRUCTION_BARN, StructureType.BARN)
+        super().__init__(
+            simulation, person, 5, StructureType.CONSTRUCTION_BARN, StructureType.BARN
+        )

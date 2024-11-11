@@ -6,4 +6,6 @@ from src.simulation.simulation import Simulation
 
 class BuildFarm(Build):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5, StructureType.CONSTRUCTION_FARM, StructureType.BARN)
+        super().__init__(
+            simulation, person, 5, StructureType.CONSTRUCTION_FARM, StructureType.BARN
+        )

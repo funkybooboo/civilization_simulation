@@ -48,7 +48,7 @@ class Task(ABC):
     def _clean_up_task(self) -> None:
         # stop the work you are doing
         pass
-    
+
     @abstractmethod
     def get_work_structure(self) -> Optional[Structure]:
         # the structure the task works at or none if there is no structure for the task

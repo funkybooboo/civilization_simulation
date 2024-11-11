@@ -23,7 +23,7 @@ class Person:
         self._age: int = age
         self._simulation = simulation
         self._location: Location = location
-        
+
         self._backpack = Backpack()
         self._memory: Memory = Memory()
         self._navigator: Navigator = Navigator(simulation, self)
@@ -41,28 +41,28 @@ class Person:
         self._moving_to_building_type: Optional[StructureType] = None
         self._building: Optional[Structure] = None
         self._searched_building_count: int = 0
-        
+
     def get_backpack(self) -> Backpack:
         return self._backpack
-        
+
     def get_memory(self) -> Memory:
         return self._memory
-        
-    def exchange_memories(self, other: 'Person') -> None:
+
+    def exchange_memories(self, other: "Person") -> None:
         if not other:
-            return 
+            return
         self._memory.combine(other.get_memory())
         other.get_memory().combine(self._memory)
-        
+
     def get_empties(self) -> List[Location]:
         return list(self._memory.get_empty_locations())
-    
+
     def get_buildings(self) -> List[Location]:
         return list(self._memory.get_building_locations())
-    
+
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
-    
+
     def get_work_structures(self) -> List[Location]:
         structures: List[Structure] = []
         for task in self._scheduler.get_all_tasks():
@@ -70,7 +70,7 @@ class Person:
             if structure:
                 structures.append(structure)
         return list(map(lambda s: s.get_location(), structures))
-    
+
     def kill(self):
         self._health = 0
 
@@ -80,7 +80,7 @@ class Person:
             self._health -= 1
         elif self._hunger > 80:
             self._health += 1
-            
+
         self._add_tasks()
         self._scheduler.execute()
 
@@ -88,7 +88,7 @@ class Person:
         # 1. Find a home
         if not self._home:
             self._scheduler.add(TaskType.FIND_HOME)
-        
+
         # 2. Deliver items you are carrying
         if self._backpack.has_items():
             self._scheduler.add(TaskType.TRANSPORT)
@@ -98,11 +98,11 @@ class Person:
             # 3. Find a spouse
             if not self._spouse:
                 self._scheduler.add(TaskType.FIND_SPOUSE)
-                
+
             # 4. Eat food
             if self._hunger < 50:
                 self._scheduler.add(TaskType.EAT)
-        
+
         # TODO only try to do WORK if there is space in the backpack
 
         # TODO: add WORK_MINE or CHOP_TREE task if you find no wood/stone in the barn during a build task?
@@ -119,13 +119,13 @@ class Person:
 
     def get_hunger(self) -> int:
         return self._hunger
-    
+
     def get_home(self) -> Optional[Home]:
         return self._home
-    
+
     def get_spouse(self) -> Optional["Person"]:
         return self._spouse
-    
+
     def get_age(self) -> int:
         return self._age
 
@@ -144,7 +144,9 @@ class Person:
         if isinstance(building, Home):
             self._hunger = min(self._hunger + 10, 100)
         else:
-            self._hunger = min(self._hunger + 5, 100) # eating in a barn is less effective
+            self._hunger = min(
+                self._hunger + 5, 100
+            )  # eating in a barn is less effective
         building.remove_resource("food", 3)
 
     def assign_spouse(self, spouse: "Person") -> None:
@@ -152,7 +154,7 @@ class Person:
 
     def assign_home(self, home: Home) -> None:
         if self._home == home:
-            return 
+            return
         self._home = home
         home.assign_owner()
         if self.has_spouse():
@@ -169,10 +171,10 @@ class Person:
 
     def has_spouse(self) -> bool:
         return self._spouse is not None
-    
+
     def age(self) -> None:
         self._age += 1
-        
+
     def get_home_locations(self):
         return self._memory.get_home_locations()
 
@@ -190,11 +192,12 @@ class Person:
         """Move towards home, if it's set."""
         return self._navigator.move_to_home()
 
-    def move_to_workable_structure(self, building_type: StructureType, resource_name: Optional[str] = None) -> Optional[Structure]:
+    def move_to_workable_structure(
+        self, building_type: StructureType, resource_name: Optional[str] = None
+    ) -> Optional[Structure]:
         """Move to a building that is workable (e.g., has capacity or resources)."""
         return self._navigator.move_to_workable_structure(building_type, resource_name)
 
     def move_to_time_estimate(self) -> int:
         """Estimate the time to move to the current building."""
         return self.move_to_time_estimate()
-    

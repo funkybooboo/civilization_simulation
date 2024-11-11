@@ -12,17 +12,17 @@ from src.simulation.simulation import Simulation
 
 class Build(Task, ABC):
     def __init__(
-            self,
-            simulation: Simulation,
-            person: Person,
-            priority: int,
-            build_structure: StructureType,
-            store_structure: StructureType,
+        self,
+        simulation: Simulation,
+        person: Person,
+        priority: int,
+        build_structure: StructureType,
+        store_structure: StructureType,
     ) -> None:
         super().__init__(simulation, person, priority)
         self._build_structure: StructureType = build_structure
         self._store_structure: StructureType = store_structure
-        
+
         self._what_resource: Optional[str] = None
         self._resource: Optional[int] = None
         self._build: Optional[Construction] = None
@@ -38,17 +38,29 @@ class Build(Task, ABC):
             elif self._what_resource:
                 if self._store:
                     if self._what_resource == "stone":
-                        self._build.deliver_stone(self._store.remove_resource(self._what_resource, self._build.how_much_stone()))
+                        self._build.deliver_stone(
+                            self._store.remove_resource(
+                                self._what_resource, self._build.how_much_stone()
+                            )
+                        )
                     else:
-                        self._build.deliver_wood(self._store.remove_resource(self._what_resource, self._build.how_much_wood()))
+                        self._build.deliver_wood(
+                            self._store.remove_resource(
+                                self._what_resource, self._build.how_much_wood()
+                            )
+                        )
                     self._finished()
                 else:
-                    self._store: Optional[Store] = self._person.move_to_workable_structure(self._store_structure)
+                    self._store: Optional[Store] = (
+                        self._person.move_to_workable_structure(self._store_structure)
+                    )
             else:
                 if self._build.work(self._person):
                     self._finished()
         else:
-            self._build: Optional[Construction] = self._person.move_to_workable_structure(self._build_structure)
+            self._build: Optional[Construction] = (
+                self._person.move_to_workable_structure(self._build_structure)
+            )
 
     @override
     def _clean_up_task(self) -> None:
@@ -57,7 +69,11 @@ class Build(Task, ABC):
 
     @override
     def get_remaining_time(self) -> int:
-        return self._person.move_to_time_estimate() + self._build.work_time_estimate() if self._build else 3
+        return (
+            self._person.move_to_time_estimate() + self._build.work_time_estimate()
+            if self._build
+            else 3
+        )
 
     @override
     def get_work_structure(self) -> Optional[Structure]:

@@ -27,7 +27,7 @@ class StatePlotter:
             PeopleDisasterState(people),
             PeopleState(people),
             ResourceState(grid),
-            TaskState(people)
+            TaskState(people),
         ]
 
         # Add data for each state class
@@ -56,9 +56,9 @@ class StatePlotter:
     def _plot(title: str, lines: Dict[int, Dict[str, Number]]):
         """
         Plots lines for each label over the years.
-        
+
         :param title: A string to be used as the title of the plot. Default is "Line Plot of Data Over Years".
-        :param lines: A dictionary where keys are years (int) and values are dictionaries, 
+        :param lines: A dictionary where keys are years (int) and values are dictionaries,
                       where each dictionary maps labels (str) to numerical values (int/float).
         """
         # Prepare data for plotting
@@ -69,18 +69,20 @@ class StatePlotter:
 
         # Loop through each year and accumulate the data for each label
         for year in years:
-            year_data = lines[year]  # The data for this year is a dictionary of {label: value}
+            year_data = lines[
+                year
+            ]  # The data for this year is a dictionary of {label: value}
             for label, value in year_data.items():
                 if label not in labels_data:
-                    labels_data[label] = {'years': [], 'values': []}
-                labels_data[label]['years'].append(year)
-                labels_data[label]['values'].append(value)
+                    labels_data[label] = {"years": [], "values": []}
+                labels_data[label]["years"].append(year)
+                labels_data[label]["values"].append(value)
 
         # Now plot the lines for each label
         plt.figure(figsize=(10, 6))
 
         for label, data in labels_data.items():
-            sns.lineplot(x=data['years'], y=data['values'], label=label)
+            sns.lineplot(x=data["years"], y=data["values"], label=label)
 
         # Add titles and labels
         plt.title(title)

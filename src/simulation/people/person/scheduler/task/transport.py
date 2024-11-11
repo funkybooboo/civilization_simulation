@@ -13,7 +13,7 @@ class Transport(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, 5)
         self._backpack: Backpack = self._person.get_backpack()
-        
+
         self._store_structure: StructureType = StructureType.BARN
 
         self._what_resource: Optional[str] = None
@@ -33,7 +33,9 @@ class Transport(Task):
                 self._store = None
                 self._finished()
             else:
-                self._store: Optional[Store] = self._person.move_to_workable_structure(self._store_structure)
+                self._store: Optional[Store] = self._person.move_to_workable_structure(
+                    self._store_structure
+                )
         else:
             self._what_resource = self._backpack.what_resource()
             amount = self._backpack.get_resource(self._what_resource)
@@ -46,7 +48,7 @@ class Transport(Task):
             self._what_resource = None
             self._resource = None
             self._store = None
-    
+
     @override
     def get_remaining_time(self) -> int:
         return 3

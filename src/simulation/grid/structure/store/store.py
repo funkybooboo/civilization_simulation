@@ -8,20 +8,22 @@ from src.simulation.grid.structure.structure import Structure
 
 class Store(Structure, ABC):
     def __init__(
-            self,
-            grid: Grid,
-            location: Location,  # top left corner
-            width: int,
-            height: int,
-            char: str,
-            allowed_resources: Dict[str, int]  # Resources and their max capacities
+        self,
+        grid: Grid,
+        location: Location,  # top left corner
+        width: int,
+        height: int,
+        char: str,
+        allowed_resources: Dict[str, int],  # Resources and their max capacities
     ):
         super().__init__(grid, location, width, height, char)
 
         # Initialize the resources dictionary with allowed resources
         self.resources = {resource: 0 for resource in allowed_resources}
         # Store the max capacity for all resources combined (this is the overall capacity of the store)
-        self._capacity = sum(allowed_resources.values())  # The total capacity is the sum of the allowed resources' capacities
+        self._capacity = sum(
+            allowed_resources.values()
+        )  # The total capacity is the sum of the allowed resources' capacities
 
     @override
     def has_capacity(self) -> bool:
@@ -32,7 +34,7 @@ class Store(Structure, ABC):
         # Sum the resources stored and check if it is less than the store's total capacity
         total_stored = sum(self.resources.values())
         return total_stored < self._capacity
-    
+
     @staticmethod
     @override
     def work_time_estimate() -> int:

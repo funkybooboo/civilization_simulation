@@ -9,6 +9,7 @@ from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.simulation import Simulation
 
+
 class Navigator:
     def __init__(self, simulation: Simulation, person: Person) -> None:
         """Initialize the Navigator with references to Simulation and Person."""
@@ -18,11 +19,15 @@ class Navigator:
         self._visited_buildings: Set[Structure] = set()
         self._searched_building_count: int = 0
         self._building: Optional[Structure] = None
-        self._mover: Mover = Mover(simulation.get_grid(), self, self._person.get_memory(), 10)
+        self._mover: Mover = Mover(
+            simulation.get_grid(), self, self._person.get_memory(), 10
+        )
 
     def is_stuck(self) -> bool:
         """Determine if the person is stuck and can't move."""
-        location: Optional[Location] = self._simulation.get_grid().get_open_spot_next_to_town()
+        location: Optional[Location] = (
+            self._simulation.get_grid().get_open_spot_next_to_town()
+        )
         if not location:
             return True
         return self._mover.can_get_to_location(location)
@@ -44,7 +49,9 @@ class Navigator:
         """Estimate the time to move to the current building."""
         if not self._building:
             return 5  # Default estimate if no building is set
-        return self._building.get_location().distance_to(self._person.get_location()) // 10
+        return (
+            self._building.get_location().distance_to(self._person.get_location()) // 10
+        )
 
     def move_to_home(self) -> Optional[Home]:
         """Move towards home, if it's set."""
@@ -59,7 +66,9 @@ class Navigator:
             return self._building  # Return the home structure
         return None
 
-    def move_to_workable_structure(self, building_type: StructureType, resource_name: Optional[str] = None) -> Optional[Structure]:
+    def move_to_workable_structure(
+        self, building_type: StructureType, resource_name: Optional[str] = None
+    ) -> Optional[Structure]:
         """Move to a building that is workable (e.g., has capacity or resources)."""
         if self._moving_to_building_type != building_type:
             self._reset_moving_state(building_type)
@@ -79,10 +88,16 @@ class Navigator:
         self._searched_building_count = 0
         self._building = None
 
-    def _find_and_move_to_building(self, building_type: StructureType) -> Optional[Structure]:
+    def _find_and_move_to_building(
+        self, building_type: StructureType
+    ) -> Optional[Structure]:
         """Find and move to the specified building type."""
-        building_data: Dict[StructureType, Callable[[], Set[Location]]] = self._get_structure_locations()
-        construction_tasks: Dict[StructureType, TaskType] = self._get_construction_tasks()
+        building_data: Dict[StructureType, Callable[[], Set[Location]]] = (
+            self._get_structure_locations()
+        )
+        construction_tasks: Dict[StructureType, TaskType] = (
+            self._get_construction_tasks()
+        )
 
         if building_type not in building_data:
             raise Exception(f"Unknown structure type: {building_type}")
@@ -92,12 +107,18 @@ class Navigator:
 
         building = self._move_to(buildings)
 
-        if building_type != StructureType.TREE and not building and self._searched_building_count >= (len(buildings) * 0.37):
+        if (
+            building_type != StructureType.TREE
+            and not building
+            and self._searched_building_count >= (len(buildings) * 0.37)
+        ):
             self._person.get_scheduler().add(construction_type)
 
         return building
 
-    def _get_structure_locations(self) -> Dict[StructureType, Callable[[], Set[Location]]]:
+    def _get_structure_locations(
+        self,
+    ) -> Dict[StructureType, Callable[[], Set[Location]]]:
         """Return the locations of various structures."""
         return {
             StructureType.FARM: self._person.get_memory().get_farm_locations,
@@ -117,7 +138,9 @@ class Navigator:
             StructureType.HOME: TaskType.START_HOME_CONSTRUCTION,
         }
 
-    def _is_building_nearby_and_has_capacity(self, resource_name: Optional[str]) -> bool:
+    def _is_building_nearby_and_has_capacity(
+        self, resource_name: Optional[str]
+    ) -> bool:
         """Check if the building is nearby and has capacity."""
         if self._person.get_location().is_one_away(self._building.get_location()):
             if resource_name and isinstance(self._building, Store):
@@ -131,8 +154,12 @@ class Navigator:
 
     def _move_to(self, locations: List[Location]) -> Optional[Structure]:
         """Move to the closest building from the provided locations."""
-        visited_buildings_locations: List[Location] = [b.get_location() for b in self._visited_buildings]
-        filtered: List[Location] = [l for l in locations if l not in visited_buildings_locations]
+        visited_buildings_locations: List[Location] = [
+            b.get_location() for b in self._visited_buildings
+        ]
+        filtered: List[Location] = [
+            l for l in locations if l not in visited_buildings_locations
+        ]
         closest: Location = self._mover.get_closest(filtered)
         self._mover.towards(closest)
         return self._simulation.get_grid().get_structure(closest)

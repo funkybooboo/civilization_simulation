@@ -18,7 +18,7 @@ class FindSpouse(Task):
                 if not other.has_spouse():
                     self._person.assign_spouse(other)
                     other.assign_spouse(self._person)
-                    
+
                     # make sure they have the same house
                     if self._person.has_home():
                         other.assign_home(self._person.get_home())

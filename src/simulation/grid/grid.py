@@ -42,7 +42,7 @@ class Grid:
             self._find_buildings()
         )  # stores the top left corner of every structure
         self._disaster_generator = GridDisasterGenerator(self)
-        
+
         self._day: int = 0
         self._temp: float = 0
 
@@ -60,9 +60,13 @@ class Grid:
         return self._grid
 
     def get_home_locations(self) -> List[Location]:
-        home_locations = [location for location, building in self._buildings.items() if isinstance(building, Home)]
+        home_locations = [
+            location
+            for location, building in self._buildings.items()
+            if isinstance(building, Home)
+        ]
         return home_locations
-    
+
     def _find_buildings(self) -> Dict[Location, Structure]:
         buildings: Dict[Location, Structure] = {}
         visited: set[Location] = (
@@ -112,15 +116,21 @@ class Grid:
                     buildings[location] = building
 
         return buildings
-    
+
     def work_structures_exchange_memories(self):
-        work_structures: List[Work] = list(filter(lambda b: not isinstance(b, Work), self._buildings.values()))
+        work_structures: List[Work] = list(
+            filter(lambda b: not isinstance(b, Work), self._buildings.values())
+        )
         for work_structure in work_structures:
             work_structure.exchange_worker_memories()
 
-    def start_building_construction(self, building_type: StructureType, location: Location) -> None:
+    def start_building_construction(
+        self, building_type: StructureType, location: Location
+    ) -> None:
         try:
-            building: Structure = self._building_factory.create_instance(building_type, location)
+            building: Structure = self._building_factory.create_instance(
+                building_type, location
+            )
         except Exception as e:
             logger.error("Could not start structure construction", e)
             return
@@ -141,7 +151,9 @@ class Grid:
                 continue
             if self._buildings[location].has_capacity():
                 continue
-            self._buildings[location] = self._building_factory.create_instance(building_type, location)
+            self._buildings[location] = self._building_factory.create_instance(
+                building_type, location
+            )
 
     def get_buildings(self) -> Dict[Location, Structure]:
         return self._buildings
@@ -155,20 +167,19 @@ class Grid:
     def get_open_spot_next_to_town(self) -> Optional[Location]:
         # List of possible directions to check (up, down, left, right)
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-    
+
         # Iterate over all the buildings
         for location in self._buildings:
             # Check all adjacent locations
             for dx, dy in directions:
                 neighbor = Location(location.x + dx, location.y + dy)
-    
+
                 # Check if the neighbor is within bounds and is empty
                 if self.is_location_in_bounds(neighbor) and self.is_empty(neighbor):
                     return neighbor
-    
+
         # If no open spot was found, return None
         return None
-
 
     def remove_tree(self, location: Location) -> None:
         self._grid[location.y][location.x] = " "
@@ -212,7 +223,11 @@ class Grid:
         return path_finding_matrix
 
     def get_barns(self) -> List[Barn]:
-        return [building for building in self._buildings.values() if isinstance(building, Barn)]
+        return [
+            building
+            for building in self._buildings.values()
+            if isinstance(building, Barn)
+        ]
 
     def is_tree(self, location: Location) -> bool:
         return self._is_item(location, "*")
@@ -252,4 +267,3 @@ class Grid:
 
     def get_height(self) -> int:
         return self._height
-

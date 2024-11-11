@@ -6,12 +6,14 @@ class Backpack:
         allowed_resources: Dict[str, int] = {
             "food": 100,
             "stone": 50,
-            "wood": 50
+            "wood": 50,
         }  # Resources and their max capacities
         # Initialize the resources dictionary with allowed resources
         self.resources = {resource: 0 for resource in allowed_resources}
         # Store the max capacity for all resources combined (this is the overall capacity of the store)
-        self._capacity = sum(allowed_resources.values())  # The total capacity is the sum of the allowed resources' capacities
+        self._capacity = sum(
+            allowed_resources.values()
+        )  # The total capacity is the sum of the allowed resources' capacities
 
     def has_capacity(self) -> bool:
         """
@@ -78,6 +80,6 @@ class Backpack:
         Returns the total capacity of the store (sum of all allowed resources' capacities).
         """
         return self._capacity
-    
+
     def has_items(self) -> bool:
         return self.get_remaining_capacity() != self.get_capacity()

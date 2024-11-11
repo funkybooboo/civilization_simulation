@@ -9,7 +9,7 @@ class PeopleState(State):
         self._people_count: int = len(people)
         self._average_health: float = self._get_average_health()
         self._average_hunger: float = self._get_average_hunger()
-        
+
         del self._people
 
     def _get_average_health(self) -> float:

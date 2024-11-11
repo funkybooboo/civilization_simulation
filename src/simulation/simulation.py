@@ -20,7 +20,7 @@ class Simulation:
             self._current_day += 1
             self._people.take_actions_for_day()
             self._grid.turn_completed_constructions_to_buildings()
-            self._people.spouses_share_memory() # end of day spouses talk
+            self._people.spouses_share_memory()  # end of day spouses talk
             self._people.kill_stuck()
 
             if self._has_been_a_year(day):
@@ -29,13 +29,11 @@ class Simulation:
                 self._people.make_babies()
                 self._grid.grow_trees()
                 self._create_disasters()
-                visualizer.add(
-                    self._get_year(day), self._grid, self._people
-                )
+                visualizer.add(self._get_year(day), self._grid, self._people)
                 self._people.flush()
 
         return visualizer
-    
+
     def get_day(self) -> int:
         return self._current_day
 

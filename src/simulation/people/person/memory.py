@@ -29,13 +29,13 @@ class Memory:
 
     def get_home_locations(self) -> Set[Location]:
         return self._homes
-    
+
     def get_tree_locations(self) -> Set[Location]:
         return self._trees
 
     def get_empty_locations(self) -> Set[Location]:
         return self._empties
-    
+
     def get_building_locations(self) -> Set[Location]:
         return self._barns | self._farms | self._mines | self._homes | self._trees
 

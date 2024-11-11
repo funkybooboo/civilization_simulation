@@ -32,7 +32,7 @@ class PeopleGenerator:
             person: Person = Person(self._simulation, name, pk, location, age)
             people.append(person)
         return people
-    
+
     def make_baby(self, location: Location) -> Person:
         name: str = random.choice(self._get_names())
         age: int = 0
