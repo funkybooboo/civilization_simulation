@@ -87,26 +87,31 @@ class Person:
         self._mover.towards(location)
 
     def take_action(self) -> None:
-        self._add_tasks()
-        self._scheduler.execute()
-
-    def _add_tasks(self) -> None:
         self._hunger -= 1
-
         if self._hunger < 20:
             self._health -= 1
         elif self._hunger > 80:
             self._health += 1
+            
+        self._add_tasks()
+        self._scheduler.execute()
 
+    def _add_tasks(self) -> None:
+        # 1. Find a home
         if not self._home:
             self._scheduler.add(TaskType.FIND_HOME)
-            
+        
+        # 2. Deliver items you are carrying
         if self._backpack.has_items():
             self._scheduler.add(TaskType.TRANSPORT)
 
+        # Things to check only so often
         if self._simulation.get_people().get_time() % self._max_time == 0:
+            # 3. Find a spouse
             if not self._spouse:
                 self._scheduler.add(TaskType.FIND_SPOUSE)
+                
+            # 4. Eat food
             if self._hunger < 50:
                 self._scheduler.add(TaskType.EAT)
         
@@ -114,8 +119,8 @@ class Person:
 
         # TODO: add WORK_MINE or CHOP_TREE task if you find no wood/stone in the barn during a build task?
 
-        # If you've got nothing else to do, explore
-        if len(self._scheduler.get_all_tasks()) == 0:
+        # 5. If you've got nothing else to do, explore
+        if len(self._scheduler.get_tasks()) == 0:
             self._scheduler.add(TaskType.EXPLORE)
 
     def get_location(self) -> Location:

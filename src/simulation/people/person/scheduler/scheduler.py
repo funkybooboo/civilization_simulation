@@ -24,6 +24,9 @@ class Scheduler:
     def get_all_tasks(self):
         return self._all_tasks
     
+    def get_tasks(self):
+        return self._tasks
+    
     def flush(self):
         self._all_tasks = []
 
