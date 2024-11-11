@@ -20,7 +20,7 @@ class Navigator:
         self._searched_building_count: int = 0
         self._building: Optional[Structure] = None
         self._mover: Mover = Mover(
-            simulation.get_grid(), self, self._person.get_memory(), 10
+            simulation.get_grid(), person, self._person.get_memory(), 10
         )
 
     def is_stuck(self) -> bool:
