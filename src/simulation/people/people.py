@@ -2,6 +2,7 @@ from typing import List, Iterator
 
 from people_generator import PeopleGenerator
 from person.person import Person
+from .home_manager import HomeManager
 from ..grid.grid import Grid
 
 from ..simulation import Simulation
@@ -14,9 +15,8 @@ class People:
         self._actions_per_day: int = actions_per_day
         self._people_generator: PeopleGenerator = PeopleGenerator(simulation)
         self._people: List[Person] = self._people_generator.generate()
-        self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(
-            self
-        )
+        self._disaster_generator: PeopleDisasterGenerator = PeopleDisasterGenerator(self)
+        self._home_manager: HomeManager = HomeManager(self)
         self._time: int = 0
 
     def take_actions_for_day(self) -> None:
@@ -32,13 +32,16 @@ class People:
             for person in dead:
                 self._people.remove(person)
 
-    def check_for_stuck_people(self) -> None:
+    def swap_homes(self) -> None:
+        self._home_manager.swap_homes()
+
+    def kill_stuck(self) -> None:
         for person in self._people:
             if person.is_stuck():
                 person.kill() # they got stuck and died
 
     def spouses_share_memory(self):
-        for person in self._get_married_people():
+        for person in self.get_married_people():
             person.exchange_memories(person.get_spouse())
 
     def get_time(self) -> int:
@@ -80,13 +83,13 @@ class People:
         return self._people
     
     def make_babies(self) -> None:
-        for person in self._get_married_people():
+        for person in self.get_married_people():
             if (person.get_age() >= 18) and (person.get_age() <= 50) and (person.get_spouse().get_age() >= 18) and (person.get_spouse().get_age() <= 50):
                 # create a baby next to the person's house
                 baby = self._people_generator.make_baby(person.get_home().get_location())
                 self._people.append(baby)
-                
-    def _get_married_people(self) -> List[Person]:
+    
+    def get_married_people(self) -> List[Person]:
         married_people: List[Person] = []
         visited_people: List[Person] = []
         for person in self._people:

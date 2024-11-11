@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from grid.grid import Grid
 from people.people import People
 from visualization.visualizer import Visualizer
@@ -23,16 +21,16 @@ class Simulation:
             self._people.take_actions_for_day()
             self._grid.turn_completed_constructions_to_buildings()
             self._people.spouses_share_memory() # end of day spouses talk
-            self._people.check_for_stuck_people()
+            self._people.kill_stuck()
 
             if self._has_been_a_year(day):
-                # TODO swap houses
+                self._people.swap_homes()
                 self._people.age()
                 self._people.make_babies()
                 self._grid.grow_trees()
                 self._create_disasters()
                 visualizer.add(
-                    self._get_year(day), deepcopy(self._grid), deepcopy(self._people)
+                    self._get_year(day), self._grid, self._people
                 )
                 self._people.flush()
 

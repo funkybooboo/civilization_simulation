@@ -1,5 +1,6 @@
-from typing import override
+from typing import override, Optional
 
+from src.simulation.grid.structure.structure import Structure
 from task import Task
 
 from src.simulation.people.person.person import Person
@@ -35,3 +36,7 @@ class FindSpouse(Task):
     @override
     def get_remaining_time(self) -> int:
         return 1
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return None

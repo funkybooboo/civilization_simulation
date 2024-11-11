@@ -33,6 +33,9 @@ class Location:
 
         return neighbors
 
+    def is_near(self, location: 'Location', distance: int = 5) -> bool:
+        return self.distance_to(location) < distance
+
     def __copy__(self) -> "Location":
         return Location(self.x, self.y)
 

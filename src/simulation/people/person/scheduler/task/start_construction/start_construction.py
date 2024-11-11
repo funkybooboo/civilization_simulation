@@ -2,6 +2,7 @@ from abc import ABC
 from typing import override, List, Optional
 
 from src.simulation.grid.location import Location
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.person import Person
 from src.simulation.people.person.scheduler.task.task import Task
@@ -115,3 +116,7 @@ class StartConstruction(Task, ABC):
     def _clean_up_task(self) -> None:
         # nothing to do here
         pass
+
+    @override
+    def get_work_structure(self) -> Optional[Structure]:
+        return None

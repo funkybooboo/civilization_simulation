@@ -68,10 +68,6 @@ class Mover:
         current_location = copy(self._person.get_location())
         return any(current_location.is_one_away(loc) for loc in locations)
 
-    @staticmethod
-    def is_near(location1: Location, location2: Location, distance: int = 5) -> bool:
-        return location1.distance_to(location2) < distance
-
     def can_get_to_location(self, target: Location) -> bool:
         path_finding_grid = self._get_path_finding_grid()
         return bool(
