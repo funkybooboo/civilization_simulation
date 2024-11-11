@@ -2,12 +2,13 @@ from copy import copy
 from random import randint
 from typing import List, Optional
 
-from memory import Memory
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid as PathFindingGrid
 from pathfinding.core.node import GridNode as PathFindingGridNode
 from pathfinding.finder.dijkstra import DijkstraFinder
-from person import Person
+
+from src.simulation.people.person.memory import Memory
+from src.simulation.people.person.person import Person
 from vision import Vision
 
 from src.simulation.grid.grid import Grid
