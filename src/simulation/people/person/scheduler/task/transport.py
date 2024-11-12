@@ -27,24 +27,23 @@ class Transport(Task):
             self._finished()
             return
         if self._resource:
-            if self._store:
-                self._store.add_resource(self._what_resource, self._resource)
-                self._what_resource = None
-                self._resource = None
-                self._store = None
-                self._finished()
-            else:
-                move_result: MoveResult = self._person.move_to_workable_structure(
-                    self._store_structure
-                )
-                if move_result.has_failed():
-                    self._finished()
-                    return
-                self._store: Optional[Store] = move_result.get_structure()
-        else:
             self._what_resource = self._backpack.what_resource()
             amount = self._backpack.get_resource(self._what_resource)
             self._resource = self._backpack.remove_resource(self._what_resource, amount)
+        if self._store:
+            self._store.add_resource(self._what_resource, self._resource)
+            self._what_resource = None
+            self._resource = None
+            self._store = None
+            self._finished()
+        else:
+            move_result: MoveResult = self._person.move_to_workable_structure(
+                self._store_structure
+            )
+            if move_result.has_failed():
+                self._finished()
+                return
+            self._store: Optional[Store] = move_result.get_structure()
 
     @override
     def _clean_up_task(self) -> None:
