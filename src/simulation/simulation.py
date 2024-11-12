@@ -33,6 +33,7 @@ class Simulation:
                 self._create_disasters()
                 visualizer.add(self._get_year(day), self._grid, self._people)
                 self._people.flush()
+                self._grid.flush()
 
         return visualizer
 

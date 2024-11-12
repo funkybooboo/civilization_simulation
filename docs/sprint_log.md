@@ -65,7 +65,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-08 |       |            |                                                                                                                                               |
 | 2024-11-09 | 8.25  | Ann Marie  | Finished up logic for non-build tasks, added calls to schedule those tasks                                                                    |
 | 2024-11-09 | 10    | Nate Stott | Finished up the build tasks                                                                                                                   |
-| 2024-11-10 | 4     | Nate Stott | Complete a bunch of tickets                                                                                                                   |
+| 2024-11-10 | 8     | Nate Stott | Complete a bunch of tickets                                                                                                                   |
 
 ## Sprint 3
 
@@ -74,15 +74,15 @@ Stay organized and on track with your assignments and tasks!
 - **Goals**:
     - ...
 
-| Date       | Hours | Name       | Notes                        |
-|------------|-------|------------|------------------------------|
-| 2024-11-11 |       |            |                              |
-| 2024-11-12 |       |            |                              |
-| 2024-11-13 |       |            |                              |
-| 2024-11-14 |       |            |                              |
-| 2024-11-15 |       |            |                              |
-| 2024-11-18 |       |            |                              |
-| 2024-11-19 |       |            |                              |
+| Date       | Hours | Name       | Notes                                                         |
+|------------|-------|------------|---------------------------------------------------------------|
+| 2024-11-11 | 6     | Nate Stott | Fix bugs, complete todos, help brighton with disasters ticket |
+| 2024-11-12 |       |            |                                                               |
+| 2024-11-13 |       |            |                                                               |
+| 2024-11-14 |       |            |                                                               |
+| 2024-11-15 |       |            |                                                               |
+| 2024-11-18 |       |            |                                                               |
+| 2024-11-19 |       |            |                                                               |
 
 ## Sprint 4
 

@@ -1,5 +1,5 @@
 import random
-from typing import List
+from typing import List, Dict
 
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
@@ -10,6 +10,15 @@ from src.simulation.grid.structure.structure import Structure
 class GridDisasterGenerator:
     def __init__(self, grid: Grid):
         self._grid = grid
+        # Initialize counters for each disaster type
+        self._disaster_counts: Dict[str, int] = {
+            'rats_eat_home_food': 0,
+            'burn_buildings': 0,
+            'decrease_farm_yield': 0,
+            'decrease_mine_yield': 0,
+            'forest_fire': 0,
+            'steal_barn_resources': 0
+        }
 
     def generate(self, chance: float) -> None:
         """Randomly trigger one of the disaster types with a given chance."""
@@ -18,17 +27,29 @@ class GridDisasterGenerator:
 
             # List of disaster methods
             disaster_methods = [
-                self._rats_eat_home_food,
-                self._burn_buildings,
-                self._decrease_farm_yield,
-                self._decrease_mine_yield,
-                self._forest_fire,
-                self._steal_barn_resources,
+                (self._rats_eat_home_food, 'rats_eat_home_food'),
+                (self._burn_buildings, 'burn_buildings'),
+                (self._decrease_farm_yield, 'decrease_farm_yield'),
+                (self._decrease_mine_yield, 'decrease_mine_yield'),
+                (self._forest_fire, 'forest_fire'),
+                (self._steal_barn_resources, 'steal_barn_resources'),
             ]
 
             # Randomly pick one disaster to trigger
-            chosen_disaster = random.choice(disaster_methods)
+            chosen_disaster, disaster_name = random.choice(disaster_methods)
             chosen_disaster(severity)
+
+            # Increment the disaster count for the chosen disaster
+            self._disaster_counts[disaster_name] += 1
+
+    def get_disaster_counts(self) -> Dict[str, int]:
+        """Return the current disaster count statistics."""
+        return self._disaster_counts
+
+    def flush(self):
+        """Reset all disaster counters to 0."""
+        for disaster in self._disaster_counts:
+            self._disaster_counts[disaster] = 0
 
     def _rats_eat_home_food(self, severity: int) -> None:
         """Remove food from home storage based on disaster severity."""

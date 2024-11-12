@@ -1,4 +1,5 @@
 import random
+from typing import Dict
 
 from src.simulation.people.people import People
 from src.simulation.grid.location import Location
@@ -8,28 +9,50 @@ from src.simulation.people.person.scheduler.scheduler import Scheduler
 class PeopleDisasterGenerator:
     def __init__(self, people: People):
         self._people = people
+        # Initialize counters for each disaster type
+        self._disaster_counts: Dict[str, int] = {
+            'divorce': 0,
+            'sickness': 0,
+            'craving': 0,
+            'death': 0,
+            'forget_tasks': 0,
+            'sleepwalk': 0,
+            'so_many_babies': 0
+        }
 
     def generate(self, chance: float) -> None:
         """Randomly trigger one of several disasters with a given chance."""
         if random.random() < chance:
 
-            # List of disaster methods
+            # List of disaster methods with their names
             disaster_methods = [
-                self._divorce,
-                self._sickness,
-                self._craving,
-                self._death,
-                self._forget_tasks,
-                self._sleepwalk,
-                self._so_many_babies,
+                (self._divorce, 'divorce'),
+                (self._sickness, 'sickness'),
+                (self._craving, 'craving'),
+                (self._death, 'death'),
+                (self._forget_tasks, 'forget_tasks'),
+                (self._sleepwalk, 'sleepwalk'),
+                (self._so_many_babies, 'so_many_babies'),
             ]
 
             # Randomly pick number of disasters to trigger, along with random severities
             disaster_count = random.randint(1, len(disaster_methods) // 2)
             for _ in range(disaster_count):
                 severity = random.randint(1, 10)  # Severity between 1 and 10
-                chosen_disaster = random.choice(disaster_methods)
+                chosen_disaster, disaster_name = random.choice(disaster_methods)
                 chosen_disaster(severity)  # Call the chosen disaster method with severity
+
+                # Increment the disaster count for the chosen disaster
+                self._disaster_counts[disaster_name] += 1
+
+    def get_disaster_counts(self) -> Dict[str, int]:
+        """Return the current disaster count statistics."""
+        return self._disaster_counts
+    
+    def flush(self):
+        """Reset all disaster counters to 0."""
+        for disaster in self._disaster_counts:
+            self._disaster_counts[disaster] = 0
 
     def _divorce(self, severity: int) -> None:
         """Divorce event, causing relationship breakdown."""

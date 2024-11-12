@@ -1,4 +1,4 @@
-from typing import List, Iterator
+from typing import List, Iterator, Dict
 
 from people_generator import PeopleGenerator
 from person.person import Person
@@ -54,6 +54,7 @@ class People:
         return self._people
         
     def flush(self):
+        self._disaster_generator.flush()
         for person in self._people:
             person.get_scheduler().flush()
 
@@ -114,6 +115,9 @@ class People:
                 continue
             married_people.append(person)
         return married_people
+    
+    def get_disaster_counts(self) -> Dict[str, int]:
+        return self._disaster_generator.get_disaster_counts()
 
     def __iter__(self) -> Iterator["Person"]:
         return iter(self._people)

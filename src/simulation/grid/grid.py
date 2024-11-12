@@ -1,11 +1,9 @@
 import random
-from collections.abc import Callable
 from copy import deepcopy
 from typing import Dict, List, Optional, Type
 
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
-from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.work.farm import Farm
 from src.simulation.grid.structure.work.mine import Mine
 from src.simulation.grid.structure.work.work import Work
@@ -319,3 +317,9 @@ class Grid:
 
     def get_height(self) -> int:
         return self._height
+
+    def flush(self):
+        self._disaster_generator.flush()
+
+    def get_disaster_counts(self) -> Dict[str, int]:
+        return self._disaster_generator.get_disaster_counts()
