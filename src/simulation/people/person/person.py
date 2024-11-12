@@ -150,9 +150,25 @@ class Person:
             )  # eating in a barn is less effective
         building.remove_resource("food", 3)
 
+    def set_hunger(self, hunger: int) -> None:
+        self._hunger += hunger
+        self._hunger = max(self._hunger, 0)
+        self._hunger = min(self._hunger, 100)
+
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse
 
+    def divorce(self) -> None:
+        self.get_spouse().leave_spouse()
+        self._spouse = None
+
+    def leave_spouse(self) -> None:
+        self._home = None
+        self._spouse = None
+
+    def get_spouse(self) -> Optional["Person"]:
+        return self._spouse
+    
     def assign_home(self, home: Home) -> None:
         if self._home == home:
             return
@@ -160,6 +176,12 @@ class Person:
         home.assign_owner()
         if self.has_spouse():
             self.get_spouse().assign_home(home)
+
+    
+    def set_health(self, health: int) -> None:
+        self._health += health
+        self._health = max(self._health, 0)
+        self._health = min(self._health, 100)
 
     def has_home(self) -> bool:
         return self._home is not None
@@ -192,6 +214,9 @@ class Person:
     def move_to_home(self) -> Optional[Home]:
         """Move towards home, if it's set."""
         return self._navigator.move_to_home()
+    
+    def get_simulation(self) -> Simulation:
+        return self._simulation
 
     def move_to_workable_structure(
         self, building_type: StructureType, resource_name: Optional[str] = None

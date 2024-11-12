@@ -32,6 +32,7 @@ class People:
                 person.take_action()
                 self._grid.work_structures_exchange_memories()
             for person in dead:
+                person.divorce()
                 self._people.remove(person)
 
     def swap_homes(self) -> None:
@@ -48,7 +49,10 @@ class People:
 
     def get_time(self) -> int:
         return self._time
-
+    
+    def get_people(self) -> List:
+        return self._people
+        
     def flush(self):
         for person in self._people:
             person.get_scheduler().flush()
@@ -80,9 +84,6 @@ class People:
             average_hunger += person.get_hunger()
         average_hunger /= len(self._people)
         return average_hunger
-
-    def get_person_list(self) -> List[Person]:
-        return self._people
 
     def make_babies(self) -> None:
         for person in self.get_married_people():

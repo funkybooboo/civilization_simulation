@@ -18,6 +18,8 @@ class Simulation:
         visualizer: Visualizer = Visualizer()
         for day in range(self._max_days):
             self._current_day += 1
+            if len(self._people) == 0: # all the people dead
+                break
             self._people.take_actions_for_day()
             self._grid.turn_completed_constructions_to_buildings()
             self._people.spouses_share_memory()  # end of day spouses talk
