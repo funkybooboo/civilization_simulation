@@ -26,7 +26,6 @@ class PeopleGenerator:
         people: List[Person] = []
         names = self._get_names()
         empty_spots_near_town: List[Location] = self._grid.get_empty_spots_near_town()
-        random.shuffle(empty_spots_near_town)
         for pk in range(self._max_pk):
             name: str = random.choice(names)
             location: Location = deepcopy(random.choice(empty_spots_near_town))
