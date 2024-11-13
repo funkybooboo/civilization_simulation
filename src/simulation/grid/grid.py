@@ -112,6 +112,39 @@ class Grid:
             building.remove_owner()
         building.remove()
 
+    def get_empty_spots_near_town(self) -> List[Location]:
+        rows = len(self._grid)
+        cols = len(self._grid[0])
+        empty_spots = []
+
+        # List of possible directions: (up, down, left, right, and 4 diagonal directions)
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+
+        for i in range(rows):
+            for j in range(cols):
+                # Check if the current cell is a building (or under construction)
+                if self._grid[i][j] in "MFHBFmhfb":
+                    # Check all 8 directions around the current building location
+                    for dx, dy in directions:
+                        ni, nj = i + dx, j + dy
+                        # Ensure the new position is within bounds
+                        if 0 <= ni < rows and 0 <= nj < cols:
+                            # If it's an empty space, we add it as a candidate
+                            if self._grid[ni][nj] == " ":
+                                # Now, check if this empty space is adjacent to a tree ('*')
+                                is_adjacent_to_tree = False
+                                for ddx, ddy in directions:
+                                    nn_i, nn_j = ni + ddx, nj + ddy
+                                    if 0 <= nn_i < rows and 0 <= nn_j < cols and self._grid[nn_i][nn_j] == "*":
+                                        is_adjacent_to_tree = True
+                                        break
+
+                                # Add the empty space if it's not adjacent to a tree
+                                if not is_adjacent_to_tree:
+                                    empty_spots.append(Location(ni, nj))
+
+        return empty_spots
+
     def _find_buildings(self) -> Dict[Location, Structure]:
         buildings: Dict[Location, Structure] = {}
         visited: set[Location] = (
