@@ -105,7 +105,7 @@ Stay organized and on track with your assignments and tasks!
 |------------|-------|--------|---------------------------------------------------------------------------------|
 | 2024-11-11 | 10    | Nate     | Fix bugs, complete todos, help brighton with disasters ticket, meet with Bellis |
 | 2024-11-11 | 5     | Brighton | work on disasters ticket and begin walk-through of People think differently ticket. |
-| 2024-11-12 |       |          |                                                                                 |
+| 2024-11-12 | 5.8   | Ann Marie| worked on epsilon greedy for work, went to group meeting                        |
 | 2024-11-13 |       |          |                                                                                 |
 | 2024-11-14 |       |          |                                                                                 |
 | 2024-11-15 |       |          |                                                                                 |
