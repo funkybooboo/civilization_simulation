@@ -83,3 +83,5 @@ class Memory:
                 "people": self._people,
             }
         )
+
+# TODO filter locations for building locations (top left corner)
