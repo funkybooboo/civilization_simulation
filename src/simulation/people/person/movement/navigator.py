@@ -21,7 +21,7 @@ class Navigator:
         self._searched_building_count: int = 0
         self._structure: Optional[Structure] = None
         self._mover: Mover = Mover(
-            simulation.get_grid(), person, self._person.get_memory(), 10
+            simulation.get_grid(), person, self._person.get_memories(), 10
         )
 
     def is_stuck(self) -> bool:
@@ -140,11 +140,11 @@ class Navigator:
     ) -> Dict[StructureType, Callable[[], Set[Location]]]:
         """Return the locations of various structures."""
         return {
-            StructureType.FARM: self._person.get_memory().get_farm_locations,
-            StructureType.MINE: self._person.get_memory().get_mine_locations,
-            StructureType.BARN: self._person.get_memory().get_barn_locations,
-            StructureType.HOME: self._person.get_memory().get_home_locations,
-            StructureType.TREE: self._person.get_memory().get_tree_locations,
+            StructureType.FARM: self._person.get_memories().get_farm_locations,
+            StructureType.MINE: self._person.get_memories().get_mine_locations,
+            StructureType.BARN: self._person.get_memories().get_barn_locations,
+            StructureType.HOME: self._person.get_memories().get_home_locations,
+            StructureType.TREE: self._person.get_memories().get_tree_locations,
         }
 
     def _get_construction_structure_locations(
@@ -152,10 +152,10 @@ class Navigator:
     ) -> Dict[StructureType, Callable[[], Set[Location]]]:
         """Return the locations of various construction sites."""
         return {
-            StructureType.FARM: self._person.get_memory().get_farm_construction_locations,
-            StructureType.MINE: self._person.get_memory().get_mine_construction_locations,
-            StructureType.BARN: self._person.get_memory().get_barn_construction_locations,
-            StructureType.HOME: self._person.get_memory().get_home_construction_locations,
+            StructureType.FARM: self._person.get_memories().get_farm_construction_locations,
+            StructureType.MINE: self._person.get_memories().get_mine_construction_locations,
+            StructureType.BARN: self._person.get_memories().get_barn_construction_locations,
+            StructureType.HOME: self._person.get_memories().get_home_construction_locations,
         }
 
     @staticmethod

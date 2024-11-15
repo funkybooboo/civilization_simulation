@@ -29,7 +29,7 @@ class Person:
         self._location: Location = location
 
         self._backpack = Backpack()
-        self._memory: Memories = Memories(simulation.get_grid())
+        self._memories: Memories = Memories(simulation.get_grid())
         self._navigator: Navigator = Navigator(simulation, self)
 
         self._health: int = 100
@@ -59,20 +59,20 @@ class Person:
     def get_backpack(self) -> Backpack:
         return self._backpack
 
-    def get_memory(self) -> Memories:
-        return self._memory
+    def get_memories(self) -> Memories:
+        return self._memories
 
     def exchange_memories(self, other: "Person") -> None:
         if not other:
             return
-        self._memory.combine(other.get_memory())
-        other.get_memory().combine(self._memory)
+        self._memories.combine(other.get_memories())
+        other.get_memories().combine(self._memories)
 
     def get_empties(self) -> List[Location]:
-        return list(self._memory.get_empty_locations())
+        return list(self._memories.get_empty_locations())
 
     def get_buildings(self) -> List[Location]:
-        return list(self._memory.get_building_locations())
+        return list(self._memories.get_building_locations())
 
     def get_scheduler(self) -> Scheduler:
         return self._scheduler
@@ -242,7 +242,7 @@ class Person:
         self._age += 1
 
     def get_home_locations(self):
-        return self._memory.get_home_locations()
+        return self._memories.get_home_locations()
 
     def is_stuck(self) -> bool:
         return self._navigator.is_stuck()
