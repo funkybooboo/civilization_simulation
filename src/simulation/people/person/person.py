@@ -251,7 +251,7 @@ class Person:
         return self._navigator.is_stuck()
 
     def go_to_location(self, location: Location) -> None:
-        self._navigator.go_to_location(location)
+        self._navigator.move_to_location(location)
 
     def explore(self) -> None:
         """Explore the area to search for buildings."""
