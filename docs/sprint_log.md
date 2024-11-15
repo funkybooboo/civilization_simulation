@@ -90,7 +90,9 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-14 | 2.5   | Madi      | continue epsilon greedy for work tasks                                              |
 | 2024-11-14 | 2.5   | Madi      | Fix epsilon greedy for work tasks with Nate                                         |
 | 2024-11-14 | 8     | Nate      | Groves of trees have the same yield ticket, meet with brighton, meet with madi      |
-| 2024-11-15 |       |           |                                                                                     |
+| 2024-11-15 | 0.5   | Nate      | Clean up code                                                                       |
+| 2024-11-16 |       |           |                                                                                     |
+| 2024-11-17 |       |           |                                                                                     |
 | 2024-11-18 |       |           |                                                                                     |
 | 2024-11-19 |       |           |                                                                                     |
 
