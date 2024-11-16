@@ -147,7 +147,7 @@ class TaskState(State):
         for person in self._people:
             total_count += sum(
                 1
-                for task in person.get_scheduler().get_all_tasks()
+                for task in person.get_scheduler().get_this_years_tasks()
                 if task_predicate(task)
             )
         average = total_count / len(self._people) if self._people else 0.0

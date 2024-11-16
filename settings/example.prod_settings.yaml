@@ -144,7 +144,6 @@ transport_priority: 5
 # Person values
 person_health_cap: 100
 person_hunger_cap: 100
-person_max_time: 10
 hunger_pref_min: 50
 hunger_pref_max: 100
 hunger_damage_threshold: 20

@@ -1,3 +1,4 @@
+from src.logger import logger
 from src.simulation.grid.grid import Grid
 from src.simulation.people.people import People
 from src.simulation.visualization.visualizer import Visualizer
@@ -33,8 +34,9 @@ class Simulation:
     def run(self) -> Visualizer:
         visualizer: Visualizer = Visualizer()
         for day in range(self._max_days):
-            self._day += 1
+            self._day = day
             if len(self._people) == 0: # all the people dead
+                logger.info("Everybody died! Game over!")
                 break
             self._people.take_actions_for_day()
             self._grid.turn_completed_constructions_to_buildings()
@@ -42,7 +44,7 @@ class Simulation:
             self._people.kill_stuck()
 
             if self._has_been_a_year(day):
-                self._people.swap_homes()
+                self._people.swap_homes() # people want to live close to work
                 self._people.age()
                 self._people.make_babies()
                 self._grid.grow_trees()

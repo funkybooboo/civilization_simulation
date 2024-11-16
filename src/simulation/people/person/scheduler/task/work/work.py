@@ -14,6 +14,7 @@ if TYPE_CHECKING:
     from src.simulation.grid.structure.work.work import Work as WorkStructure
     from src.simulation.people.person.movement.move_result import MoveResult
     from src.simulation.grid.structure.structure import Structure
+    from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 
 class Work(Task, ABC):
@@ -24,8 +25,9 @@ class Work(Task, ABC):
         priority: int,
         work_structure: StructureType,
         resource_name: str,
+        task_type: TaskType
     ) -> None:
-        super().__init__(simulation, person, priority)
+        super().__init__(simulation, person, priority, task_type)
         self._work_structure: StructureType = work_structure
         self._resource_name: str = resource_name
 

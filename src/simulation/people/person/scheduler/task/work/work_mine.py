@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from src.settings import settings
 from src.simulation.grid.structure.structure_type import StructureType
+from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 from src.simulation.people.person.scheduler.task.work.work import Work
 
@@ -18,4 +19,5 @@ class WorkMine(Work):
                          person,
                          settings.get("work_mine_priority", 5),
                          StructureType.MINE,
-                         settings.get("stone", "stone"))
+                         settings.get("stone", "stone"),
+                         TaskType.WORK_MINE)

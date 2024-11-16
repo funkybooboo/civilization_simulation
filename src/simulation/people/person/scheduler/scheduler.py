@@ -15,35 +15,29 @@ if TYPE_CHECKING:
 class Scheduler:
     def __init__(self, simulation: Simulation, person: Person) -> None:
         self._task_factory: TaskFactory = TaskFactory(simulation, person)
-        self._all_tasks: List[Task] = []
+        self._this_years_tasks: List[Task] = []
         self._tasks: List[Task] = []
         self._current_task: Optional[Task] = None
         self._last_added_time = 0  # Timestamp for when the last task was added
-        self._interruption_threshold = 3  # Initial threshold for interruptions
         self._max_interruption_threshold = 10  # Maximum interruption threshold
         self._simulation = simulation
 
-    def get_all_tasks(self):
-        return self._all_tasks
+    def get_this_years_tasks(self):
+        return self._this_years_tasks
 
     def get_tasks(self):
         return self._tasks
 
     def flush(self):
-        self._all_tasks = []
+        self._this_years_tasks = []
 
     def add(self, what: TaskType) -> None:
-        unique: bool = True
+        task_types = {type(task) for task in self._tasks}
         task: Task = self._task_factory.create_instance(what)
-        if task:
-            for other in self._tasks:
-                if type(other) == type(task):
-                    unique = False
-                    break
-            if unique:
-                self._all_tasks.append(task)
-                heapq.heappush(self._tasks, task)
-                self._last_added_time = self._get_time()
+        if type(task) not in task_types:
+            self._add(task)
+            self._this_years_tasks.append(task)
+            self._last_added_time = self._get_time()
 
     def _add(self, task: Optional[Task]) -> None:
         if task:
@@ -54,30 +48,6 @@ class Scheduler:
 
     def _get_time(self) -> int:
         return self._simulation.get_time()
-
-    def _calculate_dynamic_threshold(self) -> int:
-        # Calculate dynamic interruption threshold based on the current state
-        base_threshold = max(1, len(self._tasks) // 2)
-
-        task_addition_rate_factor = (
-            1 if self._get_time() - self._last_added_time > 1 else 2
-        )
-
-        if self._current_task:
-            priority_factor = (
-                11 - self._current_task.get_priority()
-            )  # Inverse relation: high priority = low threshold
-        else:
-            priority_factor = (
-                6  # Default to mid-range priority factor if no current task
-            )
-
-        dynamic_threshold = min(
-            self._max_interruption_threshold,
-            base_threshold * task_addition_rate_factor * priority_factor,
-        )
-
-        return dynamic_threshold
 
     @staticmethod
     def _calculate_task_reward(task: Task) -> float:
@@ -101,9 +71,6 @@ class Scheduler:
         if not self._current_task and self._tasks:
             self._current_task = self._pop()
 
-        # Calculate the dynamic interruption threshold based on the current state
-        self._interruption_threshold = self._calculate_dynamic_threshold()
-
         # Calculate the reward for continuing the current task
         current_task_reward = self._calculate_task_reward(self._current_task)
 
@@ -113,12 +80,7 @@ class Scheduler:
         next_task_reward = self._calculate_task_reward(next_task)
 
         # Apply the optimal stopping rule: stick to the current task if it has a higher reward
-        if current_task_reward >= next_task_reward:
-            self._current_task.execute()
-            if self._current_task.is_finished():
-                self._current_task = None
-            return
-        else:
+        if current_task_reward < next_task_reward:
             # If the next task has a higher reward, switch to it
             self._current_task.increment_interruptions()
             self._current_task = next_task

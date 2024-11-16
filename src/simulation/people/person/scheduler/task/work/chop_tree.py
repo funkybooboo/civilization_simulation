@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from src.settings import settings
 from src.simulation.grid.structure.structure_type import StructureType
+from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.people.person.scheduler.task.work.work import Work
 
 if TYPE_CHECKING:
@@ -17,4 +18,5 @@ class ChopTree(Work):
                          person,
                          settings.get("chop_tree_priority", 5),
                          StructureType.TREE,
-                         settings.get("wood", "wood"))
+                         settings.get("wood", "wood"),
+                         TaskType.CHOP_TREE)

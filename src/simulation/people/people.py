@@ -33,7 +33,7 @@ class People:
                     dead.append(person)
                     continue
                 person.take_action()
-                self._grid.work_structures_exchange_memories()
+                self._grid.work_structures_exchange_memories() # workers talk while working
             for person in dead:
                 person.divorce()
                 self._people.remove(person)

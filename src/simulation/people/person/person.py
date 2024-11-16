@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING, List, Optional, Dict
 import numpy as np
 import random
 
+from black.trans import defaultdict
+
 from src.simulation.people.person.scheduler.scheduler import Scheduler
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.settings import settings
@@ -45,7 +47,6 @@ class Person:
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
         self._scheduler: Scheduler = Scheduler(simulation, self)
-        self._max_time: int = settings.get("person_max_time", 10)
 
         # preferences per person
         self._hunger_preference: int = random.randint(
@@ -53,12 +54,16 @@ class Person:
             settings.get("hunger_pref_max", 100)
         )
         self._spouse_preference: bool = random.choices([True, False], weights=[95, 5])[0]
-        self._house_preference: bool = random.choices([True, False], weights=[95, 5])[0]
+        self._home_preference: bool = random.choices([True, False], weights=[95, 5])[0]
 
-        self._rewards: Dict[TaskType, int] = {}
+        self._rewards: Dict[TaskType, int] = {
+            TaskType.WORK_FARM: 0,
+            TaskType.WORK_MINE: 0,
+            TaskType.CHOP_TREE: 0
+        }
 
         logger.info(f"Initialized Person '{self._name}' with age {self._age}")
-        logger.debug(f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._house_preference}}}")
+        logger.debug(f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._home_preference}}}")
 
     def get_time(self) -> int:
         return self._simulation.get_time()
@@ -91,7 +96,7 @@ class Person:
     def get_work_structures(self) -> List[Location]:
         logger.info(f"getting all structures {self._name} is working on.")
         structures: List[Structure] = []
-        for task in self._scheduler.get_all_tasks():
+        for task in self._scheduler.get_this_years_tasks():
             structure: Structure = task.get_work_structure()
             if structure:
                 structures.append(structure)
@@ -99,26 +104,20 @@ class Person:
     
     def get_hunger_preference(self) -> int:
         return self._hunger_preference
-    
-    def get_spouse_preference(self) -> bool:
-        return self._spouse_preference
-
-    def get_house_preference(self) -> bool:
-            return self._house_preference
 
     def kill(self):
         self._health = 0
 
     def take_action(self) -> None:
         logger.info(f"{self._name} is starting an action with current hunger={self._hunger} and health={self._health}")
-        self._hunger -= 1
+        self.set_health(self._hunger - 1)
         logger.debug(f"{self._name}'s hunger decreased by 1 to {self._hunger}")
 
         if self._hunger < settings.get("hunger_damage_threshold", 20):
-            self._health -= 1
+            self.set_health(self._health - 1)
             logger.debug(f"{self._name}'s health decreased due to being hungry (Health: {self._health})")
         elif self._hunger > settings.get("hunger_regen_threshold", 50):
-            self._health -= 1
+            self.set_health(self._health + 1)
             logger.debug(f"{self._name}'s health increased due to being full (Health: {self._health})")
 
         self._add_tasks()
@@ -127,42 +126,32 @@ class Person:
 
     def _add_tasks(self) -> None:   # where tasks are added to the scheduler. 
         logger.info(f"Adding tasks for {self._name}")
-        # 1. Find a home
-        if not self._home:
+        if not self._home and self._home_preference:
             self._scheduler.add(TaskType.FIND_HOME)
             logger.debug(f"{self._name} has no home and added FIND_HOME task")
 
-        # 2. Deliver items you are carrying
+        if not self._spouse and self._spouse_preference:
+            self._scheduler.add(TaskType.FIND_SPOUSE)
+            logger.debug(f"{self._name} prefers a spouse and added FIND_SPOUSE task")
+
+        if self._hunger < self._hunger_preference:
+            self._scheduler.add(TaskType.EAT)
+            logger.debug(f"{self._name} is hungry and added EAT task")
+
+        # Deliver items you are carrying
         if self._backpack.has_items():
             self._scheduler.add(TaskType.TRANSPORT)
             logger.debug(f"{self._name} has items in backpack and added TRANSPORT task")
 
-        # Things to check only so often
-        if self._simulation.get_people().get_time() % self._max_time == 0:
-            # 3. Find a spouse
-            if not self._spouse and self._spouse_preference:
-                self._scheduler.add(TaskType.FIND_SPOUSE)
-                logger.debug(f"{self._name} prefers a spouse and added FIND_SPOUSE task")
+        # Epsilon-Greedy algorithm to decide what type of work to do
+        self._add_work_task()
 
-            # 4. Eat food
-            if self._hunger < self._hunger_preference:
-                self._scheduler.add(TaskType.EAT)
-                logger.debug(f"{self._name} is hungry and added EAT task")
-
-            # 5. Find a home
-            if not self.has_home() and self._house_preference:
-                self._scheduler.add(TaskType.FIND_HOME)
-                logger.debug(f"{self._name} prefers a home and added FIND_HOME task")
-
-        # 6. Epsilon-Greedy algorithm to decide what work to do
-        self._add_work_tasks()
-
-        # 7. If you've got nothing else to do, explore
+        # If you've got nothing else to do, explore
         if len(self._scheduler.get_tasks()) == 0:
             self._scheduler.add(TaskType.EXPLORE)
             logger.debug(f"{self._name} has no tasks and added EXPLORE task")
 
-    def _add_work_tasks(self) -> None:
+    def _add_work_task(self) -> None:
         if not self._backpack.has_capacity():
             logger.debug(f"{self._name}'s backpack is full; no work task added")
             return
@@ -180,7 +169,7 @@ class Person:
         self._scheduler.add(task_type)
         logger.info(f"{self._name} added task '{task_type}' to scheduler")
 
-    def update_scheduler_rewards(self, reward: int, task_type: TaskType) -> None:
+    def update_scheduler_rewards(self, task_type: TaskType, reward: int) -> None:
         old_reward = self._rewards.get(task_type, 0)
         self._rewards[task_type] = old_reward + reward
         logger.debug(f"Updated rewards for {self._name}: '{task_type}' reward changed from {old_reward} to {self._rewards[task_type]}")
@@ -265,7 +254,7 @@ class Person:
 
     def remove_home(self):
         if not self._home:
-            logger.warning(f"{self._name} has no home to remove")
+            logger.debug(f"{self._name} has no home to remove")
             return
         self._home = None
         logger.info(f"{self._name} removed from home")
