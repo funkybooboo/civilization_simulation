@@ -2,7 +2,9 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, override, Optional
 
+from src.settings import settings
 from src.simulation.grid.structure.store.home import Home
+from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.people.person.scheduler.task.task import Task
 
 if TYPE_CHECKING:
@@ -13,7 +15,10 @@ if TYPE_CHECKING:
 
 class FindHome(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, 5)
+        super().__init__(simulation,
+                         person,
+                         settings.get("find_home_priority", 5),
+                         TaskType.FIND_HOME)
 
     @override
     def execute(self) -> None:
