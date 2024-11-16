@@ -114,10 +114,9 @@ class Person:
         self._hunger -= 1
         logger.debug(f"{self._name}'s hunger decreased by 1 to {self._hunger}")
 
-        if self._hunger < settings.get("hunger_damage_threshold", 20)::
+        if self._hunger < settings.get("hunger_damage_threshold", 20):
             self._health -= 1
             logger.debug(f"{self._name}'s health decreased due to being hungry (Health: {self._health})")
-
         elif self._hunger > settings.get("hunger_regen_threshold", 50):
             self._health -= 1
             logger.debug(f"{self._name}'s health increased due to being full (Health: {self._health})")
@@ -221,12 +220,10 @@ class Person:
     def eat(self, building: Barn | Home) -> None:
         logger.info(f"{self._name} is about to eat with hunger {self._hunger}")
         if isinstance(building, Home):
-            self._hunger = min(self._hunger + settings.get("home_eat_satiate", 10), 100)      # todo is this a reiteration of set_hunger() logic??????
+            self.set_hunger(settings.get("home_eat_satiate", 10))
             logger.debug(f"{self._name} ate at home and their hunger is now {self._hunger}")
         else:
-            self._hunger = min(
-                self._hunger + settings.get("barn_eat_satiate", 5), 100
-            )  # eating in a barn is less effective
+            self.set_hunger(settings.get("barn_eat_satiate", 5))
             logger.debug(f"{self._name} ate in a barn and their hunger is now {self._hunger}")
         building.remove_resource(settings.get("food", "food"), 3)
         
