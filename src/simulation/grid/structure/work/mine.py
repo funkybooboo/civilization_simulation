@@ -1,10 +1,14 @@
-from typing import Callable
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Callable
 
 import numpy as np
 
-from src.simulation.grid.grid import Grid
-from src.simulation.grid.location import Location
 from src.simulation.grid.structure.work.work import Work
+
+if TYPE_CHECKING:
+    from src.simulation.grid.grid import Grid
+    from src.simulation.grid.location import Location
 
 
 class Mine(Work):

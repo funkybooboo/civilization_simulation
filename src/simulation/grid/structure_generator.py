@@ -1,16 +1,19 @@
+from __future__ import annotations
+
 import random
-from typing import Dict, List, Tuple, Callable
+from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
 
 import numpy as np
 
 from src.simulation.grid.disjoint_set import DisjointSet
-from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
-from src.simulation.grid.structure.structure import Structure
-from src.simulation.grid.structure.structure_factory import StructureFactory
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.structure.work.tree import Tree
 
+if TYPE_CHECKING:
+    from src.simulation.grid.grid import Grid
+    from src.simulation.grid.structure.structure import Structure
+    from src.simulation.grid.structure.structure_factory import StructureFactory
 
 class StructureGenerator:
     def __init__(self, grid: Grid, structure_factory: StructureFactory):
