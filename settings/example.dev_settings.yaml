@@ -171,6 +171,6 @@ num_grids: 3
 near: 5
 days_in_year: 365
 mean_temp_f: 70
-visibility: 30
+visibility: 15
 speed: 10
 memory_expire: 50

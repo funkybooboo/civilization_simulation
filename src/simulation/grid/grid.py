@@ -14,14 +14,14 @@ from src.simulation.grid.structure.structure_factory import StructureFactory
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.structure_generator import StructureGenerator
 from src.simulation.grid.temperature import get_temperature_for_day
+from src.simulation.grid.structure.work.work import Work
+from src.simulation.grid.structure.store.barn import Barn
+from src.simulation.grid.structure.store.home import Home
+from src.simulation.grid.structure.work.farm import Farm
+from src.simulation.grid.structure.work.mine import Mine
+from src.simulation.grid.structure.work.tree import Tree
 
 if TYPE_CHECKING:
-    from src.simulation.grid.structure.store.barn import Barn
-    from src.simulation.grid.structure.store.home import Home
-    from src.simulation.grid.structure.work.farm import Farm
-    from src.simulation.grid.structure.work.mine import Mine
-    from src.simulation.grid.structure.work.tree import Tree
-    from src.simulation.grid.structure.work.work import Work
     from src.simulation.simulation import Simulation
 
 
@@ -281,7 +281,7 @@ class Grid:
     def work_structures_exchange_memories(self):
         logger.debug("Starting memory exchange for work structures.")
 
-        work_structures: List[Work] = list(filter(lambda b: not isinstance(b, Work), self._structures.values()))
+        work_structures: List[Work] = list(filter(lambda s: isinstance(s, Work), self._structures.values()))
 
         for work_structure in work_structures:
             logger.debug(f"Exchanging memories for work structure {work_structure}.")

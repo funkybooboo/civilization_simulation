@@ -25,7 +25,7 @@ class Mover:
         self._grid = grid
         self._speed = speed
         self._memories = memories
-        self._vision = Vision(person, grid, settings.get("visibility", 30))
+        self._vision = Vision(person, grid, settings.get("visibility", 15))
 
     def explore(self) -> None:
         random_location = self._get_random_location()
@@ -35,25 +35,26 @@ class Mover:
         if not self._grid.is_in_bounds(target):
             return
 
-        if not self._grid.is_empty(target):
+        if self._invalid(target):
             target = self._adjust_target(target)
 
         for _ in range(self._speed):
-            current_location = deepcopy(self._person.get_location())
             self._memories.combine(self._vision.look_around())
-            path_finding_grid = self._get_path_finding_grid()
-            path = self._get_path(current_location, path_finding_grid, target)
+            path = self._get_path(target)
 
             if path and len(path) >= 2:
                 next_node = path[1]
                 new_location = Location(next_node.y, next_node.x)  # Convert to Location
                 self._place(new_location)
 
+    def _invalid(self, location: Location) -> bool:
+        return self._grid.is_barn(location) or self._grid.is_mine(location) or self._grid.is_home(location)
+
     def _adjust_target(self, target):
         neighbors: List[Location] = target.get_neighbors()
         found: bool = False
         for neighbor in neighbors:
-            if self._grid.is_empty(neighbor):
+            if not self._invalid(neighbor) and self.can_get_to_location(neighbor):
                 target = neighbor
                 found = True
                 break
@@ -69,14 +70,13 @@ class Mover:
         return min(locations, key=lambda loc: current_location.distance_to(loc), default=None)
 
     def can_get_to_location(self, target: Location) -> bool:
-        path_finding_grid = self._get_path_finding_grid()
-        return bool(self._get_path(deepcopy(self._person.get_location()), path_finding_grid, target))
+        return bool(self._get_path(target))
 
     def _place(self, location: Location) -> None:
         current_location = deepcopy(self._person.get_location())
         if not current_location.is_one_away(location):
             raise ValueError(f"Location is not one away: {location}")
-        if not self._grid.is_in_bounds(location) or not self._grid.is_empty(location):
+        if not self._grid.is_in_bounds(location) or self._invalid(location):
             raise ValueError(f"Location is not valid: {location}")
         self._person.set_location(location)
 
@@ -85,19 +85,19 @@ class Mover:
             x = randint(0, self._grid.get_width() - 1)
             y = randint(0, self._grid.get_height() - 1)
             location = Location(x, y)
-            if self._grid.is_in_bounds(location) and self._grid.is_empty(location) and self.can_get_to_location(location):
+            if self._grid.is_in_bounds(location) and not self._invalid(location) and self.can_get_to_location(location):
                 return location
 
     def _get_path(
         self,
-        current_location: Location,
-        path_finding_grid: PathFindingGrid,
         target: Location,
     ) -> List[PathFindingGridNode]:
-        if not self._grid.is_in_bounds(current_location) or not self._grid.is_empty(current_location):
+        start: Location = deepcopy(self._person.get_location())
+        path_finding_grid = self._get_path_finding_grid()
+        if not self._grid.is_in_bounds(start) or self._invalid(start):
             raise ValueError("Person out of bounds")
 
-        start_node = path_finding_grid.node(current_location.y, current_location.x)
+        start_node = path_finding_grid.node(start.y, start.x)
         end_node = path_finding_grid.node(target.y, target.x)
 
         finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
@@ -107,3 +107,46 @@ class Mover:
     def _get_path_finding_grid(self) -> PathFindingGrid:
         matrix = self._grid.get_path_finding_matrix()
         return PathFindingGrid(matrix=matrix)
+
+    # For debugging
+    def _print_grid(self, target: Location, path) -> None:
+        grid = self._grid.get_grid()
+        person_location = self._person.get_location()
+
+        # Extract y (row) and x (column) from the Location object for the person
+        person_y = person_location.y  # row
+        person_x = person_location.x  # column
+
+        # Extract y (row) and x (column) from the Location object for the target
+        target_y = target.y  # row
+        target_x = target.x  # column
+
+        # Convert path from nodes (e.g., tuples) to Location objects
+        path_locations = [Location(y, x) for y, x in path]
+
+        # Top border: Adjusted to account for spaces between characters
+        border = "+" + "-" * ((len(grid[0]) - 1) * 2 + 1) + "+"
+        print(border)
+
+        # Print each row with spaces between characters
+        for y_idx, row in enumerate(grid):
+            row_display = []
+            for x_idx, cell in enumerate(row):
+                # If we're at the person's location, mark it with 'P'
+                if y_idx == person_y and x_idx == person_x:
+                    row_display.append("P")
+                # If we're at the target's location, mark it with 'T'
+                elif y_idx == target_y and x_idx == target_x:
+                    row_display.append("T")
+                # If we're at a location in the path, mark it with 'r'
+                elif Location(y_idx, x_idx) in path_locations:
+                    row_display.append("r")
+                else:
+                    row_display.append(cell)  # otherwise, display the normal grid cell
+
+            # Print the row with spaces between characters
+            print("|" + " ".join(row_display) + "|")
+
+        # Bottom border: Same as top border
+        print(border)
+
