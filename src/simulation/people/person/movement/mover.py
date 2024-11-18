@@ -53,16 +53,6 @@ class Mover:
             return None
         return min(locations, key=lambda loc: current_location.distance_to(loc), default=None)
 
-    @staticmethod
-    def get_furthest(current_location: Location, locations: List[Location]) -> Optional[Location]:
-        if not locations:
-            return None
-        return max(locations, key=lambda loc: current_location.distance_to(loc), default=None)
-
-    def is_next_to(self, locations: List[Location]) -> bool:
-        current_location = deepcopy(self._person.get_location())
-        return any(current_location.is_one_away(loc) for loc in locations)
-
     def can_get_to_location(self, target: Location) -> bool:
         path_finding_grid = self._get_path_finding_grid()
         return bool(self._get_path(deepcopy(self._person.get_location()), path_finding_grid, target))
@@ -80,7 +70,7 @@ class Mover:
             x = randint(0, self._grid.get_width() - 1)
             y = randint(0, self._grid.get_height() - 1)
             location = Location(x, y)
-            if self._grid.is_in_bounds(location) and self._grid.is_empty(location):
+            if self._grid.is_in_bounds(location) and self._grid.is_empty(location) and self.can_get_to_location(location):
                 return location
 
     def _get_path(
