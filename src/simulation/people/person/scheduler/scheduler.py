@@ -13,6 +13,8 @@ if TYPE_CHECKING:
 
 
 class Scheduler:
+    _small_float = 2 ** -100
+
     def __init__(self, simulation: Simulation, person: Person) -> None:
         self._task_factory: TaskFactory = TaskFactory(simulation, person)
         self._this_years_tasks: List[Task] = []
@@ -43,10 +45,9 @@ class Scheduler:
     def _pop(self) -> Optional[Task]:
         return heapq.heappop(self._tasks) if self._tasks else None
 
-    @staticmethod
-    def _calculate_task_reward(task: Task) -> float:
+    def _calculate_task_reward(self, task: Task) -> float:
         if not task:
-            return 0.0
+            return self._small_float
         # Reward function: Higher priority tasks have higher rewards
         priority_weight = 11 - task.get_priority()  # Higher priority = higher weight
         time_remaining_weight = max(
