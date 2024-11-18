@@ -1,8 +1,6 @@
 import os
 import sys
-
 from loguru import logger
-
 
 def setup_logger(mode: str = "dev") -> None:
     # Create a logs directory if it doesn't exist
@@ -15,38 +13,41 @@ def setup_logger(mode: str = "dev") -> None:
     # Remove the default logger
     logger.remove()
 
-    # Set log level based on mode
-    console_log_level: str = "DEBUG" if mode == "dev" else "INFO"
-    file_log_level: str = "DEBUG"  # Always log DEBUG to file
+    # Set log level based on mode for console logging
+    console_log_level: str = "INFO"  # Log everything except DEBUG to the console
+    file_log_level: str = "DEBUG"  # Log everything to the file (DEBUG, INFO, WARNING, ERROR, CRITICAL)
 
-    # Configure the logger
+    # Configure the logger to log to the console (everything except DEBUG)
     logger.add(
         sys.stdout,
-        level=console_log_level,
-        format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
-    )  # Log to console
-    logger.add(
-        log_file_path,
-        rotation="1 MB",  # Rotate after 1 MB
-        retention="10 days",  # Keep logs for 10 days
-        compression="zip",  # Compress old logs
-        level=file_log_level,  # Log level for the file
-        format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
-    )  # Log format
-
-    logger.add(
-        os.path.join(log_dir, "error.log"),
-        level="ERROR",
+        level=console_log_level,  # Don't log DEBUG messages to the console
         format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
     )
 
+    # Configure the logger to log to the file (everything, including DEBUG)
+    logger.add(
+        log_file_path,
+        rotation="5 MB",  # Rotate log file after it reaches 5 MB
+        retention="0 days",  # Delete rotated files immediately after rotation
+        level=file_log_level,  # Log everything to the file
+        format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
+    )
+
+    # Configure the logger to log ERROR and above to a separate error log file
+    logger.add(
+        os.path.join(log_dir, "error.log"),
+        level="ERROR",
+        rotation="5 MB",  # Rotate log file after it reaches 5 MB
+        retention="0 days",  # Delete rotated files immediately after rotation
+        format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
+    )
 
 if __name__ == "__main__":
     # Example usage: Pass 'prod' or 'dev' to setup the logger
     setup_logger(mode="dev")  # Change to 'prod' for production mode
 
-    logger.info("Logger is set up and ready to use!")
-    logger.debug("This is a debug message.")
-    logger.warning("This is a warning message.")
-    logger.error("This is an error message.")
-    logger.critical("This is a critical message.")
+    logger.debug("This is a debug message.")  # Will not appear on console, but will appear in the log file
+    logger.info("This is an info message.")  # Will appear on both console and log file
+    logger.warning("This is a warning message.")  # Will appear on both console and log file
+    logger.error("This is an error message.")  # Will appear on both console and log file
+    logger.critical("This is a critical message.")  # Will appear on both console and log file
