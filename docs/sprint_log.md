@@ -95,7 +95,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-15 | 2.5   | Nate      | Clean up code, discover circular dependencies bug                                   |
 | 2024-11-16 | 1     | All       | Team meeting                                                                        |
 | 2024-11-16 | 6     | Nate      | fix circular dependencies bug, debug app, get use upuntil we start executing tasks  |
-| 2024-11-17 |       |           |                                                                                     |
+| 2024-11-17 | 2     | Nate      | Add logging the grid directory, redo the logger.py file, debug                      |
 | 2024-11-18 |       |           |                                                                                     |
 | 2024-11-19 |       |           |                                                                                     |
 
