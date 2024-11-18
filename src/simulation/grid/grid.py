@@ -3,27 +3,27 @@ from __future__ import annotations
 import random
 from copy import deepcopy
 from typing import TYPE_CHECKING, Dict, List, Optional, Type
-from src.settings import settings
 
-from src.simulation.grid.structure_generator import StructureGenerator
-from src.simulation.grid.temperature import get_temperature_for_day
-from src.simulation.grid.structure.structure import Structure
+from src.logger import logger
+from src.settings import settings
+from src.simulation.grid.grid_disaster_generator import GridDisasterGenerator
 from src.simulation.grid.grid_generator import GridGenerator
 from src.simulation.grid.location import Location
-from src.logger import logger
-
+from src.simulation.grid.structure.structure import Structure
 from src.simulation.grid.structure.structure_factory import StructureFactory
 from src.simulation.grid.structure.structure_type import StructureType
-from src.simulation.grid.grid_disaster_generator import GridDisasterGenerator
+from src.simulation.grid.structure_generator import StructureGenerator
+from src.simulation.grid.temperature import get_temperature_for_day
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
     from src.simulation.grid.structure.store.barn import Barn
     from src.simulation.grid.structure.store.home import Home
     from src.simulation.grid.structure.work.farm import Farm
     from src.simulation.grid.structure.work.mine import Mine
     from src.simulation.grid.structure.work.tree import Tree
     from src.simulation.grid.structure.work.work import Work
+    from src.simulation.simulation import Simulation
+
 
 class Grid:
     def __init__(self, simulation: Simulation, size: int) -> None:
@@ -45,8 +45,9 @@ class Grid:
 
         structure_generator: StructureGenerator = StructureGenerator(self, self._structure_factory)
         logger.debug("Generating structures using StructureGenerator.")
-        self._structures: Dict[
-            Location, Structure] = structure_generator.find_structures()  # stores the top left corner of every structure
+        self._structures: Dict[Location, Structure] = (
+            structure_generator.find_structures()
+        )  # stores the top left corner of every structure
 
         self._day: int = 0
         self._temp: float = 0
@@ -81,9 +82,7 @@ class Grid:
     def get_buildings(self) -> Dict[Location, Structure]:
         logger.debug("Retrieving buildings (excluding trees).")
         buildings = {
-            location: structure
-            for location, structure in self._structures.items()
-            if not isinstance(structure, Tree)
+            location: structure for location, structure in self._structures.items() if not isinstance(structure, Tree)
         }
         logger.debug(f"Found {len(buildings)} buildings.")
         return buildings
@@ -100,9 +99,7 @@ class Grid:
     def get_structure_locations(self, structure_type: Type[Structure]) -> List[Location]:
         logger.debug(f"Retrieving locations of structures of type {structure_type}.")
         locations = [
-            location
-            for location, building in self._structures.items()
-            if isinstance(building, structure_type)
+            location for location, building in self._structures.items() if isinstance(building, structure_type)
         ]
         logger.debug(f"Found {len(locations)} locations for {structure_type}.")
         return locations
@@ -116,9 +113,7 @@ class Grid:
 
     def get_structure_count(self, structure_type: Type[Structure]) -> int:
         logger.debug(f"Counting structures of type {structure_type}.")
-        count = sum(
-            1 for structure in self._structures.values() if isinstance(structure, structure_type)
-        )
+        count = sum(1 for structure in self._structures.values() if isinstance(structure, structure_type))
         logger.debug(f"Found {count} structures of type {structure_type}.")
         return count
 
@@ -193,16 +188,18 @@ class Grid:
         rows = len(self._grid)
         cols = len(self._grid[0])
         empty_spots = []
-        building_types = "".join([
-            settings.get("home_construction_char", "h"),
-            settings.get("home_char", "H"),
-            settings.get("barn_construction_char", "b"),
-            settings.get("barn_char", "B"),
-            settings.get("farm_construction_char", "f"),
-            settings.get("farm_char", "F"),
-            settings.get("mine_construction_char", "m"),
-            settings.get("mine_char", "M"),
-        ])
+        building_types = "".join(
+            [
+                settings.get("home_construction_char", "h"),
+                settings.get("home_char", "H"),
+                settings.get("barn_construction_char", "b"),
+                settings.get("barn_char", "B"),
+                settings.get("farm_construction_char", "f"),
+                settings.get("farm_char", "F"),
+                settings.get("mine_construction_char", "m"),
+                settings.get("mine_char", "M"),
+            ]
+        )
 
         logger.debug(f"Building types to check for: {building_types}")
 
@@ -284,9 +281,7 @@ class Grid:
     def work_structures_exchange_memories(self):
         logger.debug("Starting memory exchange for work structures.")
 
-        work_structures: List[Work] = list(
-            filter(lambda b: not isinstance(b, Work), self._structures.values())
-        )
+        work_structures: List[Work] = list(filter(lambda b: not isinstance(b, Work), self._structures.values()))
 
         for work_structure in work_structures:
             logger.debug(f"Exchanging memories for work structure {work_structure}.")
@@ -294,14 +289,10 @@ class Grid:
 
         logger.debug("Memory exchange for work structures completed.")
 
-    def start_building_construction(
-            self, building_type: StructureType, location: Location
-    ) -> None:
+    def start_building_construction(self, building_type: StructureType, location: Location) -> None:
         try:
             logger.debug(f"Attempting to start construction of {building_type} at {location}.")
-            building: Structure = self._structure_factory.create_instance(
-                building_type, location
-            )
+            building: Structure = self._structure_factory.create_instance(building_type, location)
             logger.info(f"Construction started for {building_type} at {location}.")
         except Exception as e:
             logger.error(f"Could not start structure construction at {location}. Error: {e}")
@@ -337,9 +328,7 @@ class Grid:
                 continue
 
             logger.info(f"Turning construction at {location} into a building.")
-            self._structures[location] = self._structure_factory.create_instance(
-                building_type, location
-            )
+            self._structures[location] = self._structure_factory.create_instance(building_type, location)
             logger.debug(f"Building at {location} updated to {building_type}.")
 
     def get_open_spot_next_to_town(self) -> Optional[Location]:
@@ -377,26 +366,16 @@ class Grid:
         logger.debug("Generating path finding matrix.")
 
         char_to_num: Dict[str, int] = {
-            settings.get("home_construction_char", "h"):
-                settings.get("home_construction_obstacle_rating", 10),
-            settings.get("home_char", "H"):
-                settings.get("home_obstacle_rating", 0),
-            settings.get("barn_construction_char", "b"):
-                settings.get("barn_construction_obstacle_rating", 10),
-            settings.get("barn_char", "B"):
-                settings.get("barn_obstacle_rating", 0),
-            settings.get("farm_construction_char", "f"):
-                settings.get("farm_construction_obstacle_rating", 3),
-            settings.get("farm_char", "F"):
-                settings.get("farm_obstacle_rating", 5),
-            settings.get("mine_construction_char", "m"):
-                settings.get("mine_construction_obstacle_rating", 0),
-            settings.get("mine_char", "M"):
-                settings.get("mine_obstacle_rating", 0),
-            settings.get("empty_char", " "):
-                settings.get("empty_obstacle_rating", 1),
-            settings.get("tree_char", "*"):
-                settings.get("tree_obstacle_rating", 10),
+            settings.get("home_construction_char", "h"): settings.get("home_construction_obstacle_rating", 10),
+            settings.get("home_char", "H"): settings.get("home_obstacle_rating", 0),
+            settings.get("barn_construction_char", "b"): settings.get("barn_construction_obstacle_rating", 10),
+            settings.get("barn_char", "B"): settings.get("barn_obstacle_rating", 0),
+            settings.get("farm_construction_char", "f"): settings.get("farm_construction_obstacle_rating", 3),
+            settings.get("farm_char", "F"): settings.get("farm_obstacle_rating", 5),
+            settings.get("mine_construction_char", "m"): settings.get("mine_construction_obstacle_rating", 0),
+            settings.get("mine_char", "M"): settings.get("mine_obstacle_rating", 0),
+            settings.get("empty_char", " "): settings.get("empty_obstacle_rating", 1),
+            settings.get("tree_char", "*"): settings.get("tree_obstacle_rating", 10),
         }
 
         logger.debug(f"Character to obstacle rating map: {char_to_num}")
@@ -404,7 +383,8 @@ class Grid:
         path_finding_matrix: List[List[int | str]] = deepcopy(self._grid)
 
         logger.debug(
-            f"Starting to fill the path finding matrix based on grid size {len(self._grid)}x{len(self._grid[0])}.")
+            f"Starting to fill the path finding matrix based on grid size {len(self._grid)}x{len(self._grid[0])}."
+        )
 
         for i in range(len(self._grid)):
             row = self._grid[i]

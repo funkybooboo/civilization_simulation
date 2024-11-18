@@ -1,6 +1,8 @@
 import os
 import sys
+
 from loguru import logger
+
 
 def setup_logger(mode: str = "dev") -> None:
     # Create a logs directory if it doesn't exist
@@ -41,6 +43,7 @@ def setup_logger(mode: str = "dev") -> None:
         retention="0 days",  # Delete rotated files immediately after rotation
         format="{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}",
     )
+
 
 if __name__ == "__main__":
     # Example usage: Pass 'prod' or 'dev' to setup the logger

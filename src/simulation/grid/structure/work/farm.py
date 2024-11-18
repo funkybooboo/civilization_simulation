@@ -4,9 +4,9 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from src.simulation.grid.structure.work.work import Work
-from src.settings import settings
 from src.logger import logger
+from src.settings import settings
+from src.simulation.grid.structure.work.work import Work
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
@@ -19,23 +19,27 @@ class Farm(Work):
 
         max_worker_count: int = settings.get("farm_max_worker_count", 3)
         max_work_count: int = settings.get("farm_max_work_count", 3)
-        yield_variance = np.random.normal(loc=settings.get("farm_yield_var_loc", 0),
-                                          scale=settings.get("farm_yield_var_scale", 4)
-                                          )
-        super().__init__(grid,
-                         location,
-                         settings.get("farm_size", 5),
-                         settings.get("farm_size", 5),
-                         settings.get("farm_char", "F"),
-                         max_worker_count,
-                         max_work_count,
-                         self._get_yield,
-                         yield_variance)
+        yield_variance = np.random.normal(
+            loc=settings.get("farm_yield_var_loc", 0), scale=settings.get("farm_yield_var_scale", 4)
+        )
+        super().__init__(
+            grid,
+            location,
+            settings.get("farm_size", 5),
+            settings.get("farm_size", 5),
+            settings.get("farm_char", "F"),
+            max_worker_count,
+            max_work_count,
+            self._get_yield,
+            yield_variance,
+        )
 
-        logger.info(f"Farm initialized with max workers: {max_worker_count}, "
-                    f"max work count: {max_work_count}, "
-                    f"yield variance: {yield_variance:.2f}, "
-                    f"size: {settings.get('farm_size', 5)}")
+        logger.info(
+            f"Farm initialized with max workers: {max_worker_count}, "
+            f"max work count: {max_work_count}, "
+            f"yield variance: {yield_variance:.2f}, "
+            f"size: {settings.get('farm_size', 5)}"
+        )
 
     def _get_yield(self) -> float:
         """
@@ -49,14 +53,10 @@ class Farm(Work):
 
         # Parameters for temperature-dependent yield curve
         optimal_temp: float = 70  # Optimal temperature for best yield
-        std_dev_temp: float = (
-            10  # Standard deviation of the temperature curve (how sharply it drops off)
-        )
+        std_dev_temp: float = 10  # Standard deviation of the temperature curve (how sharply it drops off)
 
         # Calculate the temperature-dependent yield factor using a Gaussian function
-        yield_factor: float = np.exp(
-            -((temp - optimal_temp) ** 2) / (2 * std_dev_temp ** 2)
-        )
+        yield_factor: float = np.exp(-((temp - optimal_temp) ** 2) / (2 * std_dev_temp**2))
 
         # Scale the yield factor to the desired range (25 to 50 food)
         min_yield: float = settings.get("farm_min_yield", 25)

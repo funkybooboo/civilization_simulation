@@ -1,16 +1,16 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import TYPE_CHECKING, override, List, Optional
+from typing import TYPE_CHECKING, List, Optional, override
 
 from src.simulation.grid.location import Location
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.scheduler.task.task import Task
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
-    from src.simulation.people.person.person import Person
     from src.simulation.grid.structure.structure import Structure
+    from src.simulation.people.person.person import Person
+    from src.simulation.simulation import Simulation
 
 
 class StartConstruction(Task, ABC):
@@ -32,16 +32,14 @@ class StartConstruction(Task, ABC):
     @override
     def execute(self) -> None:
         self._search_time += 1
-        if self._search_time >= 20:     # todo: I don't wanna put this one in the yaml
+        if self._search_time >= 20:  # todo: I don't wanna put this one in the yaml
             self._finished(False)
             return
         empties: List[Location] = self._person.get_empties()
         location = self._find_fitting_group(empties)
         if location:
             if self._person.get_location().is_one_away(location):
-                self._simulation.get_grid().start_building_construction(
-                    self._building_type, location
-                )
+                self._simulation.get_grid().start_building_construction(self._building_type, location)
                 self._finished()
             else:
                 self._person.go_to_location(location)

@@ -8,15 +8,17 @@ from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.people.person.scheduler.task.work.work import Work
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
     from src.simulation.people.person.person import Person
+    from src.simulation.simulation import Simulation
 
 
 class WorkFarm(Work):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation,
-                         person,
-                         settings.get("work_farm_priority", 5),
-                         StructureType.FARM,
-                         settings.get("food", "food"),
-                         TaskType.WORK_FARM)
+        super().__init__(
+            simulation,
+            person,
+            settings.get("work_farm_priority", 5),
+            StructureType.FARM,
+            settings.get("food", "food"),
+            TaskType.WORK_FARM,
+        )

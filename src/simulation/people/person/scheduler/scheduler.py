@@ -3,7 +3,8 @@ from __future__ import annotations
 import heapq
 from typing import TYPE_CHECKING, List, Optional
 
-from src.simulation.people.person.scheduler.task.task_factory import TaskFactory
+from src.simulation.people.person.scheduler.task.task_factory import \
+    TaskFactory
 
 if TYPE_CHECKING:
     from src.simulation.people.person.person import Person
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class Scheduler:
-    _small_float = 2 ** -100
+    _small_float = 2**-100
 
     def __init__(self, simulation: Simulation, person: Person) -> None:
         self._task_factory: TaskFactory = TaskFactory(simulation, person)
@@ -52,12 +53,8 @@ class Scheduler:
             return self._small_float
         # Reward function: Higher priority tasks have higher rewards
         priority_weight = 11 - task.get_priority()  # Higher priority = higher weight
-        time_remaining_weight = max(
-            1, 10 - task.get_remaining_time()
-        )  # Closer to completion = higher weight
-        interruption_penalty = max(
-            0, task.get_interruptions()
-        )  # More interruptions = lower reward
+        time_remaining_weight = max(1, 10 - task.get_remaining_time())  # Closer to completion = higher weight
+        interruption_penalty = max(0, task.get_interruptions())  # More interruptions = lower reward
 
         # Reward formula: Higher priority, less time remaining, fewer interruptions lead to higher reward
         reward = priority_weight * time_remaining_weight / (1 + interruption_penalty)

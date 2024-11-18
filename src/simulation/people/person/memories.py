@@ -4,18 +4,19 @@ from src.settings import settings
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 
+
 class Memory:
     def __init__(self, what: str, where: Location, when: int):
         self._what: str = what
         self._where: Location = where
         self._when: int = when
-        
+
     def get_what(self) -> str:
         return self._what
-    
+
     def get_where(self) -> Location:
         return self._where
-    
+
     def get_when(self) -> int:
         return self._when
 
@@ -27,22 +28,27 @@ class Memory:
             return self._where == other._where
         return False
 
+
 class Memories:
     def __init__(self, grid: Grid) -> None:
         self._grid: Grid = grid
-        
+
         self._memories: Set[Memory] = set()
-        
+
     def get_memories(self) -> Set[Memory]:
         return self._memories
-        
+
     def _get_locations(self, char: str) -> Set[Location]:
         current_time = self._grid.get_time()
 
         # Remove expired memories
-        self._memories = {memory for memory in self._memories if current_time - memory.get_when() <= settings.get("memory_expire", 50)}
-    
-        return set(map(lambda memory: memory.get_where(), filter(lambda memory: memory.get_what() == char, self._memories)))
+        self._memories = {
+            memory for memory in self._memories if current_time - memory.get_when() <= settings.get("memory_expire", 50)
+        }
+
+        return set(
+            map(lambda memory: memory.get_where(), filter(lambda memory: memory.get_what() == char, self._memories))
+        )
 
     def get_barn_locations(self) -> Set[Location]:
         return self._get_locations(settings.get("barn_char", "B"))
@@ -75,7 +81,12 @@ class Memories:
         return self._get_locations(settings.get("empty_char", " "))
 
     def get_building_locations(self) -> Set[Location]:
-        return self.get_barn_locations() | self.get_farm_locations() | self.get_mine_locations() | self.get_home_locations()
+        return (
+            self.get_barn_locations()
+            | self.get_farm_locations()
+            | self.get_mine_locations()
+            | self.get_home_locations()
+        )
 
     def combine(self, other: "Memories") -> None:
         # Merge the memories from both 'self' and 'other', keeping the newest memory for each location

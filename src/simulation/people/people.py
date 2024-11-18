@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import TYPE_CHECKING, List, Iterator, Dict
+from typing import TYPE_CHECKING, Dict, Iterator, List
 
-from src.simulation.people.people_generator import PeopleGenerator
 from src.settings import settings
 from src.simulation.people.home_manager import HomeManager
-from src.simulation.people.people_disaster_generator import PeopleDisasterGenerator
+from src.simulation.people.people_disaster_generator import \
+    PeopleDisasterGenerator
+from src.simulation.people.people_generator import PeopleGenerator
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
     from person.person import Person
+
     from src.simulation.grid.grid import Grid
+    from src.simulation.simulation import Simulation
 
 
 class People:
@@ -33,7 +35,7 @@ class People:
                     dead.append(person)
                     continue
                 person.take_action()
-                self._grid.work_structures_exchange_memories() # workers talk while working
+                self._grid.work_structures_exchange_memories()  # workers talk while working
             for person in dead:
                 person.divorce()
                 self._people.remove(person)
@@ -52,10 +54,10 @@ class People:
 
     def get_time(self) -> int:
         return self._simulation.get_time()
-    
+
     def get_people(self) -> List:
         return self._people
-        
+
     def flush(self):
         self._disaster_generator.flush()
         for person in self._people:
@@ -98,9 +100,7 @@ class People:
                 and (person.get_spouse().get_age() <= settings.get("infertile_age", 50))
             ):
                 # create a baby next to the person's house
-                baby = self._people_generator.make_baby(
-                    deepcopy(person.get_location())
-                )
+                baby = self._people_generator.make_baby(deepcopy(person.get_location()))
                 self._people.append(baby)
 
     def get_married_people(self) -> List[Person]:
@@ -118,7 +118,7 @@ class People:
                 continue
             married_people.append(person)
         return married_people
-    
+
     def get_disaster_counts(self) -> Dict[str, int]:
         return self._disaster_generator.get_disaster_counts()
 

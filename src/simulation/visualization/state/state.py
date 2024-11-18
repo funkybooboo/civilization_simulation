@@ -10,9 +10,7 @@ class State(ABC):
         Returns the data dictionary with labels formatted and mapped to their corresponding values.
         Subclasses should implement this method to specify the class-specific title and attributes.
         """
-        title = (
-            self.get_title()
-        )  # Get the title dynamically using each subclass's title
+        title = self.get_title()  # Get the title dynamically using each subclass's title
         data = self._data_generator()  # Use the common data generation logic
         return title, data
 

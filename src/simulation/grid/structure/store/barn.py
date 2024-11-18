@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from src.logger import logger
 
-from src.simulation.grid.structure.store.store import Store
+from src.logger import logger
 from src.settings import settings
+from src.simulation.grid.structure.store.store import Store
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
@@ -18,7 +18,7 @@ class Barn(Store):
         allowed_resources = {
             "food": settings.get("barn_food_store", 500),
             "stone": settings.get("barn_stone_store", 100),
-            "wood": settings.get("barn_wood_store", 200)
+            "wood": settings.get("barn_wood_store", 200),
         }
 
         logger.debug(f"Allowed resources for the Barn: {allowed_resources}")
@@ -29,7 +29,7 @@ class Barn(Store):
             settings.get("barn_size", 3),
             settings.get("barn_size", 3),
             settings.get("barn_char", "B"),
-            allowed_resources
+            allowed_resources,
         )
 
         logger.info(f"Barn initialized at location {location} with allowed resources.")

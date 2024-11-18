@@ -1,5 +1,7 @@
 from typing import List
+
 from src.logger import logger
+
 
 class DisjointSet:
     def __init__(self, size: int) -> None:
@@ -33,6 +35,8 @@ class DisjointSet:
             else:
                 self.parent[rootY] = rootX
                 self.rank[rootX] += 1
-                logger.debug(f"Attaching tree with root {rootY} under tree with root {rootX} and increasing rank of root {rootX} to {self.rank[rootX]}.")
+                logger.debug(
+                    f"Attaching tree with root {rootY} under tree with root {rootX} and increasing rank of root {rootX} to {self.rank[rootX]}."
+                )
         else:
             logger.debug(f"Elements {x} and {y} are already in the same set. No union performed.")

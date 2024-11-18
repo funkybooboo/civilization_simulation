@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from abc import ABC
 from typing import TYPE_CHECKING, Optional, override
-from src.logger import logger
 
+from src.logger import logger
 from src.simulation.grid.structure.work.work import Work
 
 if TYPE_CHECKING:
@@ -29,15 +29,7 @@ class Construction(Work, ABC):
         yield_func = lambda: 1
         yield_variance = 0
         super().__init__(
-            grid,
-            location,
-            width,
-            height,
-            char,
-            max_worker_count,
-            max_work_count,
-            yield_func,
-            yield_variance
+            grid, location, width, height, char, max_worker_count, max_work_count, yield_func, yield_variance
         )
         self._required_wood: int = required_wood
         self._required_stone: int = required_stone
@@ -47,7 +39,9 @@ class Construction(Work, ABC):
         self._finished_completion_level: int = finished_completion_level
         self._max_worker_count: int = max_worker_count
         self._max_work_count: int = max_work_count
-        logger.debug(f"Construction initialized with required wood: {required_wood}, required stone: {required_stone}, max work count: {max_work_count}")
+        logger.debug(
+            f"Construction initialized with required wood: {required_wood}, required stone: {required_stone}, max work count: {max_work_count}"
+        )
 
     def deliver_wood(self, amount: int) -> None:
         self._delivered_wood += amount
@@ -91,10 +85,14 @@ class Construction(Work, ABC):
         if self._workers[person] > self._max_work_count:
             self.remove_worker(person)
             self._current_completion_level += 1
-            logger.info(f"Worker {person} finished work. Current completion level: {self._current_completion_level}/{self._finished_completion_level}")
+            logger.info(
+                f"Worker {person} finished work. Current completion level: {self._current_completion_level}/{self._finished_completion_level}"
+            )
             return int(self._get_yield())
 
-        logger.debug(f"Worker {person} assigned. Current completion level: {self._current_completion_level}/{self._finished_completion_level}")
+        logger.debug(
+            f"Worker {person} assigned. Current completion level: {self._current_completion_level}/{self._finished_completion_level}"
+        )
         return None
 
     @override

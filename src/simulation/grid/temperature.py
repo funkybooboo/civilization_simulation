@@ -1,8 +1,12 @@
 import numpy as np
-from src.settings import settings
-from src.logger import logger
 
-def get_temperature_for_day(day_of_year: int, mean_temp_f: int = 70, amplitude_f: int = 18, std_dev_f: int = 5) -> float:
+from src.logger import logger
+from src.settings import settings
+
+
+def get_temperature_for_day(
+    day_of_year: int, mean_temp_f: int = 70, amplitude_f: int = 18, std_dev_f: int = 5
+) -> float:
     """
     Returns the temperature for a given day of the year using a sine wave to model seasonal variations
     and a normal distribution for daily fluctuations (output in Fahrenheit).
@@ -21,7 +25,9 @@ def get_temperature_for_day(day_of_year: int, mean_temp_f: int = 70, amplitude_f
     if not (1 <= day_of_year <= settings.get("days_in_year", 365)):
         logger.error(f"Invalid day_of_year: {day_of_year}. Must be between 1 and 365.")
         raise ValueError("day_of_year must be between 1 and 365")
-    logger.debug(f"Getting temperature for day {day_of_year} with mean={mean_temp_f}, amplitude={amplitude_f}, std_dev={std_dev_f}")
+    logger.debug(
+        f"Getting temperature for day {day_of_year} with mean={mean_temp_f}, amplitude={amplitude_f}, std_dev={std_dev_f}"
+    )
 
     # Calculate the seasonal variation using a sine wave
     seasonal_variation_f = amplitude_f * np.sin(2 * np.pi * (day_of_year - 81) / settings.get("days_in_year", 365))

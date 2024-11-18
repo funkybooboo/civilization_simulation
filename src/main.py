@@ -1,12 +1,13 @@
-from src.settings import settings, environment # this must be imported first
 from src.logger import logger, setup_logger
+from src.settings import environment, settings  # this must be imported first
 from src.simulation.simulation import Simulation
 from src.simulation.visualization.visualizer import Visualizer
+
 
 def main() -> None:
     setup_logger(environment)
     logger.info("Starting the simulation program.")
-    
+
     # Access settings via the globally initialized object
     max_simulations = settings.get("max_simulations", 10)
 

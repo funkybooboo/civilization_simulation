@@ -1,21 +1,22 @@
 from __future__ import annotations
 
 import random
-from typing import TYPE_CHECKING, Dict, List, Tuple, Callable
+from typing import TYPE_CHECKING, Callable, Dict, List, Tuple
 
 import numpy as np
 
+from src.logger import logger
 from src.settings import settings
 from src.simulation.grid.disjoint_set import DisjointSet
 from src.simulation.grid.location import Location
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.grid.structure.work.tree import Tree
-from src.logger import logger
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
     from src.simulation.grid.structure.structure import Structure
-    from src.simulation.grid.structure.structure_factory import StructureFactory
+    from src.simulation.grid.structure.structure_factory import \
+        StructureFactory
 
 
 class StructureGenerator:
@@ -67,9 +68,7 @@ class StructureGenerator:
                 # Create and store structure
                 if location not in structures:
                     logger.debug(f"Creating structure of type {structure_type} at location {location}.")
-                    structure = self._structure_factory.create_instance(
-                        structure_type, location
-                    )
+                    structure = self._structure_factory.create_instance(structure_type, location)
                     if structure:
                         structures[location] = structure
                     else:
@@ -105,8 +104,11 @@ class StructureGenerator:
             for dx, dy in directions:
                 nx, ny = x + dx, y + dy
 
-                if 0 <= nx < self._grid.get_height() and 0 <= ny < self._grid.get_width() and self._grid.get_grid()[nx][
-                    ny] == settings.get("tree_char", "*"):
+                if (
+                    0 <= nx < self._grid.get_height()
+                    and 0 <= ny < self._grid.get_width()
+                    and self._grid.get_grid()[nx][ny] == settings.get("tree_char", "*")
+                ):
                     neighbor_location: Location = Location(nx, ny)
                     if neighbor_location in tree_index:
                         logger.debug(f"Connecting tree at {location} with neighbor {neighbor_location}.")

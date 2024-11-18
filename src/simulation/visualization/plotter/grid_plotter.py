@@ -1,6 +1,6 @@
 import random
 import time
-from typing import List, Dict
+from typing import Dict, List
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -30,9 +30,9 @@ class GridPlotter:
         return self._color_map[char]
 
     def add(self, year: int, grid: List[List[str]]) -> None:
-        fig, ax = plt.subplots(figsize=(
-            settings.get("fig_size", 8),
-            settings.get("fig_size", 8)))  # Adjust size as needed
+        fig, ax = plt.subplots(
+            figsize=(settings.get("fig_size", 8), settings.get("fig_size", 8))
+        )  # Adjust size as needed
         ax.set_title("Grid Snapshot")
         ax.set_xlabel("X Axis (Column index)")
         ax.set_ylabel("Y Axis (Row index)")
@@ -48,14 +48,10 @@ class GridPlotter:
 
         # Plot each grid element with square markers
         square_size = 1  # You can change this if needed
-        for row_idx, row in tqdm(
-            enumerate(grid), desc="Adding Grid to Plot", total=num_rows
-        ):
+        for row_idx, row in tqdm(enumerate(grid), desc="Adding Grid to Plot", total=num_rows):
             for col_idx, char in enumerate(row):
                 color = self._get_color_for_char(char)
-                ax.scatter(
-                    col_idx, row_idx, color=color, s=square_size**2 * 100, marker="s"
-                )
+                ax.scatter(col_idx, row_idx, color=color, s=square_size**2 * 100, marker="s")
 
         # Add the color legend (key)
         self._add_color_key(ax)
@@ -65,9 +61,7 @@ class GridPlotter:
     def _add_color_key(self, ax) -> None:
         """Add a color key showing the terrain types and their associated colors."""
         # Dynamically generate terrain types (for example, we use characters 'a', 'b', 'c', etc.)
-        terrain_types = list(
-            self._color_map.keys()
-        )  # Use the terrain types from color_map
+        terrain_types = list(self._color_map.keys())  # Use the terrain types from color_map
 
         # Create a list of scatter objects (one per terrain type)
         handles = []
@@ -88,9 +82,7 @@ class GridPlotter:
         ax.legend(handles=handles, loc="upper right", fontsize=8, title="Terrain Types")
 
     def show_slide_show(self, pause_time: float = 2.0) -> None:
-        for _, _ in tqdm(
-            enumerate(self._years), desc="Displaying Slideshow", total=len(self._years)
-        ):
+        for _, _ in tqdm(enumerate(self._years), desc="Displaying Slideshow", total=len(self._years)):
             plt.show()
             time.sleep(pause_time)
 
@@ -99,9 +91,7 @@ if __name__ == "__main__":
 
     def generate_random_grid(size: int, terrain_chars: List[str]) -> List[List[str]]:
         """Generate a random grid with dynamically provided terrain characters."""
-        return [
-            [random.choice(terrain_chars) for _ in range(size)] for _ in range(size)
-        ]
+        return [[random.choice(terrain_chars) for _ in range(size)] for _ in range(size)]
 
     plotter = GridPlotter()
 
@@ -132,7 +122,7 @@ if __name__ == "__main__":
 
     print("Adding grids to plotter...")
     for test_grid in tqdm(test_grids, desc="Adding Grids to Plotter", ncols=100):
-        plotter.add(years, test_grid) # todo needs a years value for this method.
+        plotter.add(years, test_grid)  # todo needs a years value for this method.
 
     print("Displaying slideshow...")
     plotter.show_slide_show(pause_time=2.0)

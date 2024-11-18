@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-
 from typing import TYPE_CHECKING
 
+from src.logger import logger  # Assuming you want to log activity
 from src.settings import settings
 from src.simulation.grid.location import Location
-from src.logger import logger  # Assuming you want to log activity
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
@@ -14,12 +13,12 @@ if TYPE_CHECKING:
 
 class Structure(ABC):
     def __init__(
-            self,
-            grid: Grid,
-            location: Location,  # top left corner
-            width: int,
-            height: int,
-            char: str,
+        self,
+        grid: Grid,
+        location: Location,  # top left corner
+        width: int,
+        height: int,
+        char: str,
     ):
         logger.debug(f"Initializing structure at {location}, size: {width}x{height}, char: {char}")
 
@@ -40,7 +39,8 @@ class Structure(ABC):
         :param is_adding: True if adding a structure, False if removing a structure.
         """
         logger.debug(
-            f"Validating structure area at {self._location}, size: {self._width}x{self._height}, adding: {is_adding}")
+            f"Validating structure area at {self._location}, size: {self._width}x{self._height}, adding: {is_adding}"
+        )
 
         for dy in range(self._height):
             for dx in range(self._width):

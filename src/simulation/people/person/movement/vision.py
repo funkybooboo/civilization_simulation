@@ -52,9 +52,7 @@ class Vision:
                     self._process_location(memory, blocked, next_loc)
                     self._search(next_loc, visibility - 1, memory, blocked)
 
-    def _process_location(
-        self, memory: Memories, blocked: set[Location], location: Location
-    ) -> None:
+    def _process_location(self, memory: Memories, blocked: set[Location], location: Location) -> None:
         if self._is_blocking_object(location, memory):
             self._block_view(blocked, location)
         elif self._grid.is_empty(location):
@@ -86,9 +84,7 @@ class Vision:
         for direction in Direction:
             self._mark_blocked_in_direction(blocked, location, direction)
 
-    def _mark_blocked_in_direction(
-        self, blocked: set[Location], location: Location, direction: Direction
-    ) -> None:
+    def _mark_blocked_in_direction(self, blocked: set[Location], location: Location, direction: Direction) -> None:
         x, y = location.x, location.y
         if direction == Direction.LEFT:
             for k in range(x, -1, -1):

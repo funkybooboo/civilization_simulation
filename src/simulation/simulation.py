@@ -1,18 +1,17 @@
 from src.logger import logger
+from src.settings import settings
 from src.simulation.grid.grid import Grid
 from src.simulation.people.people import People
 from src.simulation.visualization.visualizer import Visualizer
-from src.settings import settings
+
 
 class Simulation:
-    def __init__(
-        self
-    ) -> None:
+    def __init__(self) -> None:
         actions_per_day = settings.get("actions_per_day", 5)
         days_per_year = settings.get("days_per_year", 365)
         years = settings.get("years", 50)
         grid_size = settings.get("grid_size", 100)
-        
+
         self._days_per_year: int = days_per_year
         self._actions_per_day: int = actions_per_day
         self._years: int = years
@@ -21,13 +20,13 @@ class Simulation:
         self._max_days: int = self._years * self._days_per_year
         self._day: int = 0
         self._time: int = 0
-        
+
     def actions_per_year(self) -> int:
         return self._days_per_year * self._actions_per_day
-        
+
     def increment_time(self) -> None:
         self._time += 1
-        
+
     def get_time(self) -> int:
         return self._time
 
@@ -35,7 +34,7 @@ class Simulation:
         visualizer: Visualizer = Visualizer()
         for day in range(self._max_days):
             self._day = day
-            if len(self._people) == 0: # all the people dead
+            if len(self._people) == 0:  # all the people dead
                 logger.info("Everybody died! Game over!")
                 break
             self._people.take_actions_for_day()
@@ -44,7 +43,7 @@ class Simulation:
             self._people.kill_stuck()
 
             if self._has_been_a_year(day):
-                self._people.swap_homes() # people want to live close to work
+                self._people.swap_homes()  # people want to live close to work
                 self._people.age()
                 self._people.make_babies()
                 self._grid.grow_trees()

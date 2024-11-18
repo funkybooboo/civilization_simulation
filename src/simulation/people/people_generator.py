@@ -10,8 +10,8 @@ from src.simulation.grid.structure.store.home import Home
 from src.simulation.people.person.person import Person
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
     from src.simulation.grid.location import Location
+    from src.simulation.simulation import Simulation
 
 
 class PeopleGenerator:
@@ -30,8 +30,28 @@ class PeopleGenerator:
                 names: List[str] = [line.strip() for line in file if line.strip()]
         except FileNotFoundError:
             logger.error("Could not find names file. Using default names.")
-            names: List[str] = ['James', 'John', 'Robert', 'Michael', 'William', 'David', 'Joseph', 'Charles', 'Thomas', 'Daniel',
-                   'Emma', 'Olivia', 'Sophia', 'Isabella', 'Ava', 'Mia', 'Amelia', 'Harper', 'Evelyn', 'Abigail']
+            names: List[str] = [
+                "James",
+                "John",
+                "Robert",
+                "Michael",
+                "William",
+                "David",
+                "Joseph",
+                "Charles",
+                "Thomas",
+                "Daniel",
+                "Emma",
+                "Olivia",
+                "Sophia",
+                "Isabella",
+                "Ava",
+                "Mia",
+                "Amelia",
+                "Harper",
+                "Evelyn",
+                "Abigail",
+            ]
         return names
 
     def generate(self) -> List[Person]:
@@ -42,8 +62,8 @@ class PeopleGenerator:
             name: str = random.choice(names)
             location: Location = deepcopy(random.choice(empty_spots_near_town))
             age: int = random.randint(
-                settings.get("inital_spawn_age_min", 20),
-                settings.get("inital_spawn_age_max", 30))
+                settings.get("inital_spawn_age_min", 20), settings.get("inital_spawn_age_max", 30)
+            )
             person: Person = Person(self._simulation, name, pk, location, age)
             people.append(person)
         return people

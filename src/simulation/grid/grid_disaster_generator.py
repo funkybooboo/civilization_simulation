@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import random
-from typing import TYPE_CHECKING, List, Dict
+from typing import TYPE_CHECKING, Dict, List
 
 from src.logger import logger
 from src.simulation.grid.location import Location
@@ -20,12 +20,12 @@ class GridDisasterGenerator:
         self._grid = grid
         # Initialize counters for each disaster type
         self._disaster_counts: Dict[str, int] = {
-            'rats_eat_home_food': 0,
-            'burn_buildings': 0,
-            'decrease_farm_yield': 0,
-            'decrease_mine_yield': 0,
-            'forest_fire': 0,
-            'steal_barn_resources': 0
+            "rats_eat_home_food": 0,
+            "burn_buildings": 0,
+            "decrease_farm_yield": 0,
+            "decrease_mine_yield": 0,
+            "forest_fire": 0,
+            "steal_barn_resources": 0,
         }
 
         # Log the initialization of the disaster generator
@@ -42,12 +42,12 @@ class GridDisasterGenerator:
 
             # List of disaster methods
             disaster_methods = [
-                (self._rats_eat_home_food, 'rats_eat_home_food'),
-                (self._burn_buildings, 'burn_buildings'),
-                (self._decrease_farm_yield, 'decrease_farm_yield'),
-                (self._decrease_mine_yield, 'decrease_mine_yield'),
-                (self._forest_fire, 'forest_fire'),
-                (self._steal_barn_resources, 'steal_barn_resources'),
+                (self._rats_eat_home_food, "rats_eat_home_food"),
+                (self._burn_buildings, "burn_buildings"),
+                (self._decrease_farm_yield, "decrease_farm_yield"),
+                (self._decrease_mine_yield, "decrease_mine_yield"),
+                (self._forest_fire, "forest_fire"),
+                (self._steal_barn_resources, "steal_barn_resources"),
             ]
 
             # Randomly pick one disaster to trigger

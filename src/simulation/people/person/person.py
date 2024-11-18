@@ -1,32 +1,30 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, Optional, Dict
+import random
+from typing import TYPE_CHECKING, Dict, List, Optional
 
 import numpy as np
-import random
 
-from src.simulation.people.person.scheduler.scheduler import Scheduler
-from src.simulation.people.person.scheduler.task.task_type import TaskType
+from src.logger import logger
 from src.settings import settings
 from src.simulation.people.person.backpack import Backpack
 from src.simulation.people.person.memories import Memories
 from src.simulation.people.person.movement.navigator import Navigator
-from src.logger import logger
+from src.simulation.people.person.scheduler.scheduler import Scheduler
+from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 if TYPE_CHECKING:
-    from src.simulation.grid.structure.store.home import Home
-    from src.simulation.simulation import Simulation
-    from src.simulation.people.person.movement.move_result import MoveResult
     from src.simulation.grid.location import Location
-    from src.simulation.grid.structure.structure import Structure
     from src.simulation.grid.structure.store.barn import Barn
+    from src.simulation.grid.structure.store.home import Home
+    from src.simulation.grid.structure.structure import Structure
     from src.simulation.grid.structure.structure_type import StructureType
+    from src.simulation.people.person.movement.move_result import MoveResult
+    from src.simulation.simulation import Simulation
 
 
 class Person:
-    def __init__(
-        self, simulation: Simulation, name: str, pk: int, location: Location, age: int
-    ) -> None:
+    def __init__(self, simulation: Simulation, name: str, pk: int, location: Location, age: int) -> None:
         self._name: str = name
         self._pk: int = pk
         self._age: int = age
@@ -50,20 +48,17 @@ class Person:
 
         # preferences per person
         self._hunger_preference: int = random.randint(
-            settings.get("hunger_pref_min", 50),
-            settings.get("hunger_pref_max", 100)
+            settings.get("hunger_pref_min", 50), settings.get("hunger_pref_max", 100)
         )
         self._spouse_preference: bool = random.choices([True, False], weights=[95, 5])[0]
         self._home_preference: bool = random.choices([True, False], weights=[95, 5])[0]
 
-        self._rewards: Dict[TaskType, int] = {
-            TaskType.WORK_FARM: 0,
-            TaskType.WORK_MINE: 0,
-            TaskType.CHOP_TREE: 0
-        }
+        self._rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
 
         logger.info(f"Initialized Person '{self._name}' with age {self._age}")
-        logger.debug(f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._home_preference}}}")
+        logger.debug(
+            f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._home_preference}}}"
+        )
 
     def get_time(self) -> int:
         return self._simulation.get_time()
@@ -101,7 +96,7 @@ class Person:
             if structure:
                 structures.append(structure)
         return list(map(lambda s: s.get_location(), structures))
-    
+
     def get_hunger_preference(self) -> int:
         return self._hunger_preference
 
@@ -125,7 +120,7 @@ class Person:
         self._scheduler.execute()
         logger.debug(f"{self._name} completed action with health={self._health} and hunger={self._hunger}")
 
-    def _add_tasks(self) -> None:   # where tasks are added to the scheduler.
+    def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._name}")
 
         # explore when you are born just to collect data
@@ -181,7 +176,9 @@ class Person:
     def update_scheduler_rewards(self, task_type: TaskType, reward: int) -> None:
         old_reward = self._rewards.get(task_type, 0)
         self._rewards[task_type] = old_reward + reward
-        logger.debug(f"Updated rewards for {self._name}: '{task_type}' reward changed from {old_reward} to {self._rewards[task_type]}")
+        logger.debug(
+            f"Updated rewards for {self._name}: '{task_type}' reward changed from {old_reward} to {self._rewards[task_type]}"
+        )
 
     def update_navigator_rewards(self, y: float):
         self._navigator.update_reward(y)
@@ -224,7 +221,7 @@ class Person:
             self.set_hunger(settings.get("barn_eat_satiate", 5))
             logger.debug(f"{self._name} ate in a barn and their hunger is now {self._hunger}")
         building.remove_resource(settings.get("food", "food"), 3)
-        
+
     def set_hunger(self, hunger: int) -> None:
         old_hunger = self._hunger
         self._hunger = max(0, min(self._hunger + hunger, settings.get("person_hunger_cap", 100)))
@@ -249,7 +246,7 @@ class Person:
 
     def get_spouse(self) -> Optional["Person"]:
         return self._spouse
-    
+
     def assign_home(self, home: Home) -> None:
         if self._home == home:
             logger.debug(f"{self._name} already assigned to home: {home}")
@@ -306,7 +303,7 @@ class Person:
     def move_to_home(self) -> Optional[Home]:
         """Move towards home, if it's set."""
         return self._navigator.move_to_home()
-    
+
     def get_simulation(self) -> Simulation:
         return self._simulation
 

@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import itertools
 from abc import ABC
-from typing import TYPE_CHECKING, Dict, Optional, List, Tuple, Callable
-from src.simulation.grid.structure.structure import Structure
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Tuple
+
 from src.logger import logger
+from src.simulation.grid.structure.structure import Structure
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
@@ -23,7 +24,7 @@ class Work(Structure, ABC):
         max_worker_count: int,
         max_work_count: int,
         yield_func: Callable[[], float],
-        yield_variance: float
+        yield_variance: float,
     ):
         logger.debug(f"Initializing Work at location {location}, size: {width}x{height}")
 
@@ -35,9 +36,11 @@ class Work(Structure, ABC):
         self._yield_variance: float = yield_variance
         self._decrease_yield_time: int = 0
 
-        logger.info(f"Work initialized with max workers: {max_worker_count}, "
-                    f"max work count: {max_work_count}, "
-                    f"yield variance: {yield_variance:.2f}")
+        logger.info(
+            f"Work initialized with max workers: {max_worker_count}, "
+            f"max work count: {max_work_count}, "
+            f"yield variance: {yield_variance:.2f}"
+        )
 
     def set_yield_func(self, yield_func: Callable[[], float]):
         self._yield_func = yield_func
@@ -56,7 +59,9 @@ class Work(Structure, ABC):
         Check if there is capacity for more workers.
         """
         capacity = len(self._workers) < self._max_worker_count
-        logger.debug(f"Checking capacity: {capacity} (current workers: {len(self._workers)}, max workers: {self._max_worker_count})")
+        logger.debug(
+            f"Checking capacity: {capacity} (current workers: {len(self._workers)}, max workers: {self._max_worker_count})"
+        )
         return capacity
 
     def work_time_estimate(self) -> int:

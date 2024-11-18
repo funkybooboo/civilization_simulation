@@ -7,16 +7,16 @@ from typing import TYPE_CHECKING, List, Optional
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid as PathFindingGrid
 from pathfinding.core.node import GridNode as PathFindingGridNode
-from pathfinding.finder.dijkstra import DijkstraFinder
+from pathfinding.finder.a_star import AStarFinder
 
 from src.settings import settings
-from src.simulation.people.person.movement.vision import Vision
 from src.simulation.grid.location import Location
+from src.simulation.people.person.movement.vision import Vision
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
-    from src.simulation.people.person.person import Person
     from src.simulation.people.person.memories import Memories
+    from src.simulation.people.person.person import Person
 
 
 class Mover:
@@ -46,26 +46,18 @@ class Mover:
                 new_location = Location(next_node.y, next_node.x)  # Convert to Location
                 self._place(new_location)
 
-    def get_closest(
-        self, locations: List[Location], current_location=None
-    ) -> Optional[Location]:
+    def get_closest(self, locations: List[Location], current_location=None) -> Optional[Location]:
         if not current_location:
             current_location = self._person.get_location()
         if not locations:
             return None
-        return min(
-            locations, key=lambda loc: current_location.distance_to(loc), default=None
-        )
+        return min(locations, key=lambda loc: current_location.distance_to(loc), default=None)
 
     @staticmethod
-    def get_furthest(
-        current_location: Location, locations: List[Location]
-    ) -> Optional[Location]:
+    def get_furthest(current_location: Location, locations: List[Location]) -> Optional[Location]:
         if not locations:
             return None
-        return max(
-            locations, key=lambda loc: current_location.distance_to(loc), default=None
-        )
+        return max(locations, key=lambda loc: current_location.distance_to(loc), default=None)
 
     def is_next_to(self, locations: List[Location]) -> bool:
         current_location = deepcopy(self._person.get_location())
@@ -73,17 +65,13 @@ class Mover:
 
     def can_get_to_location(self, target: Location) -> bool:
         path_finding_grid = self._get_path_finding_grid()
-        return bool(
-            self._get_path(deepcopy(self._person.get_location()), path_finding_grid, target)
-        )
+        return bool(self._get_path(deepcopy(self._person.get_location()), path_finding_grid, target))
 
     def _place(self, location: Location) -> None:
         current_location = deepcopy(self._person.get_location())
         if not current_location.is_one_away(location):
             raise ValueError(f"Location is not one away: {location}")
-        if not self._grid.is_in_bounds(
-            location
-        ) or not self._grid.is_empty(location):
+        if not self._grid.is_in_bounds(location) or not self._grid.is_empty(location):
             raise ValueError(f"Location is not valid: {location}")
         self._person.set_location(location)
 
@@ -92,9 +80,7 @@ class Mover:
             x = randint(0, self._grid.get_width() - 1)
             y = randint(0, self._grid.get_height() - 1)
             location = Location(x, y)
-            if self._grid.is_in_bounds(
-                location
-            ) and self._grid.is_empty(location):
+            if self._grid.is_in_bounds(location) and self._grid.is_empty(location):
                 return location
 
     def _get_path(
@@ -109,7 +95,7 @@ class Mover:
         start_node = path_finding_grid.node(current_location.y, current_location.x)
         end_node = path_finding_grid.node(target.y, target.x)
 
-        finder = DijkstraFinder(diagonal_movement=DiagonalMovement.always)
+        finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
         path, _ = finder.find_path(start_node, end_node, path_finding_grid)
         return path
 

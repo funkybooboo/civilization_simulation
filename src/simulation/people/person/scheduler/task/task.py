@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING, Optional
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
-    from src.simulation.people.person.person import Person
     from src.simulation.grid.structure.structure import Structure
+    from src.simulation.people.person.person import Person
+    from src.simulation.simulation import Simulation
 
 
 class Task(ABC):
@@ -37,7 +37,11 @@ class Task(ABC):
     def _finished(self, is_completed: bool = True) -> None:
         self._is_completed = is_completed
         self._is_finished = True
-        if self._task_type == TaskType.WORK_FARM or self._task_type == TaskType.WORK_MINE or self._task_type == TaskType.CHOP_TREE:
+        if (
+            self._task_type == TaskType.WORK_FARM
+            or self._task_type == TaskType.WORK_MINE
+            or self._task_type == TaskType.CHOP_TREE
+        ):
             if is_completed:
                 reward = 1
             else:

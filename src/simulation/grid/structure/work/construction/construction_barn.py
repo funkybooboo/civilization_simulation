@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from src.simulation.grid.structure.work.construction.construction import Construction
-from src.settings import settings
 from src.logger import logger
+from src.settings import settings
+from src.simulation.grid.structure.work.construction.construction import \
+    Construction
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
@@ -28,8 +29,10 @@ class ConstructionBarn(Construction):
             finished_completion_level=settings.get("barn_finished_completion_level", 5),
         )
 
-        logger.info(f"ConstructionBarn initialized with required wood: {settings.get('barn_req_wood', 60)}, "
-                    f"required stone: {settings.get('barn_req_stone', 30)}, "
-                    f"max workers: {settings.get('barn_max_construction_worker_count', 3)}, "
-                    f"max work count: {settings.get('barn_max_construction_work_count', 3)}, "
-                    f"finished completion level: {settings.get('barn_finished_completion_level', 5)}")
+        logger.info(
+            f"ConstructionBarn initialized with required wood: {settings.get('barn_req_wood', 60)}, "
+            f"required stone: {settings.get('barn_req_stone', 30)}, "
+            f"max workers: {settings.get('barn_max_construction_worker_count', 3)}, "
+            f"max work count: {settings.get('barn_max_construction_work_count', 3)}, "
+            f"finished completion level: {settings.get('barn_finished_completion_level', 5)}"
+        )

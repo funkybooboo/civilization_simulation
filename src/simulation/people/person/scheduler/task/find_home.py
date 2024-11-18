@@ -1,24 +1,21 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, override, Optional
+from typing import TYPE_CHECKING, Optional, override
 
 from src.settings import settings
 from src.simulation.grid.structure.store.home import Home
-from src.simulation.people.person.scheduler.task.task_type import TaskType
 from src.simulation.people.person.scheduler.task.task import Task
+from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 if TYPE_CHECKING:
+    from src.simulation.grid.structure.structure import Structure
     from src.simulation.people.person.person import Person
     from src.simulation.simulation import Simulation
-    from src.simulation.grid.structure.structure import Structure
 
 
 class FindHome(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation,
-                         person,
-                         settings.get("find_home_priority", 5),
-                         TaskType.FIND_HOME)
+        super().__init__(simulation, person, settings.get("find_home_priority", 5), TaskType.FIND_HOME)
 
     @override
     def execute(self) -> None:
@@ -27,10 +24,8 @@ class FindHome(Task):
             # query the grid to make sure there is a home in that location
             home_locations = self._person.get_memories().get_home_locations()
             for home_location in home_locations:
-                if home_location in all_home_locations: # if the house still exists
-                    structure: Structure = self._simulation.get_grid().get_structure(
-                        home_location
-                    )
+                if home_location in all_home_locations:  # if the house still exists
+                    structure: Structure = self._simulation.get_grid().get_structure(home_location)
                     if isinstance(structure, Home):
                         if not structure.has_owner():
                             structure.assign_owner(self._person)
@@ -38,9 +33,7 @@ class FindHome(Task):
                             self._finished()
                             return
                     else:
-                        raise Exception(
-                            "You are trying to go to a Home but are getting a different Structure"
-                        )
+                        raise Exception("You are trying to go to a Home but are getting a different Structure")
             # if all homes have owners, construction a home (add build_home task)
             self._person.start_home_construction()
         else:

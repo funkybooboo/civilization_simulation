@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
-from src.simulation.grid.structure.store.store import Store
-from src.settings import settings
 from src.logger import logger
+from src.settings import settings
+from src.simulation.grid.structure.store.store import Store
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
@@ -20,11 +20,14 @@ class Home(Store):
 
         logger.debug(f"Allowed resources for the Home: {allowed_resources}")
 
-        super().__init__(grid, location,
-                         settings.get("home_size", 2),
-                         settings.get("home_size", 2),
-                         settings.get("home_char", "H"),
-                         allowed_resources)
+        super().__init__(
+            grid,
+            location,
+            settings.get("home_size", 2),
+            settings.get("home_size", 2),
+            settings.get("home_char", "H"),
+            allowed_resources,
+        )
 
         self._owner: Optional[Person] = None
         logger.info(f"Home initialized at location {location}.")

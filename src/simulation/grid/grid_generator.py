@@ -1,8 +1,9 @@
 import random
 from typing import List, Tuple
 
-from src.settings import settings
 from src.logger import logger
+from src.settings import settings
+
 
 class GridGenerator:
     def __init__(
@@ -20,40 +21,16 @@ class GridGenerator:
         self._ca_iterations: int = ca_iterations
         self._tree_char: str = settings.get("tree_char", "*")
 
-        self._num_houses: int = random.randint(
-            settings.get("num_house_min", 3),
-            settings.get("num_house_max", 8)
-        )
-        self._num_farms: int = random.randint(
-            settings.get("num_farm_min", 1),
-            settings.get("num_farm_max", 3)
-        )
-        self._num_barns: int = random.randint(
-            settings.get("num_barn_min", 1),
-            settings.get("num_barn_max", 2)
-        )
-        self._num_mines: int = random.randint(
-            settings.get("num_mines_min", 1),
-            settings.get("num_mines_max", 2)
-        )
+        self._num_houses: int = random.randint(settings.get("num_house_min", 3), settings.get("num_house_max", 8))
+        self._num_farms: int = random.randint(settings.get("num_farm_min", 1), settings.get("num_farm_max", 3))
+        self._num_barns: int = random.randint(settings.get("num_barn_min", 1), settings.get("num_barn_max", 2))
+        self._num_mines: int = random.randint(settings.get("num_mines_min", 1), settings.get("num_mines_max", 2))
 
         self._building_sizes: dict[str, Tuple[int, int]] = {
-            settings.get("home_char", "H"): (
-                settings.get("home_size", 2),
-                settings.get("home_size", 2)
-            ),
-            settings.get("farm_char", "F"): (
-                settings.get("farm_size", 5),
-                settings.get("farm_size", 5)
-            ),
-            settings.get("barn_char", "B"): (
-                settings.get("barn_size", 3),
-                settings.get("barn_size", 3)
-            ),
-            settings.get("mine_char", "M"): (
-                settings.get("mine_size", 3),
-                settings.get("mine_size", 3)
-            ),
+            settings.get("home_char", "H"): (settings.get("home_size", 2), settings.get("home_size", 2)),
+            settings.get("farm_char", "F"): (settings.get("farm_size", 5), settings.get("farm_size", 5)),
+            settings.get("barn_char", "B"): (settings.get("barn_size", 3), settings.get("barn_size", 3)),
+            settings.get("mine_char", "M"): (settings.get("mine_size", 3), settings.get("mine_size", 3)),
         }
 
         self._town_clearance_radius: int = town_clearance_radius
@@ -105,37 +82,25 @@ class GridGenerator:
         self._clear_town_area(center_x, center_y)
 
         buildings = [
-            (
-                settings.get("home_char", "H"),
-                self._num_houses,
-                settings.get("home_completion_prob", 0.8)
-            ),
-            (
-                settings.get("farm_char", "F"),
-                self._num_farms,
-                settings.get("farm_completion_prob", 0.8)
-            ),
-            (
-                settings.get("barn_char", "B"),
-                self._num_barns,
-                settings.get("barn_completion_prob", 0.8)
-            ),
-            (
-                settings.get("mine_char", "M"),
-                self._num_mines,
-                settings.get("mine_completion_prob", 0.8)
-            )
+            (settings.get("home_char", "H"), self._num_houses, settings.get("home_completion_prob", 0.8)),
+            (settings.get("farm_char", "F"), self._num_farms, settings.get("farm_completion_prob", 0.8)),
+            (settings.get("barn_char", "B"), self._num_barns, settings.get("barn_completion_prob", 0.8)),
+            (settings.get("mine_char", "M"), self._num_mines, settings.get("mine_completion_prob", 0.8)),
         ]
 
         for building_type, count, completion_prob in buildings:
-            logger.debug(f"Placing {count} buildings of type '{building_type}' with a completion probability of {completion_prob:.2f}...")
+            logger.debug(
+                f"Placing {count} buildings of type '{building_type}' with a completion probability of {completion_prob:.2f}..."
+            )
             self._place_building_random(building_type, True)  # Place the first building (always completed)
             for i in range(count - 1):
                 is_completed = random.random() < completion_prob
                 logger.debug(f"Building {i + 1}/{count - 1} of type '{building_type}' - Completed: {is_completed}")
                 self._place_building_random(building_type, is_completed)
 
-        logger.debug(f"Town generation completed with {self._num_houses} homes, {self._num_farms} farms, {self._num_barns} barns, and {self._num_mines} mines placed.")
+        logger.debug(
+            f"Town generation completed with {self._num_houses} homes, {self._num_farms} farms, {self._num_barns} barns, and {self._num_mines} mines placed."
+        )
 
     def _clear_town_area(self, center_x: int, center_y: int) -> None:
         logger.debug(f"Clearing town area with radius {self._town_clearance_radius} around ({center_x}, {center_y})...")
@@ -159,9 +124,7 @@ class GridGenerator:
                     x, y = center_x + dx, center_y + dy
                     if 0 <= x < self._width and 0 <= y < self._height:
                         if self._can_place_building(x, y, width, height):
-                            building_char = (
-                                building_type if is_completed else building_type.lower()
-                            )
+                            building_char = building_type if is_completed else building_type.lower()
                             logger.debug(f"Placing building at ({x}, {y})")
                             self._clear_area(x, y, width, height)
                             self._place_on_grid(x, y, width, height, building_char)
@@ -201,9 +164,7 @@ class GridGenerator:
                         self._grid[new_y][new_x] = " "
         logger.debug("Area cleared.")
 
-    def _place_on_grid(
-            self, x: int, y: int, width: int, height: int, building_char: str
-    ) -> None:
+    def _place_on_grid(self, x: int, y: int, width: int, height: int, building_char: str) -> None:
         logger.debug(f"Placing building of type '{building_char}' at ({x}, {y}) with size ({width}, {height})...")
 
         for dy in range(height):

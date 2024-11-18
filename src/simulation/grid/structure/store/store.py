@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import TYPE_CHECKING, Dict, override, List
+from typing import TYPE_CHECKING, Dict, List, override
+
 from src.logger import logger
 from src.simulation.grid.structure.structure import Structure
 
@@ -12,13 +13,13 @@ if TYPE_CHECKING:
 
 class Store(Structure, ABC):
     def __init__(
-            self,
-            grid: Grid,
-            location: Location,  # top left corner
-            width: int,
-            height: int,
-            char: str,
-            allowed_resources: Dict[str, int],  # Resources and their max capacities
+        self,
+        grid: Grid,
+        location: Location,  # top left corner
+        width: int,
+        height: int,
+        char: str,
+        allowed_resources: Dict[str, int],  # Resources and their max capacities
     ):
         logger.debug(f"Initializing Store at location {location}, size ({width}, {height}), character {char}")
 

@@ -1,14 +1,16 @@
 from numbers import Number
 from typing import Dict
 
-from matplotlib import pyplot as plt
 import seaborn as sns
+from matplotlib import pyplot as plt
 
 from src.simulation.grid.grid import Grid
 from src.simulation.people.people import People
-from src.simulation.visualization.state.grid_disaster_state import GridDisasterState
+from src.simulation.visualization.state.grid_disaster_state import \
+    GridDisasterState
 from src.simulation.visualization.state.grid_state import GridState
-from src.simulation.visualization.state.people_disaster_state import PeopleDisasterState
+from src.simulation.visualization.state.people_disaster_state import \
+    PeopleDisasterState
 from src.simulation.visualization.state.people_state import PeopleState
 from src.simulation.visualization.state.resource_state import ResourceState
 from src.simulation.visualization.state.task_state import TaskState
@@ -69,9 +71,7 @@ class StatePlotter:
 
         # Loop through each year and accumulate the data for each label
         for year in years:
-            year_data = lines[
-                year
-            ]  # The data for this year is a dictionary of {label: value}
+            year_data = lines[year]  # The data for this year is a dictionary of {label: value}
             for label, value in year_data.items():
                 if label not in labels_data:
                     labels_data[label] = {"years": [], "values": []}

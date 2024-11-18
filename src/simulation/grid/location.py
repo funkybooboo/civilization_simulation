@@ -1,6 +1,7 @@
 from typing import List
-from src.settings import settings
+
 from src.logger import logger
+from src.settings import settings
 
 
 class Location:
@@ -30,7 +31,6 @@ class Location:
         location_str = f"Location(x={self.x}, y={self.y})"
         logger.debug(f"String representation: {location_str}")
         return location_str
-
 
     def distance_to(self, other: "Location") -> float:
         logger.debug(f"Calculating distance from Location({self.x}, {self.y}) to {other}")

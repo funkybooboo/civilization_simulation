@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Optional, List, Dict, Callable, Set, Tuple
-import numpy as np
 from collections import defaultdict
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Set, Tuple
+
+import numpy as np
 
 from src.settings import settings
 from src.simulation.grid.structure.structure_type import StructureType
@@ -11,12 +12,12 @@ from src.simulation.people.person.movement.mover import Mover
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 if TYPE_CHECKING:
-    from src.simulation.simulation import Simulation
-    from src.simulation.people.person.person import Person
-    from src.simulation.grid.structure.structure import Structure
+    from src.simulation.grid.location import Location
     from src.simulation.grid.structure.store.home import Home
     from src.simulation.grid.structure.store.store import Store
-    from src.simulation.grid.location import Location
+    from src.simulation.grid.structure.structure import Structure
+    from src.simulation.people.person.person import Person
+    from src.simulation.simulation import Simulation
 
 
 class Navigator:
@@ -71,7 +72,9 @@ class Navigator:
             return self._structure
         return None
 
-    def move_to_workable_structure(self, structure_type: StructureType, resource_name: Optional[str] = None) -> MoveResult:
+    def move_to_workable_structure(
+        self, structure_type: StructureType, resource_name: Optional[str] = None
+    ) -> MoveResult:
         """Move to a building that is workable (e.g., has capacity or resources)."""
         if self._moving_to_structure_type != structure_type:
             self._reset_moving_state(structure_type)
@@ -126,9 +129,11 @@ class Navigator:
         else:
             structure = self._move_to_closest_structure(locations)
 
-        if (structure_type != StructureType.TREE and 
-                not structure and 
-                self._searched_structure_count >= (len(locations) * 0.37)):
+        if (
+            structure_type != StructureType.TREE
+            and not structure
+            and self._searched_structure_count >= (len(locations) * 0.37)
+        ):
             if construction_sites:
                 self._person.get_scheduler().add(build_type)
             else:
@@ -195,7 +200,9 @@ class Navigator:
         closest = self._mover.get_closest(filtered)
         return self._move_to(closest)
 
-    def _move_to_chosen_structure(self, structure_type: StructureType, locations: List[Location]) -> Optional[Structure]:
+    def _move_to_chosen_structure(
+        self, structure_type: StructureType, locations: List[Location]
+    ) -> Optional[Structure]:
         """Move to the chosen building that is workable."""
         self._calculate_epsilon(structure_type)
 
@@ -225,7 +232,9 @@ class Navigator:
     def _logarithmic_decay(t, a=0.5):
         return max(0.1, 1 / (1 + a * np.log(t + 1)))
 
-    def _update_rewards_and_actions(self, locations: List[Location], structure_type: StructureType) -> Tuple[Dict[Location, int], Dict[Location, float]]:
+    def _update_rewards_and_actions(
+        self, locations: List[Location], structure_type: StructureType
+    ) -> Tuple[Dict[Location, int], Dict[Location, float]]:
         rewards = self._rewards[structure_type]
         actions = self._actions[structure_type]
 
