@@ -1,5 +1,5 @@
 from src.logger import logger, setup_logger
-from src.settings import environment, settings  # this must be imported first
+from src.settings import environment, settings
 from src.simulation.simulation import Simulation
 from src.simulation.visualization.visualizer import Visualizer
 

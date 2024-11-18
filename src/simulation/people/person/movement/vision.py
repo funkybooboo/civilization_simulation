@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from enum import Enum
-from typing import TYPE_CHECKING, Callable, Dict
+from typing import TYPE_CHECKING, Callable, Dict, List, Tuple
 
 from src.simulation.grid.location import Location
 from src.simulation.people.person.memories import Memories
@@ -24,6 +24,7 @@ class Vision:
         self._person = person
         self._grid = grid
         self._visibility = visibility
+        self._directions: List[Tuple[int, int]] = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
 
     def look_around(self) -> Memories:
         memories = Memories(self._grid)
@@ -40,17 +41,13 @@ class Vision:
     ) -> None:
         if visibility <= 0 or location in blocked:
             return
-
         blocked.add(location)
 
-        for dx in range(-1, 2):
-            for dy in range(-1, 2):
-                if (dx, dy) == (0, 0):
-                    continue
-                next_loc = Location(location.x + dx, location.y + dy)
-                if not self._grid.is_in_bounds(location) and location not in blocked:
-                    self._process_location(memory, blocked, next_loc)
-                    self._search(next_loc, visibility - 1, memory, blocked)
+        for dx, dy in self._directions:
+            neighbor = Location(location.x + dx, location.y + dy)
+            if self._grid.is_in_bounds(neighbor) and neighbor not in blocked:
+                self._process_location(memory, blocked, neighbor)
+                self._search(neighbor, visibility - 1, memory, blocked)
 
     def _process_location(self, memory: Memories, blocked: set[Location], location: Location) -> None:
         if self._is_blocking_object(location, memory):
