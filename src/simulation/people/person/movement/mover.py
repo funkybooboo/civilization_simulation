@@ -32,8 +32,11 @@ class Mover:
         self.towards(random_location)
 
     def towards(self, target: Location) -> None:
-        if not self._grid.is_in_bounds(target) or not self._grid.is_empty(target):
+        if not self._grid.is_in_bounds(target):
             return
+
+        if not self._grid.is_empty(target):
+            target = self._adjust_target(target)
 
         for _ in range(self._speed):
             current_location = deepcopy(self._person.get_location())
@@ -45,6 +48,18 @@ class Mover:
                 next_node = path[1]
                 new_location = Location(next_node.y, next_node.x)  # Convert to Location
                 self._place(new_location)
+
+    def _adjust_target(self, target):
+        neighbors: List[Location] = target.get_neighbors()
+        found: bool = False
+        for neighbor in neighbors:
+            if self._grid.is_empty(neighbor):
+                target = neighbor
+                found = True
+                break
+        if not found:
+            raise Exception("Can only move to empty spaces.")
+        return target
 
     def get_closest(self, locations: List[Location], current_location=None) -> Optional[Location]:
         if not current_location:
