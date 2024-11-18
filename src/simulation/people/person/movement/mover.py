@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from copy import copy
+from copy import deepcopy
 from random import randint
 from typing import TYPE_CHECKING, List, Optional
 
@@ -20,11 +20,11 @@ if TYPE_CHECKING:
 
 
 class Mover:
-    def __init__(self, grid: Grid, person: Person, memory: Memories, speed: int) -> None:
+    def __init__(self, grid: Grid, person: Person, memories: Memories, speed: int) -> None:
         self._person = person
         self._grid = grid
         self._speed = speed
-        self._memory = memory
+        self._memories = memories
         self._vision = Vision(person, grid, settings.get("visibility", 30))
 
     def explore(self) -> None:
@@ -32,14 +32,12 @@ class Mover:
         self.towards(random_location)
 
     def towards(self, target: Location) -> None:
-        if not self._grid.is_in_bounds(
-            target
-        ) or not self._grid.is_empty(target):
+        if not self._grid.is_in_bounds(target) or not self._grid.is_empty(target):
             return
 
         for _ in range(self._speed):
-            current_location = copy(self._person.get_location())
-            self._memory.combine(self._vision.look_around())
+            current_location = deepcopy(self._person.get_location())
+            self._memories.combine(self._vision.look_around())
             path_finding_grid = self._get_path_finding_grid()
             path = self._get_path(current_location, path_finding_grid, target)
 
@@ -70,17 +68,17 @@ class Mover:
         )
 
     def is_next_to(self, locations: List[Location]) -> bool:
-        current_location = copy(self._person.get_location())
+        current_location = deepcopy(self._person.get_location())
         return any(current_location.is_one_away(loc) for loc in locations)
 
     def can_get_to_location(self, target: Location) -> bool:
         path_finding_grid = self._get_path_finding_grid()
         return bool(
-            self._get_path(copy(self._person.get_location()), path_finding_grid, target)
+            self._get_path(deepcopy(self._person.get_location()), path_finding_grid, target)
         )
 
     def _place(self, location: Location) -> None:
-        current_location = copy(self._person.get_location())
+        current_location = deepcopy(self._person.get_location())
         if not current_location.is_one_away(location):
             raise ValueError(f"Location is not one away: {location}")
         if not self._grid.is_in_bounds(

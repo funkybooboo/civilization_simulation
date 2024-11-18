@@ -42,6 +42,8 @@ class Person:
         # when your hunger gets below 25, health starts going down; when it gets above 75, health starts going up
         self._hunger: int = settings.get("person_hunger_cap", 100)
 
+        self._personal_time: int = 0
+
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
         self._scheduler: Scheduler = Scheduler(simulation, self)
@@ -107,6 +109,7 @@ class Person:
         self._health = 0
 
     def take_action(self) -> None:
+        self._personal_time += 1
         logger.info(f"{self._name} is starting an action with current hunger={self._hunger} and health={self._health}")
         self.set_health(self._hunger - 1)
         logger.debug(f"{self._name}'s hunger decreased by 1 to {self._hunger}")
@@ -122,8 +125,15 @@ class Person:
         self._scheduler.execute()
         logger.debug(f"{self._name} completed action with health={self._health} and hunger={self._hunger}")
 
-    def _add_tasks(self) -> None:   # where tasks are added to the scheduler. 
+    def _add_tasks(self) -> None:   # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._name}")
+
+        # explore when you are born just to collect data
+        if self._personal_time < settings.get("explore_time", 10):
+            self._scheduler.add(TaskType.EXPLORE)
+            logger.debug(f"{self._name} added EXPLORE task")
+            return
+
         if not self._home and self._home_preference:
             self._scheduler.add(TaskType.FIND_HOME)
             logger.debug(f"{self._name} has no home and added FIND_HOME task")
@@ -145,6 +155,7 @@ class Person:
         self._add_work_task()
 
         # If you've got nothing else to do, explore
+        # TODO this will never happen
         if len(self._scheduler.get_tasks()) == 0:
             self._scheduler.add(TaskType.EXPLORE)
             logger.debug(f"{self._name} has no tasks and added EXPLORE task")

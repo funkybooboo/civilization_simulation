@@ -52,14 +52,11 @@ class Navigator:
     def move_to_location(self, location: Location):
         """Move directly to the specified location."""
         self._reset_moving_state(None)
-        self._structure = None
         self._mover.towards(location)
 
     def explore(self):
         """Explore the area to search for buildings."""
         self._reset_moving_state(None)
-        self._visited_structures.clear()
-        self._searched_structure_count = 0
         self._mover.explore()
 
     def move_to_home(self) -> Optional[Home]:

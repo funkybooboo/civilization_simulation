@@ -32,9 +32,11 @@ class Scheduler:
         self._this_years_tasks = []
 
     def add(self, what: TaskType) -> None:
-        task_types = {type(task) for task in self._tasks}
         task: Task = self._task_factory.create_instance(what)
-        if task and type(task) not in task_types:
+        if not task:
+            return
+        task_types = {type(task) for task in self._tasks}
+        if type(task) not in task_types:
             self._add(task)
             self._this_years_tasks.append(task)
 

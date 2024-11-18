@@ -142,6 +142,7 @@ find_spouse_priority: 5
 transport_priority: 5
 
 # Person values
+explore_time: 10
 person_health_cap: 100
 person_hunger_cap: 100
 hunger_pref_min: 50

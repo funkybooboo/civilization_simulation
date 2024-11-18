@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from copy import copy
+from copy import deepcopy
 from enum import Enum
 from typing import TYPE_CHECKING, Callable, Dict
 
@@ -26,10 +26,10 @@ class Vision:
         self._visibility = visibility
 
     def look_around(self) -> Memories:
-        memory = Memories(self._grid)
-        current_location = copy(self._person.get_location())
-        self._search(current_location, self._visibility, memory, set())
-        return memory
+        memories = Memories(self._grid)
+        current_location = deepcopy(self._person.get_location())
+        self._search(current_location, self._visibility, memories, set())
+        return memories
 
     def _search(
         self,
@@ -48,18 +48,13 @@ class Vision:
                 if (dx, dy) == (0, 0):
                     continue
                 next_loc = Location(location.x + dx, location.y + dy)
-                if self._is_valid_location(next_loc, blocked):
+                if not self._grid.is_in_bounds(location) and location not in blocked:
                     self._process_location(memory, blocked, next_loc)
                     self._search(next_loc, visibility - 1, memory, blocked)
 
     def _process_location(
         self, memory: Memories, blocked: set[Location], location: Location
     ) -> None:
-        if not self._grid.is_in_bounds(
-            location
-        ) or not self._grid.is_empty(location):
-            return
-
         if self._is_blocking_object(location, memory):
             self._block_view(blocked, location)
         elif self._grid.is_empty(location):
@@ -107,14 +102,3 @@ class Vision:
         elif direction == Direction.UP:
             for k in range(y, -1, -1):
                 blocked.add(Location(x, k))
-
-    def _is_valid_location(self, location: Location, blocked: set[Location]) -> bool:
-        return not self._is_out_of_bounds(location) and location not in blocked
-
-    def _is_out_of_bounds(self, location: Location) -> bool:
-        return (
-            location.x < 0
-            or location.y < 0
-            or location.x >= self._grid.get_width()
-            or location.y >= self._grid.get_height()
-        )
