@@ -18,8 +18,6 @@ class Scheduler:
         self._this_years_tasks: List[Task] = []
         self._tasks: List[Task] = []
         self._current_task: Optional[Task] = None
-        self._last_added_time = 0  # Timestamp for when the last task was added
-        self._max_interruption_threshold = 10  # Maximum interruption threshold
         self._simulation = simulation
 
     def get_this_years_tasks(self):
@@ -37,7 +35,6 @@ class Scheduler:
         if type(task) not in task_types:
             self._add(task)
             self._this_years_tasks.append(task)
-            self._last_added_time = self._get_time()
 
     def _add(self, task: Optional[Task]) -> None:
         if task:
