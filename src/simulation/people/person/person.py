@@ -282,9 +282,6 @@ class Person:
     def age(self) -> None:
         self._age += 1
 
-    def get_home_locations(self):
-        return self._memories.get_home_locations()
-
     def is_stuck(self) -> bool:
         return self._navigator.is_stuck()
 

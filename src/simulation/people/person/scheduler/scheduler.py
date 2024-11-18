@@ -32,7 +32,7 @@ class Scheduler:
     def add(self, what: TaskType) -> None:
         task_types = {type(task) for task in self._tasks}
         task: Task = self._task_factory.create_instance(what)
-        if type(task) not in task_types:
+        if task and type(task) not in task_types:
             self._add(task)
             self._this_years_tasks.append(task)
 
@@ -43,11 +43,10 @@ class Scheduler:
     def _pop(self) -> Optional[Task]:
         return heapq.heappop(self._tasks) if self._tasks else None
 
-    def _get_time(self) -> int:
-        return self._simulation.get_time()
-
     @staticmethod
     def _calculate_task_reward(task: Task) -> float:
+        if not task:
+            return 0.0
         # Reward function: Higher priority tasks have higher rewards
         priority_weight = 11 - task.get_priority()  # Higher priority = higher weight
         time_remaining_weight = max(
@@ -72,15 +71,16 @@ class Scheduler:
         current_task_reward = self._calculate_task_reward(self._current_task)
 
         # Evaluate the reward of switching to the next task
-        self._add(self._current_task)
         next_task: Optional[Task] = self._pop()
-        next_task_reward = self._calculate_task_reward(next_task)
+        next_task_reward: float = self._calculate_task_reward(next_task)
 
         # Apply the optimal stopping rule: stick to the current task if it has a higher reward
         if current_task_reward < next_task_reward:
-            # If the next task has a higher reward, switch to it
             self._current_task.increment_interruptions()
+            self._add(self._current_task)
             self._current_task = next_task
+        else:
+            self._add(next_task)
 
         self._current_task.execute()
 
