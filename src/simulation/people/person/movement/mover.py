@@ -38,7 +38,7 @@ class Mover:
         if self._invalid(target):
             target = self._adjust_target(target)
 
-        vision = Vision(self._person, self._grid, settings.get("visibility", 30))
+        vision = Vision(self._person, self._grid, settings.get("visibility", 10))
 
         for _ in range(self._speed):
             self._memories.combine(vision.look_around())
