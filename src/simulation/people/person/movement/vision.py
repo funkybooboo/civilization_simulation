@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from enum import Enum
-from typing import TYPE_CHECKING, Callable, Dict, List, Tuple, Set
+from typing import TYPE_CHECKING, Callable, Dict, List, Tuple
 
 from src.simulation.grid.location import Location
 from src.simulation.people.person.memories import Memories
@@ -25,48 +25,28 @@ class Vision:
         self._grid = grid
         self._visibility = visibility
         self._directions: List[Tuple[int, int]] = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
-        self._scanned: Set[Location] = set()  # Add scanned locations tracker
 
     def look_around(self) -> Memories:
         memories: Memories = Memories(self._grid)
-        self._scanned.clear()  # Reset scanned locations when starting a new scan
-
-        # Get the person's location
-        person_location = self._person.get_location()
-
-        # Start scanning from the edges of the visibility range
-        for dx in range(-self._visibility, self._visibility + 1):
-            for dy in range(-self._visibility, self._visibility + 1):
-                # Compute the potential edge location within the range
-                edge_location = Location(person_location.x + dx, person_location.y + dy)
-                if self._grid.is_in_bounds(edge_location) and self._distance(person_location, edge_location) == self._visibility:
-                    # If this is an edge location, initiate the search from there
-                    self._search(edge_location, self._visibility, memories, set())
-
+        self._search(deepcopy(self._person.get_location()), self._visibility, memories, set())
         return memories
-    
-    @staticmethod
-    def _distance(loc1: Location, loc2: Location) -> int:
-        # Calculate the Manhattan distance between two locations
-        return abs(loc1.x - loc2.x) + abs(loc1.y - loc2.y)
 
     def _search(
-            self,
-            location: Location,
-            visibility: int,
-            memories: Memories,
-            blocked: Set[Location],
+        self,
+        location: Location,
+        visibility: int,
+        memory: Memories,
+        blocked: set[Location],
     ) -> None:
-        if visibility <= 0 or location in blocked or location in self._scanned:  # Check if location is already scanned
+        if visibility <= 0 or location in blocked:
             return
-        self._scanned.add(location)  # Mark this location as scanned
         blocked.add(location)
 
         for dx, dy in self._directions:
             neighbor = Location(location.x + dx, location.y + dy)
             if self._grid.is_in_bounds(neighbor) and neighbor not in blocked:
-                self._process_location(memories, blocked, neighbor)
-                self._search(neighbor, visibility - 1, memories, blocked)
+                self._process_location(memory, blocked, neighbor)
+                self._search(neighbor, visibility - 1, memory, blocked)
 
     def _process_location(self, memory: Memories, blocked: set[Location], location: Location) -> None:
         non_blocking_objects: Dict[str, Callable[[Location], bool]] = {
