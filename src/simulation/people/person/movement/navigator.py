@@ -42,7 +42,7 @@ class Navigator:
 
     def is_stuck(self) -> bool:
         location = self._simulation.get_grid().get_open_spot_next_to_town()
-        return not location or not self._mover.can_get_to_location(location)
+        return not location or not self._mover.can_get_to(location)
 
     def move_to_time_estimate(self) -> int:
         """Estimate the time to move to the current building."""

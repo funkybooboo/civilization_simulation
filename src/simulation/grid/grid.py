@@ -26,7 +26,6 @@ if TYPE_CHECKING:
 
 
 class Grid:
-
     _char_to_num: Dict[str, int] = {
         settings.get("home_construction_char", "h"): settings.get("home_construction_obstacle_rating", 10),
         settings.get("home_char", "H"): settings.get("home_obstacle_rating", 0),
@@ -392,8 +391,9 @@ class Grid:
             row = self._grid[i]
             for j in range(len(row)):
                 cell = row[j]
-                path_finding_matrix[i][j] = self._char_to_num[cell]
-                logger.debug(f"Setting path_finding_matrix[{i}][{j}] = {self._char_to_num[cell]} (cell: {cell})")
+                # invert coordinates for the pathfinding library
+                path_finding_matrix[j][i] = self._char_to_num[cell]  
+                logger.debug(f"Setting path_finding_matrix[{j}][{i}] = {self._char_to_num[cell]} (cell: {cell})")
 
         logger.debug("Path finding matrix generation complete.")
 

@@ -25,7 +25,7 @@ class Mover:
         self._grid = grid
         self._speed = speed
         self._memories = memories
-        self._vision = Vision(person, grid, settings.get("visibility", 15))
+        self._path_finding_grid = self._get_path_finding_grid()
 
     def explore(self) -> None:
         random_location = self._get_random_location()
@@ -38,10 +38,12 @@ class Mover:
         if self._invalid(target):
             target = self._adjust_target(target)
 
-        for _ in range(self._speed):
-            self._memories.combine(self._vision.look_around())
-            path = self._get_path(target)
+        vision = Vision(self._person, self._grid, settings.get("visibility", 30))
 
+        for _ in range(self._speed):
+            self._memories.combine(vision.look_around())
+            path = self._get_path(target)
+            
             if path and len(path) >= 2:
                 next_node = path[1]
                 new_location = Location(next_node.y, next_node.x)  # Convert to Location
@@ -54,7 +56,7 @@ class Mover:
         neighbors: List[Location] = target.get_neighbors()
         found: bool = False
         for neighbor in neighbors:
-            if not self._invalid(neighbor) and self.can_get_to_location(neighbor):
+            if not self._invalid(neighbor) and self.can_get_to(neighbor):
                 target = neighbor
                 found = True
                 break
@@ -69,7 +71,7 @@ class Mover:
             return None
         return min(locations, key=lambda loc: current_location.distance_to(loc), default=None)
 
-    def can_get_to_location(self, target: Location) -> bool:
+    def can_get_to(self, target: Location) -> bool:
         return bool(self._get_path(target))
 
     def _place(self, location: Location) -> None:
@@ -77,7 +79,7 @@ class Mover:
         if not current_location.is_one_away(location):
             raise ValueError(f"Location is not one away: {location}")
         if not self._grid.is_in_bounds(location) or self._invalid(location):
-            raise ValueError(f"Location is not valid: {location}")
+            raise ValueError(f"Location is not valid: {location} {self._grid.get_grid()[location.y][location.x]}")
         self._person.set_location(location)
 
     def _get_random_location(self) -> Location:
@@ -85,7 +87,7 @@ class Mover:
             x = randint(0, self._grid.get_width() - 1)
             y = randint(0, self._grid.get_height() - 1)
             location = Location(x, y)
-            if self._grid.is_in_bounds(location) and not self._invalid(location) and self.can_get_to_location(location):
+            if self._grid.is_in_bounds(location) and not self._invalid(location) and self.can_get_to(location):
                 return location
 
     def _get_path(
@@ -93,15 +95,14 @@ class Mover:
         target: Location,
     ) -> List[PathFindingGridNode]:
         start: Location = deepcopy(self._person.get_location())
-        path_finding_grid = self._get_path_finding_grid()
         if not self._grid.is_in_bounds(start) or self._invalid(start):
             raise ValueError("Person out of bounds")
 
-        start_node = path_finding_grid.node(start.y, start.x)
-        end_node = path_finding_grid.node(target.y, target.x)
+        start_node = self._path_finding_grid.node(start.y, start.x)
+        end_node = self._path_finding_grid.node(target.y, target.x)
 
         finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
-        path, _ = finder.find_path(start_node, end_node, path_finding_grid)
+        path, _ = finder.find_path(start_node, end_node, self._path_finding_grid)
         return path
 
     def _get_path_finding_grid(self) -> PathFindingGrid:
@@ -112,23 +113,23 @@ class Mover:
     def _print_grid(self, target: Location, path) -> None:
         grid = self._grid.get_grid()
         person_location = self._person.get_location()
-
+    
         # Extract y (row) and x (column) from the Location object for the person
         person_y = person_location.y  # row
         person_x = person_location.x  # column
-
+    
         # Extract y (row) and x (column) from the Location object for the target
         target_y = target.y  # row
         target_x = target.x  # column
-
+    
         # Convert path from nodes (e.g., tuples) to Location objects
         path_locations = [Location(y, x) for y, x in path]
-
-        # Top border: Adjusted to account for spaces between characters
-        border = "+" + "-" * ((len(grid[0]) - 1) * 2 + 1) + "+"
+    
+        # Top border: Adjusted to account for the number of columns
+        border = "+" + "-" * len(grid[0]) + "+"
         print(border)
-
-        # Print each row with spaces between characters
+    
+        # Print each row with characters joined by an empty string
         for y_idx, row in enumerate(grid):
             row_display = []
             for x_idx, cell in enumerate(row):
@@ -143,10 +144,9 @@ class Mover:
                     row_display.append("r")
                 else:
                     row_display.append(cell)  # otherwise, display the normal grid cell
-
-            # Print the row with spaces between characters
-            print("|" + " ".join(row_display) + "|")
-
+    
+            # Print the row with no spaces between characters (join with an empty string)
+            print("|" + "".join(row_display) + "|")
+    
         # Bottom border: Same as top border
         print(border)
-
