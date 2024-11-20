@@ -75,14 +75,14 @@ class Work(Structure, ABC):
         """
         Assign a worker to the work, track work progress, and return the yield if max work count is reached.
         """
-        logger.debug(f"Assigning worker {person} to work")
+        logger.debug(f"Assigning worker {person.get_name()} to work")
 
         if person in self._workers:
             self._workers[person] += 1
-            logger.debug(f"Worker {person} already working, increasing count to {self._workers[person]}")
+            logger.debug(f"Worker {person.get_name()} already working, increasing count to {self._workers[person]}")
         elif len(self._workers) < self._max_worker_count:
             self._workers[person] = 1
-            logger.debug(f"Worker {person} added to work site")
+            logger.debug(f"Worker {person.get_name()} added to work site")
 
         if self._workers[person] > self._max_work_count:
             self.remove_worker(person)
@@ -91,7 +91,7 @@ class Work(Structure, ABC):
                 y = y // 2
                 logger.debug(f"Yield decreased due to time passed since last decrease. Yield halved: {y}")
             self._decrease_yield_time = 0
-            logger.info(f"Work complete for {person}, yield: {y}")
+            logger.info(f"Work complete for {person.get_name()}, yield: {y}")
             return y
 
         return None
@@ -102,7 +102,7 @@ class Work(Structure, ABC):
         """
         if person in self._workers:
             del self._workers[person]
-            logger.debug(f"Worker {person} removed from work site")
+            logger.debug(f"Worker {person.get_name()} removed from work site")
 
     def _get_yield(self) -> float:
         """

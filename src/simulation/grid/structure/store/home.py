@@ -37,7 +37,7 @@ class Home(Store):
         return self._owner is not None
 
     def assign_owner(self, person: Person) -> None:
-        logger.info(f"Assigning owner {person} to the Home.")
+        logger.info(f"Assigning owner {person.get_name()} to the Home.")
         self._owner = person
 
     def remove_owner(self) -> None:

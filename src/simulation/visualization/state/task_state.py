@@ -155,7 +155,7 @@ class TaskState(State):
         total_count = 0.0
         for person in self._people:
             count = sum(1 for task in person.get_scheduler().get_this_years_tasks() if task_predicate(task))
-            logger.debug(f"Person {person} has {count} tasks matching the predicate.")
+            logger.debug(f"Person {person.get_name()} has {count} tasks matching the predicate.")
             total_count += count
         average = total_count / len(self._people) if self._people else 0.0
         logger.debug(

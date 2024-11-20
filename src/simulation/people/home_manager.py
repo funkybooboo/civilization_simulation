@@ -100,13 +100,13 @@ class HomeManager:
 
         for person in self._people:
             if not person.get_spouse():
-                logger.debug(f"{person} has no spouse")
+                logger.debug(f"{person.get_name()} has no spouse")
                 center = self._calculate_center(person.get_work_structures())
                 if center:
                     far_people[person] = center
-                    logger.debug(f"{person} has {center} and added to far people")
+                    logger.debug(f"{person.get_name()} has {center} and added to far people")
                 else:
-                    logger.debug(f"{person} has no work structures, therefore no center.")
+                    logger.debug(f"{person.get_name()} has no work structures, therefore no center.")
 
         for person in self._people.get_married_people():
             person_center = self._calculate_center(person.get_work_structures())
@@ -114,7 +114,7 @@ class HomeManager:
             combined_center = self._calculate_center([person_center, spouse_center])
             if combined_center:
                 far_people[person] = combined_center
-            logger.debug(f"{person} has spouse, and combined center {combined_center} and added to far people")
+            logger.debug(f"{person.get_name()} has spouse, and combined center {combined_center} and added to far people")
 
         return far_people
 

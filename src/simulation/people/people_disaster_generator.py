@@ -77,36 +77,36 @@ class PeopleDisasterGenerator:
                 person.divorce()
                 visited.add(person)
                 visited.add(spouse)
-                logger.debug(f"{person} and {spouse} are divorced.")
+                logger.debug(f"{person.get_name()} and {spouse.get_name()} are divorced.")
 
     def _sickness(self, severity: int) -> None:
         """Person gets sick, losing health."""
         affected_people = self._get_affected_people(severity, 0.1)
         for person in affected_people:
             person.set_health(settings.get("sick_health_decr", -30))  # arbitrary decrement value
-            logger.debug(f"{person} got sick. Health: {person.get_health()}")
+            logger.debug(f"{person.get_name()} got sick. Health: {person.get_health()}")
 
     def _craving(self, severity: int) -> None:
         """Craving causes hunger to increase."""
         affected_people = self._get_affected_people(severity, 0.1)
         for person in affected_people:
             person.set_hunger(settings.get("sick_hunger_decr", -30))  # arbitrary decrement value
-            logger.debug(f"{person} has craving. Hunger: {person.get_hunger()}")
+            logger.debug(f"{person.get_name()} has craving. Hunger: {person.get_hunger()}")
 
     def _death(self, severity: int) -> None:
         """A person dies."""
         affected_people = self._get_affected_people(severity, 0.1)
         for person in affected_people:
             person.kill()  # person is dead
-            logger.debug(f"{person} died. :(")
+            logger.debug(f"{person.get_name()} died. :(")
 
     def _forget_tasks(self, severity: int) -> None:
         """Person forgets their tasks."""
         affected_people = self._get_affected_people(severity, 0.1)
         for person in affected_people:
+            logger.debug(f"{person.get_name()} forgot their tasks.")
             person = Scheduler(person.get_simulation(), person)
             person.flush()
-            logger.debug(f"{person} forgot their tasks.")
 
     def _sleepwalk(self, severity: int) -> None:
         """A person sleepwalks into the woods."""
@@ -114,7 +114,7 @@ class PeopleDisasterGenerator:
         for person in affected_people:
             # send person to a random corner of the grid.
             person.set_location(Location(0, 0))
-            logger.debug(f"{person} sleepwalked into the woods.")
+            logger.debug(f"{person.get_name()} sleepwalked into the woods.")
 
     def _so_many_babies(self, severity: int) -> None:
         """A person or group has a baby boom."""

@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 
 class Mover:
     def __init__(self, grid: Grid, person: Person, memories: Memories, speed: int) -> None:
-        logger.debug(f"Initializing Mover for person {person} with speed {speed}.")
+        logger.debug(f"Initializing Mover for person {person.get_name()} with speed {speed}.")
         self._person = person
         self._grid = grid
         self._speed = speed

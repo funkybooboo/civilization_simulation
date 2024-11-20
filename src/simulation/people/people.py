@@ -36,13 +36,13 @@ class People:
                     dead.append(person)
                     continue
                 person.take_action()
-                logger.debug(f"{person} should have taken action for the {action} time.")
+                logger.debug(f"{person.get_name()} should have taken action for the {action} time.")
                 self._grid.work_structures_exchange_memories()  # workers talk while working
                 logger.debug("These people are talking a lot and should have gotten others memories.")
             for person in dead:
                 person.divorce()
                 self._people.remove(person)
-                logger.info(f"{person} is dead. Their spouse is widowed. :(")
+                logger.info(f"{person.get_name()} is dead. Their spouse is widowed. :(")
 
     def swap_homes(self) -> None:
         self._home_manager.swap_homes()
@@ -51,12 +51,12 @@ class People:
         for person in self._people:
             if person.is_stuck():
                 person.kill()  # they got stuck and died
-            logger.info(f"{person} got stuck and died. :(")
+            logger.info(f"{person.get_name()} got stuck and died. :(")
 
     def spouses_share_memory(self):
         for person in self.get_married_people():
             person.exchange_memories(person.get_spouse())
-            logger.debug(f"{person} and {person.get_spouse()} should have shared memories.")
+            logger.debug(f"{person.get_name()} and {person.get_spouse().get_name()} should have shared memories.")
 
     def get_time(self) -> int:
         return self._simulation.get_time()
@@ -125,7 +125,7 @@ class People:
                 continue
             visited_people.append(person)
             visited_people.append(person.get_spouse())
-            logger.debug(f"{person} is married to {person.get_spouse()}")
+            logger.debug(f"{person.get_name()} is married to {person.get_spouse().get_name()}")
             if not person.has_home():
                 continue
             married_people.append(person)
