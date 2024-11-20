@@ -315,4 +315,4 @@ class Person:
 
     def move_to_time_estimate(self) -> int:
         """Estimate the time to move to the current building."""
-        return self.move_to_time_estimate()
+        return self._navigator.move_to_time_estimate()
