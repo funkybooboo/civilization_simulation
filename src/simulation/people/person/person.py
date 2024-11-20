@@ -123,7 +123,7 @@ class Person:
     def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._name}")        
         # explore when you are born just to collect data
-        if self._personal_time <= settings.get("explore_time", 1) or self.get_time() % settings.get("explore_threshold", 30) == 0:
+        if self._personal_time <= settings.get("explore_time", 1) or self._personal_time % settings.get("explore_threshold", 30) == 0:
             self._scheduler.add(TaskType.EXPLORE)
             logger.debug(f"{self._name} added EXPLORE task")
             return
