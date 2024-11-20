@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Dict
 
 from src.settings import settings
 from src.simulation.grid.location import Location
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.person.scheduler.scheduler import Scheduler
 
 if TYPE_CHECKING:

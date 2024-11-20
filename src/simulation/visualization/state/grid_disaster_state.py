@@ -1,7 +1,7 @@
 from typing import Dict
 
 from src.simulation.grid.grid import Grid
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.visualization.state.state import State
 
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import heapq
 from typing import TYPE_CHECKING, List, Optional
 
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.person.scheduler.task.task_factory import \
     TaskFactory
 

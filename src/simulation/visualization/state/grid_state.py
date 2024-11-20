@@ -3,7 +3,7 @@ from typing import override
 from src.simulation.grid.grid import Grid
 from src.simulation.grid.structure.store.barn import Barn
 from src.simulation.grid.structure.store.home import Home
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.grid.structure.work.construction.construction_barn import \
     ConstructionBarn
 from src.simulation.grid.structure.work.construction.construction_farm import \

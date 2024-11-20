@@ -3,7 +3,7 @@ from abc import ABC
 from numbers import Number
 from typing import Dict, Tuple
 
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 
 
 class State(ABC):

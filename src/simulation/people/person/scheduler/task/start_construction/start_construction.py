@@ -4,7 +4,7 @@ from abc import ABC
 from typing import TYPE_CHECKING, List, Optional, override
 
 from src.simulation.grid.location import Location
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.people.person.scheduler.task.task_type import TaskType

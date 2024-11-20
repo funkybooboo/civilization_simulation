@@ -1,6 +1,6 @@
 from typing import Dict
 
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.people import People
 from src.simulation.visualization.state.state import State
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Optional, override
 
 from src.settings import settings
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.scheduler.task.task import Task
 

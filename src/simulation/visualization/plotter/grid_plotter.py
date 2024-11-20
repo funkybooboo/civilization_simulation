@@ -7,8 +7,8 @@ import seaborn as sns
 from matplotlib import colors
 from tqdm import tqdm
 
+from src.logger import logger
 from src.settings import settings
-from src.simulation.grid.structure.structure_factory import logger
 
 
 class GridPlotter:

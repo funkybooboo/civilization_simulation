@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, override
 
 from typing_extensions import Optional
 
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.person.scheduler.task.task import Task
 
 if TYPE_CHECKING:

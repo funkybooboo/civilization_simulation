@@ -5,7 +5,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 
 from src.simulation.grid.grid import Grid
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.people import People
 from src.simulation.visualization.state.grid_disaster_state import \
     GridDisasterState

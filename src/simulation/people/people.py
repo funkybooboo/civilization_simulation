@@ -4,7 +4,7 @@ from copy import deepcopy
 from typing import TYPE_CHECKING, Dict, Iterator, List
 
 from src.settings import settings
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.home_manager import HomeManager
 from src.simulation.people.people_disaster_generator import \
     PeopleDisasterGenerator

@@ -1,5 +1,5 @@
 from src.simulation.grid.grid import Grid
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.people import People
 from src.simulation.visualization.plotter.grid_plotter import GridPlotter
 from src.simulation.visualization.plotter.state_plotter import StatePlotter

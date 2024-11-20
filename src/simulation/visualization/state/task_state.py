@@ -1,4 +1,4 @@
-from src.simulation.grid.structure.structure_factory import logger
+from src.logger import logger
 from src.simulation.people.people import People
 from src.simulation.people.person.scheduler.task.construction.build_barn import \
     BuildBarn
