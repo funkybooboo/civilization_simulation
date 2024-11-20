@@ -101,19 +101,19 @@ class Person:
         return self._hunger_preference
 
     def kill(self):
-        self._health = 0
+        self.set_health(-100)
 
     def take_action(self) -> None:
         self._personal_time += 1
         logger.info(f"{self._name} is starting an action with current hunger={self._hunger} and health={self._health}")
-        self.set_health(self._hunger - 1)
+        self.set_health(-1)
         logger.debug(f"{self._name}'s hunger decreased by 1 to {self._hunger}")
 
         if self._hunger < settings.get("hunger_damage_threshold", 20):
-            self.set_health(self._health - 1)
+            self.set_health(-1)
             logger.debug(f"{self._name}'s health decreased due to being hungry (Health: {self._health})")
         elif self._hunger > settings.get("hunger_regen_threshold", 50):
-            self.set_health(self._health + 1)
+            self.set_health(1)
             logger.debug(f"{self._name}'s health increased due to being full (Health: {self._health})")
 
         self._add_tasks()
