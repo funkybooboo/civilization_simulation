@@ -225,7 +225,7 @@ class Person:
     def set_hunger(self, hunger: int) -> None:
         old_hunger = self._hunger
         self._hunger = max(0, min(self._hunger + hunger, settings.get("person_hunger_cap", 100)))
-        logger.debug(f"{self._name}'s hunger adjusted from {old_hunger} to {self._hunger}")
+        logger.info(f"{self._name}'s hunger adjusted from {old_hunger} to {self._hunger}")
 
     def assign_spouse(self, spouse: "Person") -> None:
         self._spouse = spouse

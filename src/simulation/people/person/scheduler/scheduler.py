@@ -22,7 +22,6 @@ class Scheduler:
         self._this_years_tasks: List[Task] = []
         self._tasks: List[Task] = []
         self._current_task: Optional[Task] = None
-        self._simulation = simulation
 
     def get_this_years_tasks(self):
         return self._this_years_tasks
@@ -89,7 +88,7 @@ class Scheduler:
         else:
             self._add(next_task)
 
-        logger.debug(f"Should be executing {self._current_task}")
+        logger.info(f"Executing current task {self._current_task}")
         self._current_task.execute()
 
 

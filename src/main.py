@@ -27,7 +27,7 @@ def main() -> None:
         except Exception as e:
             # Log the exception if something goes wrong
             logger.error(f"An error occurred during simulation {i + 1}: {e}")
-
+            raise 
         finally:
             # End timing the simulation and log the duration
             end_time = time.time()
