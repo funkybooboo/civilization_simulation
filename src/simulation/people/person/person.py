@@ -122,7 +122,9 @@ class Person:
 
     def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._name}")
-
+        
+        # TODO we may need to start everyone out with memories of the map just to get things going more smoothly
+        
         # explore when you are born just to collect data
         if self._personal_time <= settings.get("explore_time", 1):
             self._scheduler.add(TaskType.EXPLORE)
