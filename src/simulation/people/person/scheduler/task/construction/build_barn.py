@@ -18,7 +18,7 @@ class BuildBarn(Build):
         super().__init__(
             simulation,
             person,
-            settings.get("build_barn_priority", 5),
+            settings.get("build_barn_priority", 6),
             StructureType.CONSTRUCTION_BARN,
             StructureType.BARN,
             TaskType.BUILD_BARN

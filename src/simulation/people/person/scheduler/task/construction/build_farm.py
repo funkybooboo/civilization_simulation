@@ -18,7 +18,7 @@ class BuildFarm(Build):
         super().__init__(
             simulation,
             person,
-            settings.get("build_farm_priority", 5),
+            settings.get("build_farm_priority", 6),
             StructureType.CONSTRUCTION_FARM,
             StructureType.BARN,
             TaskType.BUILD_FARM

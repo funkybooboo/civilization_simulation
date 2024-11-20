@@ -22,6 +22,12 @@ class Task(ABC):
         self._is_completed: bool = False
         self._task_type: TaskType = task_type
 
+    def __str__(self) -> str:
+        return str(self._task_type)
+    
+    def __repr__(self) -> str:
+        return str(self._task_type)
+    
     def __lt__(self, other: Task) -> bool:
         return self.get_priority() < other.get_priority()
 
