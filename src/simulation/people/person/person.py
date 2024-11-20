@@ -106,7 +106,7 @@ class Person:
     def take_action(self) -> None:
         self._personal_time += 1
         logger.info(f"{self._name} is starting an action with current hunger={self._hunger} and health={self._health}")
-        self.set_health(-1)
+        self.set_hunger(-1)
         logger.debug(f"{self._name}'s hunger decreased by 1 to {self._hunger}")
 
         if self._hunger < settings.get("hunger_damage_threshold", 20):
