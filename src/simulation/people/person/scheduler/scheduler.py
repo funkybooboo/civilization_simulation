@@ -56,7 +56,7 @@ class Scheduler:
         # Reward function: Higher priority tasks have higher rewards
         priority_weight = 11 - task.get_priority()  # Higher priority = higher weight
         time_remaining_weight = max(1, 10 - task.get_remaining_time())  # Closer to completion = higher weight
-        interruption_penalty = max(0, task.get_interruptions())  # More interruptions = lower reward
+        interruption_penalty = task.get_interruptions()  # More interruptions = lower reward
 
         # Reward formula: Higher priority, less time remaining, fewer interruptions lead to higher reward
         reward = priority_weight * time_remaining_weight / (1 + interruption_penalty)

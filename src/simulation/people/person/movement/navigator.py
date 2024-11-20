@@ -161,16 +161,18 @@ class Navigator:
         build_type = build_tasks.get(structure_type)
 
         logger.debug(f"Construction tasks and sites for structure type {structure_type}: tasks={construction_type}, sites={len(construction_sites)}")
-
-        if structure_type in [StructureType.FARM, StructureType.TREE, StructureType.MINE]:
-            structure = self._move_to_chosen_structure(structure_type, locations)
+        
+        if locations:
+            if structure_type in [StructureType.FARM, StructureType.TREE, StructureType.MINE]:
+                structure = self._move_to_chosen_structure(structure_type, locations)
+            else:
+                structure = self._move_to_closest_structure(locations)
         else:
-            structure = self._move_to_closest_structure(locations)
-
+            structure = None
+        
         if (
-            structure_type != StructureType.TREE
-            and not structure
-            and self._searched_structure_count >= (len(locations) * 0.37)
+            structure_type != StructureType.TREE and 
+                (not structure or self._searched_structure_count >= (len(locations) * 0.37))
         ):
             if construction_sites:
                 self._person.get_scheduler().add(build_type)
@@ -256,9 +258,11 @@ class Navigator:
     ) -> Optional[Structure]:
         """Move to the chosen building that is workable."""
         logger.debug(f"Choosing structure of type {structure_type} from {len(locations)} locations.")
-        self._calculate_epsilon(structure_type)
 
         actions, rewards = self._update_rewards_and_actions(locations, structure_type)
+        
+        self._calculate_epsilon(structure_type)
+
         logger.debug(
             logger.debug(f"Actions: {actions} | Rewards: {rewards} | Epsilon: {self._epsilon[structure_type]:.4f}")
         )
@@ -304,6 +308,8 @@ class Navigator:
         logger.debug(f"Initial actions: {actions}")
 
         for location in locations:
+            if location in rewards or location in actions:
+                continue
             rewards.setdefault(location, 0)
             actions.setdefault(location, 0)
             logger.debug(f"Location {location} | Reward: {rewards[location]} | Actions: {actions[location]}")

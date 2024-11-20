@@ -59,6 +59,12 @@ class Person:
         logger.debug(
             f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._home_preference}}}"
         )
+        
+    def __str__(self) -> str:
+        return f"person: {self._pk}, {self._name}"
+
+    def __repr__(self) -> str:
+        return f"person: {self._pk}, {self._name}"
 
     def get_time(self) -> int:
         return self._simulation.get_time()
