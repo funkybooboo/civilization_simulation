@@ -82,11 +82,11 @@ class Eat(Task):
             # if the barn has no food, start working a farm to get food
             if self._food <= 0:
                 self._person.work_farm()
-                logger.info(f"{self._person} could not get food from barn. Needs to work farm")
+                logger.info(f"{self._person.get_name()} could not get food from barn. Needs to work farm")
 
     def _handle_barn_food_logic(self) -> None:
         if not self._barn:
-            logger.debug(f"{self._person} is going to a barn")
+            logger.debug(f"{self._person.get_name()} is going to a barn")
             move_result: MoveResult = self._person.move_to_workable_structure(
                 StructureType.BARN, settings.get("food", "food")
             )
@@ -100,7 +100,7 @@ class Eat(Task):
         if self._barn:
             # if the barn is out of food, go work the farm to get some food
             if self._barn.get_resource(settings.get("food", "food")) <= 0:
-                logger.info(f"{self._person} could not get food from barn. Needs to work farm")
+                logger.info(f"{self._person.get_name()} could not get food from barn. Needs to work farm")
                 self._person.work_farm()
             else:
                 self._person.eat(self._barn)

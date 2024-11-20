@@ -249,6 +249,7 @@ class Person:
     def assign_home(self, home: Home) -> None:
         if self._home == home:
             logger.warning(f"{self._name} tried to assign home but is already assigned to home: {home}")
+            # TODO allow spouses to assign home without issue
             return
         self._home = home
         home.assign_owner(self)
