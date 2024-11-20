@@ -75,5 +75,5 @@ class PeopleGenerator:
         age: int = 0
         self._max_pk += 1
         person: Person = Person(self._simulation, name, self._max_pk, location, age)
-        logger.info("Baby {name} was born!")
+        logger.info(f"Baby {name} was born!")
         return person

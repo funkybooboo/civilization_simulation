@@ -80,7 +80,7 @@ class Vision:
         for obj_type, check_fn in non_blocking_objects.items():
             if check_fn(location):
                 logger.debug(f"{obj_type.capitalize()} found at {location}.")
-                memory.add(f"{obj_type}s", location)
+                memory.add(self._grid.get_grid()[location.y][location.x], location)
                 return
 
         if self._is_blocking_object(location, memory):
@@ -102,7 +102,7 @@ class Vision:
         for obj_type, check_fn in blocking_objects.items():
             if check_fn(location):
                 logger.debug(f"Blocking object {obj_type.capitalize()} detected at {location}.")
-                memory.add(f"{obj_type}s", location)
+                memory.add(self._grid.get_grid()[location.y][location.x], location)
                 return True
         return False
 

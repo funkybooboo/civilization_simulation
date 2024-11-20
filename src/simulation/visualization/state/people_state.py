@@ -22,7 +22,7 @@ class PeopleState(State):
         average_health: float = 0.0
         for person in self._people:
             person_health = person.get_health()
-            logger.debug(f"Person {person} has health: {person_health}.")
+            logger.debug(f"Person {person.get_name()} has health: {person_health}.")
             average_health += person_health
         if self._people:
             average_health /= len(self._people)
@@ -34,7 +34,7 @@ class PeopleState(State):
         average_hunger: float = 0.0
         for person in self._people:
             person_hunger = person.get_hunger()
-            logger.debug(f"Person {person} has hunger: {person_hunger}.")
+            logger.debug(f"Person {person.get_name()} has hunger: {person_hunger}.")
             average_hunger += person_hunger
         if self._people:
             average_hunger /= len(self._people)

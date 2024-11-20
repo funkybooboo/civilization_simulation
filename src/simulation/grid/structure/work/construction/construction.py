@@ -86,12 +86,12 @@ class Construction(Work, ABC):
             self.remove_worker(person)
             self._current_completion_level += 1
             logger.info(
-                f"Worker {person} finished work. Current completion level: {self._current_completion_level}/{self._finished_completion_level}"
+                f"Worker {person.get_name()} finished work. Current completion level: {self._current_completion_level}/{self._finished_completion_level}"
             )
             return int(self._get_yield())
 
         logger.debug(
-            f"Worker {person} assigned. Current completion level: {self._current_completion_level}/{self._finished_completion_level}"
+            f"Worker {person.get_name()} assigned. Current completion level: {self._current_completion_level}/{self._finished_completion_level}"
         )
         return None
 
