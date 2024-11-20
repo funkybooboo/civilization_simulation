@@ -18,7 +18,7 @@ class BuildMine(Build):
         super().__init__(
             simulation,
             person,
-            settings.get("build_mine_priority", 5),
+            settings.get("build_mine_priority", 6),
             StructureType.CONSTRUCTION_MINE,
             StructureType.BARN,
             TaskType.BUILD_MINE

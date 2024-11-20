@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 class FindHome(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, settings.get("find_home_priority", 5), TaskType.FIND_HOME)
+        super().__init__(simulation, person, settings.get("find_home_priority", 3), TaskType.FIND_HOME)
 
     @override
     def execute(self) -> None:

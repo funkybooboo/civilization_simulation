@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 class Eat(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, settings.get("eat_priority", 5), TaskType.EAT)
+        super().__init__(simulation, person, settings.get("eat_priority", 1), TaskType.EAT)
 
         self._home: Optional[Home] = None
         self._barn: Optional[Barn] = None

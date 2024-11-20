@@ -18,7 +18,7 @@ class BuildHome(Build):
         super().__init__(
             simulation,
             person,
-            settings.get("build_home_priority", 5),
+            settings.get("build_home_priority", 6),
             StructureType.CONSTRUCTION_HOME,
             StructureType.BARN,
             TaskType.BUILD_HOME

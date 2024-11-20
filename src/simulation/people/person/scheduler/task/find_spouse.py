@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 class FindSpouse(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, settings.get("find_spouse_priority", 5), TaskType.FIND_SPOUSE)
+        super().__init__(simulation, person, settings.get("find_spouse_priority", 3), TaskType.FIND_SPOUSE)
 
     @override
     def execute(self) -> None:

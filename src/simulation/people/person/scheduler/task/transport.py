@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 class Transport(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, settings.get("transport_priority", 5), TaskType.TRANSPORT)
+        super().__init__(simulation, person, settings.get("transport_priority", 4), TaskType.TRANSPORT)
         self._backpack: Backpack = self._person.get_backpack()
 
         self._store_structure: StructureType = StructureType.BARN
