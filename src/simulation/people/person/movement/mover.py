@@ -61,7 +61,10 @@ class Mover:
                 logger.debug(f"Moving to next location: {new_location}.")
                 self._place(new_location)
             else:
-                logger.warning(f"No valid path found to target: {target}")
+                if self._person.get_location() == target:
+                    logger.info(f"{self._person.get_name()} has arrived to their target")
+                else:
+                    logger.warning(f"No valid path found to target: {target}")
                 break
 
     def _invalid(self, location: Location) -> bool:
