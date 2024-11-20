@@ -62,6 +62,7 @@ class Mover:
                 self._place(new_location)
             else:
                 logger.warning(f"No valid path found to target: {target}")
+                break
 
     def _invalid(self, location: Location) -> bool:
         logger.debug(f"Checking if location {location} is invalid (barn, mine, or home).")
