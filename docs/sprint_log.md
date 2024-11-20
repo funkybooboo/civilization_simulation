@@ -75,7 +75,7 @@ Stay organized and on track with your assignments and tasks!
 - **Date Range**: 2024-11-11 -> 2024-11-19
 - **Lead**: Madi Patch
 - **Goals**:
-    - ...
+    - get it running
 
 | Date       | Hours | Name      | Notes                                                                                           |
 |------------|-------|-----------|-------------------------------------------------------------------------------------------------|
@@ -108,7 +108,7 @@ Stay organized and on track with your assignments and tasks!
 - **Date Range**: 2024-11-20 -> 2024-11-29
 - **Lead**: Bellis
 - **Goals**:
-    - ...
+    - wrap up the project
 
 | Date       | Hours | Name | Notes |
 |------------|-------|------|-------|
