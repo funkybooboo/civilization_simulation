@@ -91,7 +91,6 @@ class Scheduler:
         logger.info(f"Executing current task {self._current_task}")
         self._current_task.execute()
 
-
         if self._current_task.is_finished():
             logger.debug(f"Current task {self._current_task} is finished")
             self._current_task = None
