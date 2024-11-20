@@ -24,7 +24,7 @@ class FindSpouse(Task):
                 if not other.has_spouse():
                     self._person.assign_spouse(other)
                     other.assign_spouse(self._person)
-                    logger.info(f"{self._person} and {other} got married!")
+                    logger.info(f"{self._person.get_name()} and {other.get_name()} got married!")
 
                     # make sure they have the same house
                     if self._person.has_home():

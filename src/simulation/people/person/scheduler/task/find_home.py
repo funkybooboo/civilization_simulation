@@ -37,7 +37,7 @@ class FindHome(Task):
                     else:
                         raise Exception("You are trying to go to a Home but are getting a different Structure")
             # if all homes have owners, construction a home (add build_home task)
-            logger.info(f"{self._person} needs to start building a home")
+            logger.info(f"{self._person.get_name()} needs to start building a home")
             self._person.start_home_construction()
         else:
             self._finished()

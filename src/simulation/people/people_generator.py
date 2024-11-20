@@ -26,7 +26,7 @@ class PeopleGenerator:
     @staticmethod
     def _get_names() -> List[str]:
         try:
-            with open("../../../data/first_names.txt", "r") as file:
+            with open("../../data/first_names.txt", "r") as file:
                 names: List[str] = [line.strip() for line in file if line.strip()]
         except FileNotFoundError:
             logger.error("Could not find names file. Using default names.")
