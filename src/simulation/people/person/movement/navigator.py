@@ -40,9 +40,10 @@ class Navigator:
         logger.debug(f"Epsilon reset value initialized to: {self._epsilon_reset}")
 
         # Using defaultdict to simplify reward and action initialization
-        self._epsilon = defaultdict(lambda: 1.0)  # Default epsilon to 1.0
-        self._rewards = defaultdict(lambda: defaultdict(float))
-        self._actions = defaultdict(lambda: defaultdict(int))
+        self._epsilon: Dict[StructureType, float] = defaultdict(lambda: 1.0)
+        self._rewards: Dict[StructureType, Dict[Location, float]] = defaultdict(lambda: defaultdict(float))
+        self._actions: Dict[StructureType, Dict[Location, int]] = defaultdict(lambda: defaultdict(int))
+        
 
     def is_stuck(self) -> bool:
         logger.debug("Checking if navigator is stuck.")
