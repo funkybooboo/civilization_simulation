@@ -64,10 +64,23 @@ class Vision:
             else:
                 logger.debug(f"Neighbor {neighbor} is out of bounds. Skipping.")
 
-    def _process_location(self, memory: Memories, blocked: set[Location], location: Location) -> None:
+    def _process_location(self, memories: Memories, blocked: set[Location], location: Location) -> None:
         """Processes a location and updates memory if an object is found."""
         logger.debug(f"Processing location {location}.")
 
+        if self._is_non_blocking_object(location, memories):
+            logger.debug(f"Non blocking object found at {location}.")
+            return
+
+        if self._is_blocking_object(location, memories):
+            logger.debug(f"Blocking object found at {location}. View will be obstructed.")
+            self._block_view(blocked, location)
+            return
+
+        logger.error(f"Unknown character detected at {location}. Raising exception.")
+        raise Exception(f"Unknown character at: {location}")
+
+    def _is_non_blocking_object(self, location: Location, memories: Memories) -> bool:
         non_blocking_objects: Dict[str, Callable[[Location], bool]] = {
             "empties": self._grid.is_empty,
             "construction_barn": self._grid.is_construction_barn,
@@ -79,19 +92,12 @@ class Vision:
         }
         for obj_type, check_fn in non_blocking_objects.items():
             if check_fn(location):
-                logger.debug(f"{obj_type.capitalize()} found at {location}.")
-                memory.add(f"{obj_type}s", location)
-                return
+                logger.debug(f"{obj_type} found at {location}.")
+                memories.add(self._grid.get_grid()[location.y][location.x], location)
+                return True
+        return False
 
-        if self._is_blocking_object(location, memory):
-            logger.debug(f"Blocking object found at {location}. View will be obstructed.")
-            self._block_view(blocked, location)
-            return
-
-        logger.error(f"Unknown character detected at {location}. Raising exception.")
-        raise Exception(f"Unknown character at: {location}")
-
-    def _is_blocking_object(self, location: Location, memory: Memories) -> bool:
+    def _is_blocking_object(self, location: Location, memories: Memories) -> bool:
         """Checks if the location contains a blocking object."""
         blocking_objects: Dict[str, Callable[[Location], bool]] = {
             "barn": self._grid.is_barn,
@@ -101,8 +107,8 @@ class Vision:
 
         for obj_type, check_fn in blocking_objects.items():
             if check_fn(location):
-                logger.debug(f"Blocking object {obj_type.capitalize()} detected at {location}.")
-                memory.add(f"{obj_type}s", location)
+                logger.debug(f"Blocking object {obj_type} detected at {location}.")
+                memories.add(self._grid.get_grid()[location.y][location.x], location)
                 return True
         return False
 
