@@ -6,6 +6,7 @@ from src.settings import settings
 from src.simulation.grid.structure.store.home import Home
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.people.person.scheduler.task.task_type import TaskType
+from src.simulation.grid.structure.structure_factory import logger
 
 if TYPE_CHECKING:
     from src.simulation.grid.structure.structure import Structure
@@ -31,13 +32,16 @@ class FindHome(Task):
                             structure.assign_owner(self._person)
                             self._person.assign_home(structure)
                             self._finished()
+                            logger.info(f"{self._person} found a home")
                             return
                     else:
                         raise Exception("You are trying to go to a Home but are getting a different Structure")
             # if all homes have owners, construction a home (add build_home task)
+            logger.info(f"{self._person} needs to start building a home")
             self._person.start_home_construction()
         else:
             self._finished()
+            logger.warning(f"{self._person} should already has a home: {self._person.has_home()}")
 
     @override
     def _clean_up_task(self) -> None:

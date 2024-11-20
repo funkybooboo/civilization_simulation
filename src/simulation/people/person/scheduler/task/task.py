@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Optional
+from src.logger import logger
 
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 
@@ -47,6 +48,7 @@ class Task(ABC):
             else:
                 reward = -1
             self._person.update_scheduler_rewards(self._task_type, reward)
+            logger.debug(f"{self._person} should have updated scheduler rewards")
 
     def is_finished(self) -> bool:
         return self._is_finished
