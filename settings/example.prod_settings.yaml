@@ -127,22 +127,22 @@ mine_completion_prob: 0.8
 eat_priority: 1
 find_home_priority: 3
 explore_priority: 2
-find_spouse_priority: 4
-transport_priority: 5
+find_spouse_priority: 3
+transport_priority: 4
 
-chop_tree_priority: 9
-work_farm_priority: 8
-work_mine_priority: 9
+chop_tree_priority: 8
+work_farm_priority: 7
+work_mine_priority: 8
 
-build_barn_priority: 7
-build_farm_priority: 7
-build_home_priority: 7
-build_mine_priority: 7
+build_barn_priority: 6
+build_farm_priority: 6
+build_home_priority: 6
+build_mine_priority: 6
 
-start_barn_priority: 6
-start_farm_priority: 6
-start_home_priority: 6
-start_mine_priority: 6
+start_barn_priority: 5
+start_farm_priority: 5
+start_home_priority: 5
+start_mine_priority: 5
 
 # Person values
 explore_time: 1

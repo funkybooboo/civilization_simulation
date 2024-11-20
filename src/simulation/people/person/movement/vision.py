@@ -109,7 +109,6 @@ class Vision:
             if check_fn(location):
                 logger.debug(f"Blocking object {obj_type} detected at {location}.")
                 memories.add(self._grid.get_grid()[location.y][location.x], location)
-
                 return True
         return False
 
