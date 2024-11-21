@@ -148,22 +148,12 @@ class Navigator:
     def _find_and_move_to_structure(self, structure_type: StructureType) -> Tuple[bool, Optional[Structure]]:
         logger.debug(f"Finding and moving to structure of type: {structure_type}")
         structure_data = self._get_structure_locations()
-        construction_tasks = self._get_start_construction_tasks()
-        construction_site_data = self._get_construction_structure_locations()
-        build_tasks = self._get_construction_tasks()
-
         if structure_type not in structure_data:
             logger.error(f"Unknown structure type: {structure_type}")
             raise Exception(f"Unknown structure type: {structure_type}")
 
         locations = list(structure_data[structure_type]())
         logger.debug(f"Retrieved {len(locations)} known locations for structure type: {structure_type}")
-
-        construction_type = construction_tasks.get(structure_type)
-        construction_sites = list(construction_site_data[structure_type]())
-        build_type = build_tasks.get(structure_type)
-
-        logger.debug(f"Construction tasks and sites for structure type {structure_type}: tasks={construction_type}, sites={len(construction_sites)}")
         
         if locations:
             if structure_type in [StructureType.FARM, StructureType.TREE, StructureType.MINE]:
@@ -177,6 +167,17 @@ class Navigator:
             structure_type != StructureType.TREE and 
                 (not structure or self._searched_structure_count >= (len(locations) * 0.37))
         ):
+            construction_tasks = self._get_start_construction_tasks()
+            construction_site_data = self._get_construction_structure_locations()
+            build_tasks = self._get_construction_tasks()
+            if structure_type not in list(build_tasks.keys()):
+                logger.warning("You couldn't find a construction site even tho we only add build tasks when you know about construction sites")
+                return True, None
+    
+            construction_type = construction_tasks.get(structure_type)
+            construction_sites = list(construction_site_data[structure_type]())
+            build_type = build_tasks.get(structure_type)
+        
             if construction_sites:
                 self._person.get_scheduler().add(build_type)
             else:
