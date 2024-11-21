@@ -123,7 +123,7 @@ class Thinker:
     def _add_work_task(self) -> None:
         keys: List[TaskType] = list(self._work_rewards.keys())
         epsilon: float = settings.get("person_epsilon", 0.05)
-        if np.random.rand() < epsilon:
+        if np.random.rand() < epsilon or all(value == 0 for value in self._work_rewards.values()):
             random_index: int = np.random.randint(0, len(keys) - 1)
             task_type: TaskType = keys[random_index]
             logger.debug(f"{self._person.get_name()} is exploring by selecting random task: {task_type}")
