@@ -54,7 +54,6 @@ farm_max_construction_worker_count: 3
 farm_finished_completion_level: 3
 
 tree_growth_chance: 0.01
-explore_threshold: 30
 
 # storing
 barn_food_store: 500

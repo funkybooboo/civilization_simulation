@@ -129,7 +129,7 @@ class Person:
     def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._name}")        
         # explore when you are born just to collect data
-        if self._personal_time <= settings.get("explore_time", 1) or self._personal_time % settings.get("explore_threshold", 30) == 0:
+        if self._personal_time <= settings.get("explore_time", 1) or self._personal_time % random.randint(30, 100) == 0:
             self._scheduler.add(TaskType.EXPLORE)
             logger.debug(f"{self._name} added EXPLORE task")
             return
@@ -248,8 +248,6 @@ class Person:
 
     def assign_home(self, home: Home) -> None:
         if self._home == home:
-            logger.warning(f"{self._name} tried to assign home but is already assigned to home: {home}")
-            # TODO allow spouses to assign home without issue
             return
         self._home = home
         home.assign_owner(self)
