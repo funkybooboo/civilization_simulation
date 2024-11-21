@@ -112,7 +112,7 @@ Stay organized and on track with your assignments and tasks!
 
 | Date       | Hours | Name | Notes |
 |------------|-------|------|-------|
-| 2024-11-20 | 1     | Nate | Debug |
+| 2024-11-20 | 6     | Nate | Debug |
 | 2024-11-21 |       |      |       |
 | 2024-11-22 |       |      |       |
 | 2024-11-23 |       |      |       |
