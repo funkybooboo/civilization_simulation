@@ -68,10 +68,10 @@ class Person:
             TaskType.BUILD_HOME: 4,
             TaskType.BUILD_FARM: 4,
             TaskType.BUILD_MINE: 4,
-            TaskType.START_FARM_CONSTRUCTION: 10,
-            TaskType.START_BARN_CONSTRUCTION: 10,
-            TaskType.START_MINE_CONSTRUCTION: 10,
-            TaskType.START_HOME_CONSTRUCTION: 10
+            TaskType.START_FARM_CONSTRUCTION: 1,
+            TaskType.START_BARN_CONSTRUCTION: 1,
+            TaskType.START_MINE_CONSTRUCTION: 1,
+            TaskType.START_HOME_CONSTRUCTION: 1
         }
 
         logger.debug(f"{self._name} added EXPLORE task")
@@ -199,6 +199,8 @@ class Person:
         # the more construction sites there are the more of a need to gather wood, or stone, and then build them in that order
         
         # the less food in the barn the more we need to farm
+        
+        # start construction tasks should just always be high
         
         # etc...
         
