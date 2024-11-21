@@ -21,7 +21,7 @@ class FindSpouse(Task):
     def execute(self) -> None:
         if not self._person.has_spouse():
             for other in self._simulation.get_people():
-                if not other.has_spouse():
+                if not other.has_spouse() and not other == self._person:
                     self._person.assign_spouse(other)
                     other.assign_spouse(self._person)
                     logger.info(f"{self._person.get_name()} and {other.get_name()} got married!")
@@ -32,7 +32,7 @@ class FindSpouse(Task):
                     else:
                         if other.has_home():
                             self._person.assign_home(other.get_home())
-                    logger.debug(f"{self._person} and {other} should have the same house: {self._person.get_home() == other.get_home()}")
+                    logger.debug(f"{self._person.get_name()} and {other.get_name()} should have the same house: {self._person.get_home() == other.get_home()}")
                     break
         # if you have a spouse, or there are no options, finish the task
         self._finished()
