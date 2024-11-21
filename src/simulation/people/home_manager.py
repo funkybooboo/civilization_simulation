@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
-from venv import logger
+from src.logger import logger
 
 from src.simulation.grid.location import Location
 
@@ -124,7 +124,6 @@ class HomeManager:
         if not structures:
             logger.debug("No structures found to find center")
             return None
-
 
         total_x, total_y = sum(loc.x for loc in structures), sum(loc.y for loc in structures)
         logger.debug(f'total x: {total_x}, total y: {total_y}, number of structures: {len(structures)}')
