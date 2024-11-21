@@ -50,8 +50,6 @@ class Person:
         self._hunger_preference: int = random.randint(
             settings.get("hunger_pref_min", 50), settings.get("hunger_pref_max", 100)
         )
-        self._spouse_preference: bool = random.choices([True, False], weights=[95, 5])[0]
-        self._home_preference: bool = random.choices([True, False], weights=[95, 5])[0]
 
         self._work_rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
         
@@ -74,20 +72,18 @@ class Person:
             TaskType.START_HOME_CONSTRUCTION: 1
         }
 
-        logger.debug(f"{self._name} added EXPLORE task")
         self._scheduler.add(TaskType.EXPLORE)
+        logger.debug(f"{self._name} added EXPLORE task")
 
-        if self._spouse_preference:
-            self._scheduler.add(TaskType.FIND_SPOUSE)
-            logger.debug(f"{self._name} prefers a spouse and added FIND_SPOUSE task")
-        
-        if self._home_preference:
-            self._scheduler.add(TaskType.FIND_HOME)
-            logger.debug(f"{self._name} has no home and added FIND_HOME task")
+        self._scheduler.add(TaskType.FIND_SPOUSE)
+        logger.debug(f"{self._name} prefers a spouse and added FIND_SPOUSE task")
+
+        self._scheduler.add(TaskType.FIND_HOME)
+        logger.debug(f"{self._name} has no home and added FIND_HOME task")
 
         logger.info(f"Initialized Person '{self._name}' with age {self._age}")
         logger.debug(
-            f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._home_preference}}}"
+            f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}}}"
         )
     
     def get_task_type_priority(self, task_type: TaskType) -> int:
@@ -168,11 +164,11 @@ class Person:
             self._scheduler.add(TaskType.EXPLORE)
             logger.debug(f"{self._name} added EXPLORE task")
 
-            if not self._spouse and self._spouse_preference:
+            if not self._spouse:
                 self._scheduler.add(TaskType.FIND_SPOUSE)
                 logger.debug(f"{self._name} added FIND_SPOUSE task")
     
-            if not self._home and self._home_preference:
+            if not self._home:
                 self._scheduler.add(TaskType.FIND_HOME)
                 logger.debug(f"{self._name} added FIND_HOME task")
 
