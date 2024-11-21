@@ -36,14 +36,7 @@ class Memories:
         self._memories: Set[Memory] = set()
 
     def get_memories(self) -> Set[Memory]:
-        return self._memories
-
-    def _get_locations(self, char: str) -> Set[Location]:
-        logger.debug(f"Fetching locations associated with character '{char}'.")
-
         current_time = self._grid.get_time()
-        logger.debug(f"Current simulation time is {current_time}.")
-
         # Remove expired memories
         expired_count = len(self._memories)
         self._memories = {
@@ -52,8 +45,11 @@ class Memories:
         expired_count -= len(self._memories)
         if expired_count > 0:
             logger.debug(f"{expired_count} expired memories removed based on the expiration time.")
+        return self._memories
 
-        filtered_memories = filter(lambda memory: memory.get_what() == char, self._memories)
+    def _get_locations(self, char: str) -> Set[Location]:
+        logger.debug(f"Fetching locations associated with character '{char}'.")
+        filtered_memories = filter(lambda memory: memory.get_what() == char, self.get_memories())
         locations = set(map(lambda memory: memory.get_where(), filtered_memories))
         logger.debug(f"Found {len(locations)} locations associated with character '{char}'.")
 

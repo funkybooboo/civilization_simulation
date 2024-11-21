@@ -64,6 +64,9 @@ class Construction(Work, ABC):
         needs = self._delivered_wood < self._required_wood
         logger.debug(f"Needs wood: {needs}")
         return needs
+    
+    def needs_build(self) -> bool:
+        return not self.needs_stone() and self.needs_wood()
 
     def how_much_stone(self) -> int:
         remaining_stone = self._required_stone - self._delivered_stone
