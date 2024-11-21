@@ -19,14 +19,19 @@ decision-making algorithms are at keeping the village alive and thriving.
 
 ## How to Run
 
-This program uses poetry to manage dependencies. Before running the program, install dependencies using 
-`poetry shell` and `poetry install`. Then, to run the simulation, run `python3 src/main.py`. The simulation will take some time to complete. 
+This program uses poetry to manage dependencies. Before running the program, install poetry. Then install the program's 
+dependencies using `poetry shell` and `poetry install`. 
+
+All settings used throughout the program are stored in `example.dev_settings.yaml` (the settings used during 
+development) and `example.prod_settings.yaml` (the settings used during production). Before running the program, change 
+these file names to `dev_settings.yaml` and `prod_settings.yaml`.
+
+Then, to run the simulation, run `python3 src/main.py`. The simulation will take some time to complete. 
 You will get the simulation results plotted as output of the program.
 
 ## Code Structure
 
 The project directories are organized like so:
-
 
 src
 * `logger.py`: logs messages to the console about what is happening in the simulation as it runs
