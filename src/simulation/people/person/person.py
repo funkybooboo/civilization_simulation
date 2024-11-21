@@ -190,7 +190,7 @@ class Person:
     def _adjust_priorities(self) -> None:
         # TODO priorities change over time depending on the situation the person is in
 
-        # find spouse should always be high
+        # find spouse should always be high, information sharing is important
 
         # explore should be high if they dont have a lot of memories
 
