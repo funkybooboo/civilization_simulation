@@ -53,26 +53,37 @@ class Person:
         self._spouse_preference: bool = random.choices([True, False], weights=[95, 5])[0]
         self._home_preference: bool = random.choices([True, False], weights=[95, 5])[0]
 
-        self._rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
+        self._work_rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
         
         self._task_type_priorities: Dict[TaskType, int] = {
-            TaskType.EAT: 1,
-            TaskType.FIND_HOME: random.randint(2, 4),
+            TaskType.EAT: 10,
+            TaskType.FIND_HOME: 6,
             TaskType.EXPLORE: 1,
-            TaskType.FIND_SPOUSE: random.randint(2, 4),
-            TaskType.TRANSPORT: random.randint(2, 4),
-            TaskType.CHOP_TREE: random.randint(5, 10),
-            TaskType.WORK_FARM: random.randint(5, 10),
-            TaskType.WORK_MINE: random.randint(5, 10),
-            TaskType.BUILD_BARN: random.randint(5, 10),
-            TaskType.BUILD_HOME: random.randint(5, 10),
-            TaskType.BUILD_FARM: random.randint(5, 10),
-            TaskType.BUILD_MINE: random.randint(5, 10),
-            TaskType.START_FARM_CONSTRUCTION: random.randint(5, 10),
-            TaskType.START_BARN_CONSTRUCTION: random.randint(5, 10),
-            TaskType.START_MINE_CONSTRUCTION: random.randint(5, 10),
-            TaskType.START_HOME_CONSTRUCTION: random.randint(5, 10)
+            TaskType.FIND_SPOUSE: 1,
+            TaskType.TRANSPORT: 5,
+            TaskType.CHOP_TREE: 3,
+            TaskType.WORK_FARM: 2,
+            TaskType.WORK_MINE: 3,
+            TaskType.BUILD_BARN: 4,
+            TaskType.BUILD_HOME: 4,
+            TaskType.BUILD_FARM: 4,
+            TaskType.BUILD_MINE: 4,
+            TaskType.START_FARM_CONSTRUCTION: 10,
+            TaskType.START_BARN_CONSTRUCTION: 10,
+            TaskType.START_MINE_CONSTRUCTION: 10,
+            TaskType.START_HOME_CONSTRUCTION: 10
         }
+
+        logger.debug(f"{self._name} added EXPLORE task")
+        self._scheduler.add(TaskType.EXPLORE)
+
+        if self._spouse_preference:
+            self._scheduler.add(TaskType.FIND_SPOUSE)
+            logger.debug(f"{self._name} prefers a spouse and added FIND_SPOUSE task")
+        
+        if self._home_preference:
+            self._scheduler.add(TaskType.FIND_HOME)
+            logger.debug(f"{self._name} has no home and added FIND_HOME task")
 
         logger.info(f"Initialized Person '{self._name}' with age {self._age}")
         logger.debug(
@@ -149,30 +160,21 @@ class Person:
         self._adjust_priorities()
         
         logger.debug(f"{self._name} completed action with health={self._health} and hunger={self._hunger}")
-        
-    def _adjust_priorities(self) -> None:
-        # TODO priorities change over time depending on the situation the person is in
-        pass
 
     def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
-        logger.info(f"Adding tasks for {self._name}")        
-        # explore when you are born just to collect data
-        if self._personal_time <= settings.get("explore_time", 1) or self._personal_time % random.randint(30, 100) == 0:
+        logger.info(f"Adding tasks for {self._name}")   
+        # check to do this stuff every once in a while
+        if self._personal_time % random.randint(2, 50) == 0:
             self._scheduler.add(TaskType.EXPLORE)
             logger.debug(f"{self._name} added EXPLORE task")
-            return
 
-        if not self._home and self._home_preference:
-            self._scheduler.add(TaskType.FIND_HOME)
-            logger.debug(f"{self._name} has no home and added FIND_HOME task")
-
-        if not self._spouse and self._spouse_preference:
-            self._scheduler.add(TaskType.FIND_SPOUSE)
-            logger.debug(f"{self._name} prefers a spouse and added FIND_SPOUSE task")
-
-        if self._hunger < self._hunger_preference:
-            self._scheduler.add(TaskType.EAT)
-            logger.debug(f"{self._name} is hungry and added EAT task")
+            if not self._spouse and self._spouse_preference:
+                self._scheduler.add(TaskType.FIND_SPOUSE)
+                logger.debug(f"{self._name} added FIND_SPOUSE task")
+    
+            if not self._home and self._home_preference:
+                self._scheduler.add(TaskType.FIND_HOME)
+                logger.debug(f"{self._name} added FIND_HOME task")
 
         # Deliver items you are carrying
         if self._backpack.has_items():
@@ -180,31 +182,47 @@ class Person:
             logger.debug(f"{self._name} has items in backpack and added TRANSPORT task")
 
         # Epsilon-Greedy algorithm to decide what type of work to do
-        self._add_work_task()
+        if self._backpack.has_capacity():
+            self._add_work_task()
+        else:
+            logger.debug(f"{self._name}'s backpack is full; no work task added")
+
+        if self._hunger < self._hunger_preference:
+            self._scheduler.add(TaskType.EAT)
+            logger.debug(f"{self._name} is hungry and added EAT task")
+
+    def _adjust_priorities(self) -> None:
+        # TODO priorities change over time depending on the situation the person is in
+        
+        # the more full the backpack the higher the transport task is
+        
+        # the more construction sites there are the more of a need to gather wood, or stone, and then build them in that order
+        
+        # the less food in the barn the more we need to farm
+        
+        # etc...
+        
+        pass
 
     def _add_work_task(self) -> None:
-        if not self._backpack.has_capacity():
-            logger.debug(f"{self._name}'s backpack is full; no work task added")
-            return
-        keys: List[TaskType] = list(self._rewards.keys())
+        keys: List[TaskType] = list(self._work_rewards.keys())
         epsilon: float = settings.get("person_epsilon", 0.05)
         if np.random.rand() < epsilon:
-            # Exploration: randomly select an action
             random_index: int = np.random.randint(0, len(keys) - 1)
             task_type: TaskType = keys[random_index]
             logger.debug(f"{self._name} is exploring by selecting random task: {task_type}")
         else:
-            task_type: TaskType = max(self._rewards, key=self._rewards.get)
+            task_type: TaskType = max(self._work_rewards, key=self._work_rewards.get)
             logger.debug(f"{self._name} selected highest reward task: {task_type}")
 
         self._scheduler.add(task_type)
         logger.info(f"{self._name} added task '{task_type}' to scheduler")
 
     def update_scheduler_rewards(self, task_type: TaskType, reward: int) -> None:
-        old_reward = self._rewards.get(task_type, 0)
-        self._rewards[task_type] = old_reward + reward
+        old_reward = self._work_rewards.get(task_type, 0)
+        self._work_rewards[task_type] = old_reward + reward
         logger.debug(
-            f"Updated rewards for {self._name}: '{task_type}' reward changed from {old_reward} to {self._rewards[task_type]}"
+            f"Updated rewards for {self._name}: '{task_type}' reward changed from {old_reward} to {self._work_rewards[task_type]}"
         )
 
     def update_navigator_rewards(self, y: float):

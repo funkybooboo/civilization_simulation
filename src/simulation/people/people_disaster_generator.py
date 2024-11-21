@@ -94,11 +94,12 @@ class PeopleDisasterGenerator:
             logger.debug(f"{person.get_name()} has craving. Hunger: {person.get_hunger()}")
 
     def _death(self, severity: int) -> None:
-        """A person dies."""
+        """A bunch of people die."""
         affected_people = self._get_affected_people(severity, 0.1)
         for person in affected_people:
             person.kill()  # person is dead
-            logger.debug(f"{person.get_name()} died. :(")
+            self._people.get_people().remove(person)
+            logger.debug(f"{person.get_name()} died from a disaster. :(")
 
     def _forget_tasks(self, severity: int) -> None:
         """Person forgets their tasks."""
