@@ -119,4 +119,4 @@ class Eat(Task):
 
     @override
     def get_work_structure(self) -> Optional[Structure]:
-        return None
+        return self._home if self._home else self._barn

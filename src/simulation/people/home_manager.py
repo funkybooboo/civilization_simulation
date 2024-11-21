@@ -110,10 +110,19 @@ class HomeManager:
         for person in self._people.get_married_people():
             person_center = self._calculate_center(person.get_work_structures())
             spouse_center = self._calculate_center(person.get_spouse().get_work_structures())
-            combined_center = self._calculate_center([person_center, spouse_center])
-            if combined_center:
-                far_people[person] = combined_center
-            logger.debug(f"{person.get_name()} has spouse, and combined center {combined_center} and added to far people")
+            if not person_center and not spouse_center:
+                continue
+            if not person_center:
+                far_people[person] = spouse_center
+            elif not spouse_center:
+                far_people[person] = person_center
+            else:
+                combined_center = self._calculate_center([person_center, spouse_center])
+                if combined_center:
+                    far_people[person] = combined_center
+                else:
+                    continue
+                logger.debug(f"{person.get_name()} has spouse, and combined center {combined_center} and added to far people")
 
         return far_people
 
