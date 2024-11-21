@@ -18,7 +18,6 @@ class StartFarmConstruction(StartConstruction):
         super().__init__(
             simulation,
             person,
-            settings.get("start_farm_priority", 5),
             settings.get("farm_size", 5),
             settings.get("farm_size", 5),
             StructureType.CONSTRUCTION_FARM,

@@ -23,12 +23,11 @@ class Build(Task, ABC):
         self,
         simulation: Simulation,
         person: Person,
-        priority: int,
         build_structure: StructureType,
         store_structure: StructureType,
         task_type: TaskType
     ) -> None:
-        super().__init__(simulation, person, priority, task_type)
+        super().__init__(simulation, person, task_type)
         self._build_structure: StructureType = build_structure
         self._store_structure: StructureType = store_structure
 

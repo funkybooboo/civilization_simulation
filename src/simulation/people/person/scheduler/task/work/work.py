@@ -23,12 +23,11 @@ class Work(Task, ABC):
         self,
         simulation: Simulation,
         person: Person,
-        priority: int,
         work_structure: StructureType,
         resource_name: str,
         task_type: TaskType,
     ) -> None:
-        super().__init__(simulation, person, priority, task_type)
+        super().__init__(simulation, person, task_type)
         self._work_structure: StructureType = work_structure
         self._resource_name: str = resource_name
 

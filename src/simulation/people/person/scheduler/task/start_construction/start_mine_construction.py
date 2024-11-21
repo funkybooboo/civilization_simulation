@@ -18,7 +18,6 @@ class StartMineConstruction(StartConstruction):
         super().__init__(
             simulation,
             person,
-            settings.get("start_mine_priority", 6),
             settings.get("mine_size", 3),
             settings.get("mine_size", 3),
             StructureType.CONSTRUCTION_MINE,

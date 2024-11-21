@@ -18,7 +18,6 @@ class StartHomeConstruction(StartConstruction):
         super().__init__(
             simulation,
             person,
-            settings.get("start_home_priority", 5),
             settings.get("home_size", 2),
             settings.get("home_size", 2),
             StructureType.CONSTRUCTION_HOME,

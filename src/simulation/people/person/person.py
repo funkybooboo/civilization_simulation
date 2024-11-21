@@ -54,11 +54,33 @@ class Person:
         self._home_preference: bool = random.choices([True, False], weights=[95, 5])[0]
 
         self._rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
+        
+        self._task_type_priorities: Dict[TaskType, int] = {
+            TaskType.EAT: 1,
+            TaskType.FIND_HOME: random.randint(2, 4),
+            TaskType.EXPLORE: 1,
+            TaskType.FIND_SPOUSE: random.randint(2, 4),
+            TaskType.TRANSPORT: random.randint(2, 4),
+            TaskType.CHOP_TREE: random.randint(5, 10),
+            TaskType.WORK_FARM: random.randint(5, 10),
+            TaskType.WORK_MINE: random.randint(5, 10),
+            TaskType.BUILD_BARN: random.randint(5, 10),
+            TaskType.BUILD_HOME: random.randint(5, 10),
+            TaskType.BUILD_FARM: random.randint(5, 10),
+            TaskType.BUILD_MINE: random.randint(5, 10),
+            TaskType.START_FARM_CONSTRUCTION: random.randint(5, 10),
+            TaskType.START_BARN_CONSTRUCTION: random.randint(5, 10),
+            TaskType.START_MINE_CONSTRUCTION: random.randint(5, 10),
+            TaskType.START_HOME_CONSTRUCTION: random.randint(5, 10)
+        }
 
         logger.info(f"Initialized Person '{self._name}' with age {self._age}")
         logger.debug(
             f"Attributes for '{self._name}': health={self._health}, hunger={self._hunger}, preferences={{'hunger': {self._hunger_preference}, 'spouse': {self._spouse_preference}, 'house': {self._home_preference}}}"
         )
+    
+    def get_task_type_priority(self, task_type: TaskType) -> int:
+        return self._task_type_priorities[task_type]
         
     def __str__(self) -> str:
         return f"person: {self._pk}, {self._name}"
@@ -121,10 +143,16 @@ class Person:
         elif self._hunger > settings.get("hunger_regen_threshold", 50):
             self.set_health(1)
             logger.debug(f"{self._name}'s health increased due to being full (Health: {self._health})")
-
+        
         self._add_tasks()
         self._scheduler.execute()
+        self._adjust_priorities()
+        
         logger.debug(f"{self._name} completed action with health={self._health} and hunger={self._hunger}")
+        
+    def _adjust_priorities(self) -> None:
+        # TODO priorities change over time depending on the situation the person is in
+        pass
 
     def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._name}")        
@@ -249,6 +277,7 @@ class Person:
     def assign_home(self, home: Home) -> None:
         if self._home == home:
             return
+        self.remove_home()
         self._home = home
         home.assign_owner(self)
         logger.info(f"{self._name} assigned to new home: {home}")
@@ -260,6 +289,7 @@ class Person:
         if not self._home:
             logger.warning(f"{self._name} tried to remove home but has no home to remove")
             return
+        self._home.assign_owner(None)
         self._home = None
         logger.info(f"{self._name} removed from home")
         if self.has_spouse():

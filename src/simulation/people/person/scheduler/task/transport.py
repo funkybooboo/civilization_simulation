@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional, override
 
-from src.settings import settings
 from src.logger import logger
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.scheduler.task.task import Task
@@ -19,7 +18,7 @@ if TYPE_CHECKING:
 
 class Transport(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, settings.get("transport_priority", 4), TaskType.TRANSPORT)
+        super().__init__(simulation, person, TaskType.TRANSPORT)
         self._backpack: Backpack = self._person.get_backpack()
 
         self._store_structure: StructureType = StructureType.BARN

@@ -36,8 +36,8 @@ class Home(Store):
         logger.debug(f"Checking if Home has an owner.")
         return self._owner is not None
 
-    def assign_owner(self, person: Person) -> None:
-        logger.info(f"Assigning owner {person.get_name()} to the Home.")
+    def assign_owner(self, person: Optional[Person]) -> None:
+        logger.info(f"Assigning owner {person} to the Home.")
         self._owner = person
 
     def remove_owner(self) -> None:

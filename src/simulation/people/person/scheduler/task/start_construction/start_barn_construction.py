@@ -18,7 +18,6 @@ class StartBarnConstruction(StartConstruction):
         super().__init__(
             simulation,
             person,
-            settings.get("start_barn_priority", 5),
             settings.get("barn_size", 3),
             settings.get("barn_size", 3),
             StructureType.CONSTRUCTION_BARN,

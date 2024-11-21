@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from src.settings import settings
 from src.simulation.grid.structure.structure_type import StructureType
 from src.simulation.people.person.scheduler.task.construction.build import \
     Build
@@ -18,7 +17,6 @@ class BuildFarm(Build):
         super().__init__(
             simulation,
             person,
-            settings.get("build_farm_priority", 6),
             StructureType.CONSTRUCTION_FARM,
             StructureType.BARN,
             TaskType.BUILD_FARM

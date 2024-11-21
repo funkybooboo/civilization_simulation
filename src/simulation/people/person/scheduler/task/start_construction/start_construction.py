@@ -20,13 +20,12 @@ class StartConstruction(Task, ABC):
         self,
         simulation: Simulation,
         person: Person,
-        priority: int,
         width: int,
         height: int,
         building_type: StructureType,
         task_type: TaskType
     ) -> None:
-        super().__init__(simulation, person, priority, task_type)
+        super().__init__(simulation, person, task_type)
         self._width: int = width + 2
         self._height: int = height + 2
         self._building_type: StructureType = building_type

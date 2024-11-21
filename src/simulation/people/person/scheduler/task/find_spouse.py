@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional, override
 
-from src.settings import settings
 from src.logger import logger
 from src.simulation.people.person.scheduler.task.task import Task
 from src.simulation.people.person.scheduler.task.task_type import TaskType
@@ -15,7 +14,7 @@ if TYPE_CHECKING:
 
 class FindSpouse(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
-        super().__init__(simulation, person, settings.get("find_spouse_priority", 3), TaskType.FIND_SPOUSE)
+        super().__init__(simulation, person, TaskType.FIND_SPOUSE)
 
     @override
     def execute(self) -> None:

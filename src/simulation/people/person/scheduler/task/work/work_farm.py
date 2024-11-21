@@ -17,7 +17,6 @@ class WorkFarm(Work):
         super().__init__(
             simulation,
             person,
-            settings.get("work_farm_priority", 7),
             StructureType.FARM,
             settings.get("food", "food"),
             TaskType.WORK_FARM,

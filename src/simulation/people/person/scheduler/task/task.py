@@ -13,10 +13,9 @@ if TYPE_CHECKING:
 
 
 class Task(ABC):
-    def __init__(self, simulation: Simulation, person: Person, priority: int, task_type: TaskType) -> None:
+    def __init__(self, simulation: Simulation, person: Person, task_type: TaskType) -> None:
         self._simulation: Simulation = simulation
         self._person: Person = person
-        self._priority: int = priority  # 10 high to 1 low
         self._is_finished: bool = False
         self._interruptions: int = 0
         self._is_completed: bool = False
@@ -39,7 +38,7 @@ class Task(ABC):
         self._clean_up_task()
 
     def get_priority(self) -> int:
-        return self._priority
+        return self._person.get_task_type_priority(self._task_type)
 
     def _finished(self, is_completed: bool = True) -> None:
         self._is_completed = is_completed

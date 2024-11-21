@@ -17,7 +17,6 @@ class ChopTree(Work):
         super().__init__(
             simulation,
             person,
-            settings.get("chop_tree_priority", 8),
             StructureType.TREE,
             settings.get("wood", "wood"),
             TaskType.CHOP_TREE,

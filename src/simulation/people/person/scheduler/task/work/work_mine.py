@@ -17,7 +17,6 @@ class WorkMine(Work):
         super().__init__(
             simulation,
             person,
-            settings.get("work_mine_priority", 8),
             StructureType.MINE,
             settings.get("stone", "stone"),
             TaskType.WORK_MINE,
