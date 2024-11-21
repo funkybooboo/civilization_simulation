@@ -102,6 +102,8 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-18 | 3     | Brighton  | checking/validating all occurrences of Location Object calls to ensure proper variable passing. |
 | 2024-11-19 | 8     | Nate      | Complete my part of the readme and debug                                                        |
 | 2024-11-19 | 4.5   | Brighton  | Complete logging of Visualization directory, added file descriptions to README                  |
+| 2024-11-19 | 2     | Madi      | Complete logging of People directory                                                            |
+| 2024-11-19 | 4     | Madi      | Complete logging of Scheduler and tasks directories, started debugging                          |
 
 ## Sprint 4
 
@@ -110,15 +112,17 @@ Stay organized and on track with your assignments and tasks!
 - **Goals**:
     - wrap up the project
 
-| Date       | Hours | Name | Notes |
-|------------|-------|------|-------|
-| 2024-11-20 | 6     | Nate | Debug |
-| 2024-11-21 |       |      |       |
-| 2024-11-22 |       |      |       |
-| 2024-11-23 |       |      |       |
-| 2024-11-24 |       |      |       |
-| 2024-11-25 |       |      |       |
-| 2024-11-26 |       |      |       |
+| Date       | Hours | Name | Notes                             |
+|------------|-------|------|-----------------------------------|
+| 2024-11-20 | 3     | Madi | Debug                             |
+| 2024-11-20 | 6     | Nate | Debug                             |
+| 2024-11-20 | 1.5   | Madi | added file descriptions to README |
+| 2024-11-21 |       |      |                                   |
+| 2024-11-22 |       |      |                                   |
+| 2024-11-23 |       |      |                                   |
+| 2024-11-24 |       |      |                                   |
+| 2024-11-25 |       |      |                                   |
+| 2024-11-26 |       |      |                                   |
 
 ## Important Dates
 
