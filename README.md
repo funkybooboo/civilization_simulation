@@ -74,7 +74,8 @@ src
     * person
       * `backpack.py`: handles all logic for a person's inventory
       * `memories.py`: handles all logic for a person's memory
-      * `person.py`: handles all logic for a single person, including traits and actions
+      * `person.py`: handles all logic for a person's actions
+      * `thinker.py`: handles all logic for adding tasks and adjusting task priorities for a person
       * movement
         * `move_result.py`: defines class MoveResult for storing if a call to move_to succeeded and resulted in a structure 
         * `mover.py`: handles all lower-level logic for moving a person around the grid
