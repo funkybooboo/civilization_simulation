@@ -61,13 +61,13 @@ class Person:
             TaskType.EXPLORE: 1,
             TaskType.FIND_SPOUSE: 1,
             TaskType.TRANSPORT: 5,
-            TaskType.CHOP_TREE: 3,
-            TaskType.WORK_FARM: 2,
-            TaskType.WORK_MINE: 3,
-            TaskType.BUILD_BARN: 4,
-            TaskType.BUILD_HOME: 4,
-            TaskType.BUILD_FARM: 4,
-            TaskType.BUILD_MINE: 4,
+            TaskType.CHOP_TREE: 2,
+            TaskType.WORK_FARM: 4,
+            TaskType.WORK_MINE: 2,
+            TaskType.BUILD_BARN: 3,
+            TaskType.BUILD_HOME: 3,
+            TaskType.BUILD_FARM: 3,
+            TaskType.BUILD_MINE: 3,
             TaskType.START_FARM_CONSTRUCTION: 1,
             TaskType.START_BARN_CONSTRUCTION: 1,
             TaskType.START_MINE_CONSTRUCTION: 1,
@@ -193,17 +193,21 @@ class Person:
 
     def _adjust_priorities(self) -> None:
         # TODO priorities change over time depending on the situation the person is in
-        
+
+        # find spouse should always be high
+
+        # explore should be high if they dont have a lot of memories
+
+        # start construction tasks should just always be high, but explore should be bigger if we dont have a lot of memories
+
         # the more full the backpack the higher the transport task is
         
         # the more construction sites there are the more of a need to gather wood, or stone, and then build them in that order
         
         # the less food in the barn the more we need to farm
         
-        # start construction tasks should just always be high
-        
-        # etc...
-        
+        # if there is nothing pressing to do then make the priorities random?
+                
         pass
 
     def _add_work_task(self) -> None:
