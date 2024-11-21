@@ -346,31 +346,6 @@ class Grid:
             self._structures[location] = self._structure_factory.create_instance(building_type, location)
             logger.debug(f"Building at {location} updated to {building_type}.")
 
-    def get_open_spot_next_to_town(self) -> Optional[Location]:
-        logger.debug("Searching for an open spot next to a town.")
-
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-
-        for location in self._structures:
-            logger.debug(f"Checking neighboring spots of structure at {location}.")
-
-            for dx, dy in directions:
-                neighbor = Location(location.x + dx, location.y + dy)
-
-                if self.is_in_bounds(neighbor):
-                    logger.debug(f"Neighbor {neighbor} is within bounds.")
-
-                    if self.is_empty(neighbor):
-                        logger.debug(f"Found open spot at {neighbor}.")
-                        return neighbor
-                    else:
-                        logger.debug(f"Spot at {neighbor} is not empty.")
-                else:
-                    logger.debug(f"Neighbor {neighbor} is out of bounds.")
-
-        logger.debug("No open spot found next to any town.")
-        return None
-
     def is_in_bounds(self, location: Location) -> bool:
         logger.debug(f"Checking if location {location} is within bounds.")
         in_bounds = 0 <= location.x < self._width and 0 <= location.y < self._height

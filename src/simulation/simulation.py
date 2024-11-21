@@ -69,7 +69,7 @@ class Simulation:
 
         for day in range(self._max_days):
             self._day = day
-            logger.debug(f"Day {day} begins.")
+            logger.info(f"Day {day} begins.")
 
             if len(self._people) == 0:  # all the people dead
                 logger.info("Everybody died! Game over!")
@@ -88,27 +88,30 @@ class Simulation:
             self._people.kill_stuck()
 
             if self._has_been_a_year(day):
-                logger.debug(f"Year completed on day {day}. Performing yearly actions.")
+                logger.info(f"Year completed on day {day}. Performing yearly actions.")
                 self._people.swap_homes()  # people want to live close to work
-                logger.debug("People swapped homes.")
+                logger.info("People swapped homes.")
                 
                 self._people.age()
-                logger.debug("People aged.")
+                logger.info("People aged.")
                 
                 self._people.make_babies()
-                logger.debug("New babies made.")
+                logger.info("New babies made.")
                 
                 self._grid.grow_trees()
-                logger.debug("Grid growing trees.")
+                logger.info("Grid growing trees.")
                 
                 self._create_disasters()
-                logger.debug("Disasters created for the year.")
+                logger.info("Disasters created for the year.")
 
                 year = self._get_year(day)
-                logger.debug(f"Year {year} logged into the visualizer.")
+                logger.info(f"Year {year} logged into the visualizer.")
                 visualizer.add(year, self._grid, self._people)
+                
+                # for debugging
+                # visualizer.display_town_slide_show()
 
-                logger.debug("Flushing logs for end-of-year data.")
+                logger.info("Flushing logs for end-of-year data.")
                 self.flush()
 
         logger.info("Simulation ended.")

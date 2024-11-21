@@ -51,7 +51,8 @@ class People:
         for person in self._people:
             if person.is_stuck():
                 person.kill()  # they got stuck and died
-            logger.info(f"{person.get_name()} got stuck and died. :(")
+                self._people.remove(person)
+                logger.info(f"{person.get_name()} got stuck and died. :(")
 
     def spouses_share_memory(self):
         for person in self.get_married_people():

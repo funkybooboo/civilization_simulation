@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from collections import defaultdict
 from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Set, Tuple
 
@@ -43,13 +44,15 @@ class Navigator:
         self._epsilon: Dict[StructureType, float] = defaultdict(lambda: 1.0)
         self._rewards: Dict[StructureType, Dict[Location, float]] = defaultdict(lambda: defaultdict(float))
         self._actions: Dict[StructureType, Dict[Location, int]] = defaultdict(lambda: defaultdict(int))
-        
 
     def is_stuck(self) -> bool:
         logger.debug("Checking if navigator is stuck.")
-        location = self._simulation.get_grid().get_open_spot_next_to_town()
+        locations: List[Location] = self._simulation.get_grid().get_empty_spots_near_town()
+        location: Location = random.choice(locations)
+        while location == self._person.get_location():
+            location: Location = random.choice(locations)
 
-        stuck = not location or not self._mover.can_get_to(location)
+        stuck = not self._mover.can_get_to(location)
         if stuck:
             logger.warning("Navigator is stuck, no reachable location found.")
         return stuck
