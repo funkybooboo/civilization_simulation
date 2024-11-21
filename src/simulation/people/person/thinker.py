@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 class Thinker:
-    def __init__(self, person: Person, simulation: Simulation) -> None:
+    def __init__(self, simulation: Simulation, person: Person) -> None:
         self._person: Person = person
         self._simulation: Simulation = simulation
         self._scheduler = person.get_scheduler()
@@ -26,18 +26,7 @@ class Thinker:
             settings.get("hunger_pref_min", 50), settings.get("hunger_pref_max", 100)
         )
 
-        self._personal_time: int = 0
-
         self._work_rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
-
-        self._scheduler.add(TaskType.EXPLORE)
-        logger.debug(f"{self._person.get_name()} added EXPLORE task")
-
-        self._scheduler.add(TaskType.FIND_SPOUSE)
-        logger.debug(f"{self._person.get_name()} prefers a spouse and added FIND_SPOUSE task")
-
-        self._scheduler.add(TaskType.FIND_HOME)
-        logger.debug(f"{self._person.get_name()} has no home and added FIND_HOME task")
 
         self._task_type_priorities: Dict[TaskType, int] = {
             TaskType.EAT: 10,
@@ -65,7 +54,6 @@ class Thinker:
         return self._task_type_priorities[task_type]
 
     def take_action(self) -> None:
-        self._personal_time += 1
         logger.info(f"{self._person.get_name()} is starting an action with current hunger={self._person.get_hunger()} and health={self._person.get_health()}")
         self._person.set_hunger(-1)
         logger.debug(f"{self._person.get_name()}'s hunger decreased by 1 to {self._person.get_hunger()}")
@@ -93,17 +81,16 @@ class Thinker:
     def _add_tasks(self) -> None:  # where tasks are added to the scheduler.
         logger.info(f"Adding tasks for {self._person.get_name()}")
         # check to do this stuff every once in a while
-        if self._personal_time % random.randint(2, 50) == 0:
-            self._scheduler.add(TaskType.EXPLORE)
-            logger.debug(f"{self._person.get_name()} added EXPLORE task")
-
-            if not self._person.get_spouse():
-                self._scheduler.add(TaskType.FIND_SPOUSE)
-                logger.debug(f"{self._person.get_name()} added FIND_SPOUSE task")
-
-            if not self._person.get_home():
-                self._scheduler.add(TaskType.FIND_HOME)
-                logger.debug(f"{self._person.get_name()} added FIND_HOME task")
+        self._scheduler.add(TaskType.EXPLORE)
+        logger.debug(f"{self._person.get_name()} added EXPLORE task")
+    
+        if not self._person.get_spouse():
+            self._scheduler.add(TaskType.FIND_SPOUSE)
+            logger.debug(f"{self._person.get_name()} added FIND_SPOUSE task")
+    
+        if not self._person.get_home():
+            self._scheduler.add(TaskType.FIND_HOME)
+            logger.debug(f"{self._person.get_name()} added FIND_HOME task")
 
         # Deliver items you are carrying
         if self._person.get_backpack().has_items():
