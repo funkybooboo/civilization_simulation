@@ -29,20 +29,19 @@ class Person:
         self._simulation = simulation
         self._location: Location = location
 
-        self._backpack: Backpack = Backpack()
-        self._memories: Memories = Memories(simulation.get_grid())
-        self._navigator: Navigator = Navigator(simulation, self)
-
-        self._health: int = settings.get("person_health_cap", 100)
-
         # when your hunger gets below 25, health starts going down; when it gets above 75, health starts going up
+        self._health: int = settings.get("person_health_cap", 100)
         self._hunger: int = settings.get("person_hunger_cap", 100)
 
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
+        
+        self._backpack: Backpack = Backpack()
         self._scheduler: Scheduler = Scheduler(simulation, self)
+        self._memories: Memories = Memories(simulation.get_grid())
+        self._navigator: Navigator = Navigator(simulation, self)
         self._thinker: Thinker = Thinker(self, simulation)
-    
+
     def get_task_type_priority(self, task_type: TaskType) -> int:
         return self._thinker.get_task_type_priority(task_type)
         
