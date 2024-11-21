@@ -271,9 +271,7 @@ class Navigator:
         
         self._calculate_epsilon(structure_type)
 
-        logger.debug(
-            logger.debug(f"Actions: {actions} | Rewards: {rewards} | Epsilon: {self._epsilon[structure_type]:.4f}")
-        )
+        logger.debug(f"Actions: {actions} | Rewards: {rewards} | Epsilon: {self._epsilon[structure_type]:.4f}")
 
         if np.random.uniform(0, 1) < self._epsilon[structure_type]:
             chosen = np.random.choice(list(rewards.keys()))  # explore

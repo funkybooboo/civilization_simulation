@@ -19,14 +19,19 @@ decision-making algorithms are at keeping the village alive and thriving.
 
 ## How to Run
 
-This program uses poetry to manage dependencies. Before running the program, install dependencies using 
-`poetry shell` and `poetry install`. Then, to run the simulation, run `python3 src/main.py`. The simulation will take some time to complete. 
+This program uses poetry to manage dependencies. Before running the program, install poetry. Then install the program's 
+dependencies using `poetry shell` and `poetry install`. 
+
+All settings used throughout the program are stored in `example.dev_settings.yaml` (the settings used during 
+development) and `example.prod_settings.yaml` (the settings used during production). Before running the program, change 
+these file names to `dev_settings.yaml` and `prod_settings.yaml`.
+
+Then, to run the simulation, run `python3 src/main.py`. The simulation will take some time to complete. 
 You will get the simulation results plotted as output of the program.
 
 ## Code Structure
 
 The project directories are organized like so:
-
 
 src
 * `logger.py`: logs messages to the console about what is happening in the simulation as it runs
@@ -62,10 +67,10 @@ src
           * `construction_home.py`: when completed a `home` will take its place
           * `construction_mine.py`: when completed a `mine` will take its place
   * people
-    * `home_manager.py`: 
-    * `people.py`: 
-    * `people_disaster_generator.py`: 
-    * `people_generator.py`: 
+    * `home_manager.py`: handles all logic for people swapping homes
+    * `people.py`:  handles all logic for the general population or people
+    * `people_disaster_generator.py`: creates disasters that directly involve people: divorce, sickness, craving, death, forget tasks, sleepwalk, baby boom
+    * `people_generator.py`: creates each person, assigning an age, name, and location spawned.
     * person
       * `backpack.py`: handles all logic for a person's inventory
       * `memories.py`: handles all logic for a person's memory
@@ -76,33 +81,33 @@ src
         * `navigator.py`: handles all higher-level logic for moving a person around the grid
         * `vision.py`: handles all logic for what a person can see around them as they move around the grid
       * scheduler
-        * `scheduler.py`: 
+        * `scheduler.py`: handles all logic for which task should be executed at what time based on priority values
         * task
-          * `eat.py`:
-          * `explore.py`: 
-          * `find_home.py`: 
-          * `find_spouse`: 
-          * `task.py`: 
-          * `task_factory.py`: 
-          * `task_type.py`: 
-          * `transport.py`: 
+          * `eat.py`: represents task of eating
+          * `explore.py`: represents task of exploring the grid
+          * `find_home.py`: represents task of finding a home
+          * `find_spouse`: represents task of finding a spouse
+          * `task.py`: an abstract class, with abstract methods for each task type to override
+          * `task_factory.py`: manages the creation of tasks
+          * `task_type.py`: an enum used in the code to identify task types
+          * `transport.py`: represents task of transporting items to a location
           * construction
-            * `build.py`: 
-            * `build_barn.py`: 
-            * `build_farm.py`: 
-            * `build_home.py`: 
-            * `build_mine.py`: 
+            * `build.py`: an abstract class, handles logic of building at an already declared construction site for all structure types
+            * `build_barn.py`: represents task of building a barn at the already declared construction site
+            * `build_farm.py`: represents task of building a farm at the already declared construction site
+            * `build_home.py`: represents task of building a home at the already declared construction site
+            * `build_mine.py`: represents task of building a mine at the already declared construction site
           * start_construction
-            * `start_barn_construction.py`: 
-            * `start_construction.py`: 
-            * `start_farm_construction.py`: 
-            * `start_home_construction.py`: 
-            * `start_mine_construction.py`: 
+            * `start_barn_construction.py`: represents task of starting construction site for barn
+            * `start_construction.py`: an abstract class, handles logic of starting construction for all structure types
+            * `start_farm_construction.py`: represents task of starting construction site for farm
+            * `start_home_construction.py`: represents task of starting construction site for home
+            * `start_mine_construction.py`: represents task of starting construction site for mine
           * work
-            * `chop_tree.py`: 
-            * `work.py`: 
-            * `work_farm.py`: 
-            * `work_mine.py`: 
+            * `chop_tree.py`: represents task of chopping tree
+            * `work.py`: an abstract class, handles logic of all types of work actions
+            * `work_farm.py`: represents task of working farm 
+            * `work_mine.py`: represents task of working mine
   * visualization
     * `visualizer.py`: manages and displays town grid and simulation stats using grid and state plotters
     * plotter
