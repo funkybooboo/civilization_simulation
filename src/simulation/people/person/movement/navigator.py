@@ -144,16 +144,16 @@ class Navigator:
 
     def _find_and_move_to_structure(self, structure_type: StructureType) -> Tuple[bool, Optional[Structure]]:
         logger.debug(f"Finding and moving to structure of type: {structure_type}")
-        building_data = self._get_structure_locations()
+        structure_data = self._get_structure_locations()
         construction_tasks = self._get_start_construction_tasks()
         construction_site_data = self._get_construction_structure_locations()
         build_tasks = self._get_construction_tasks()
 
-        if structure_type not in building_data:
+        if structure_type not in structure_data:
             logger.error(f"Unknown structure type: {structure_type}")
             raise Exception(f"Unknown structure type: {structure_type}")
 
-        locations = list(building_data[structure_type]())
+        locations = list(structure_data[structure_type]())
         logger.debug(f"Retrieved {len(locations)} known locations for structure type: {structure_type}")
 
         construction_type = construction_tasks.get(structure_type)
@@ -191,6 +191,10 @@ class Navigator:
             StructureType.BARN: self._person.get_memories().get_barn_locations,
             StructureType.HOME: self._person.get_memories().get_home_locations,
             StructureType.TREE: self._person.get_memories().get_tree_locations,
+            StructureType.CONSTRUCTION_BARN: self._person.get_memories().get_barn_construction_locations,
+            StructureType.CONSTRUCTION_FARM: self._person.get_memories().get_farm_construction_locations,
+            StructureType.CONSTRUCTION_HOME: self._person.get_memories().get_home_construction_locations,
+            StructureType.CONSTRUCTION_MINE: self._person.get_memories().get_mine_construction_locations,
         }
 
     def _get_construction_structure_locations(self) -> Dict[StructureType, Callable[[], Set[Location]]]:

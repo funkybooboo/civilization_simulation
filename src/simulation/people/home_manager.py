@@ -17,7 +17,7 @@ class HomeManager:
     def swap_homes(self) -> None:
         logger.debug("Start swapping homes")
         # Step 1: Get the people who are far from their work centers
-        far_people: Dict[Person, Location] = self._get_far_walking_people()
+        far_people: Dict[Person, Location] = self._get_peoples_centers()
         logger.debug(f"Found {len(far_people)} people far from work centers")
 
         # Step 2: Remove people whose homes are near their work centers
@@ -56,7 +56,6 @@ class HomeManager:
             person2.assign_home(home1)
             logger.debug(f"{person1} new home {person1.get_home()} and {person2} new home {person2.get_home()}")
 
-
     @staticmethod
     def _find_matches(far_people: Dict[Person, Location], distance: int) -> List[Tuple[Person, Person]]:
         """Find pairs of people whose homes are within the given distance"""
@@ -94,7 +93,7 @@ class HomeManager:
         logger.debug(f"Removed people whose homes are near their work centers")
         return far_people
 
-    def _get_far_walking_people(self) -> Dict[Person, Location]:
+    def _get_peoples_centers(self) -> Dict[Person, Location]:
         """Return a dictionary of people and the center of their work locations"""
         far_people: Dict[Person, Location] = {}
 
@@ -119,15 +118,15 @@ class HomeManager:
         return far_people
 
     @staticmethod
-    def _calculate_center(structures: List[Location]) -> Optional[Location]:
+    def _calculate_center(locations: List[Location]) -> Optional[Location]:
         """Calculate the average location of a list of structures"""
-        if not structures:
+        if not locations:
             logger.debug("No structures found to find center")
             return None
 
-        total_x, total_y = sum(loc.x for loc in structures), sum(loc.y for loc in structures)
-        logger.debug(f'total x: {total_x}, total y: {total_y}, number of structures: {len(structures)}')
-        avg_x, avg_y = total_x // len(structures), total_y // len(structures)
+        total_x, total_y = sum(location.x for location in locations), sum(location.y for location in locations)
+        logger.debug(f'total x: {total_x}, total y: {total_y}, number of structures: {len(locations)}')
+        avg_x, avg_y = total_x // len(locations), total_y // len(locations)
         logger.debug(f'avg x: {avg_x}, avg y: {avg_y}')
 
         return Location(avg_x, avg_y)
