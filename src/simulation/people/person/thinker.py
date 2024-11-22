@@ -26,6 +26,8 @@ class Thinker:
             settings.get("hunger_pref_min", 50), settings.get("hunger_pref_max", 100)
         )
 
+        self._time_without_home: int = 0
+
         self._work_rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
 
         self._task_type_priorities: Dict[TaskType, int] = {
@@ -54,6 +56,10 @@ class Thinker:
         return self._task_type_priorities[task_type]
 
     def take_action(self) -> None:
+        if not self._person.has_home():
+            self._time_without_home += 1
+        else:
+            self._time_without_home = 0
         logger.info(f"{self._person.get_name()} is starting an action with current hunger={self._person.get_hunger()} and health={self._person.get_health()}")
         self._person.set_hunger(-1)
         logger.debug(f"{self._person.get_name()}'s hunger decreased by 1 to {self._person.get_hunger()}")
@@ -83,11 +89,11 @@ class Thinker:
         # check to do this stuff every once in a while
         self._scheduler.add(TaskType.EXPLORE)
         logger.debug(f"{self._person.get_name()} added EXPLORE task")
-    
+
         if not self._person.get_spouse():
             self._scheduler.add(TaskType.FIND_SPOUSE)
             logger.debug(f"{self._person.get_name()} added FIND_SPOUSE task")
-    
+
         if not self._person.get_home():
             self._scheduler.add(TaskType.FIND_HOME)
             logger.debug(f"{self._person.get_name()} added FIND_HOME task")
@@ -135,17 +141,41 @@ class Thinker:
         self._set_resource_gathering_priorities()
 
         # the more construction sites there are the more of a need to build them
-        self._set_barn_construction_priorities()
-        self._set_farm_construction_priorities()
-        self._set_home_construction_priorities()
-        self._set_mine_construction_priorities()
+        self._set_barn_construction_priority()
+        self._set_farm_construction_priority()
+        self._set_home_construction_priority()
+        self._set_mine_construction_priority()
 
-        # TODO find home should be higher the longer you dont have a home but make sure that construction tasks are higher
+        # find home should be more important the longer you don't have a home, constructing a home matters more
+        self._set_find_home_priority()
 
-        # TODO eat should be higher the more hungry you are but only if their is food in the barns or at home
-        
+        # eat should be more important the more hungry you are, but only if there's food in the barns or at home
+        self._set_eat_priority()
+
         # at the end of this we need to make sure that generally
         # explore > start_construction > transport > resource_gathering > eat > construction > find_home
+
+    def _set_find_home_priority(self):
+        # if you've been 20 steps without a home, getting a home is priority 1
+        find_home_priority: int = 11 - min(10, max(1, self._time_without_home // 2))
+        construct_home_priority: int = self._task_type_priorities[TaskType.START_HOME_CONSTRUCTION]
+
+        # if you need to build a home, don't even try to find one
+        if construct_home_priority < 4:
+            find_home_priority = 10
+
+        self._task_type_priorities[TaskType.FIND_HOME] = find_home_priority
+
+    def _set_eat_priority(self):
+        # these are set to 6 instead of 10 because self._person.get_hunger() - 40 will never be higher than 60
+        eat_priority: int = max(self._person.get_hunger() - 40, 6) // 6
+        work_farm_priority: int = self._task_type_priorities[TaskType.WORK_FARM]
+
+        # if there is no food, there is no point in trying to eat during this cycle
+        if work_farm_priority == 1:
+            eat_priority = 10
+
+        self._task_type_priorities[TaskType.EAT] = eat_priority
 
     def _set_explore_priority(self):
         # Get the grid dimensions
@@ -242,28 +272,28 @@ class Thinker:
     def _adjust_work_mine_priority(self, stone_percentage: float):
         self._task_type_priorities[TaskType.WORK_MINE] = max(1, min(10, int(10 * stone_percentage)))
 
-    def _set_barn_construction_priorities(self):
+    def _set_barn_construction_priority(self):
         construction_count = len(self._person.get_memories().get_barn_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_BARN] = 10
             return 
         self._task_type_priorities[TaskType.BUILD_BARN] = max(1, min(10, 3 - construction_count))
     
-    def _set_farm_construction_priorities(self):
+    def _set_farm_construction_priority(self):
         construction_count = len(self._person.get_memories().get_farm_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_FARM] = 10
             return
         self._task_type_priorities[TaskType.BUILD_FARM] = max(1, min(10, 3 - construction_count))
     
-    def _set_home_construction_priorities(self):
+    def _set_home_construction_priority(self):
         construction_count = len(self._person.get_memories().get_home_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_HOME] = 10
             return
         self._task_type_priorities[TaskType.BUILD_HOME] = max(1, min(10, 3 - construction_count))
     
-    def _set_mine_construction_priorities(self):
+    def _set_mine_construction_priority(self):
         construction_count = len(self._person.get_memories().get_mine_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_MINE] = 10
