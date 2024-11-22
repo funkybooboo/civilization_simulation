@@ -154,6 +154,8 @@ class Thinker:
 
         # TODO (maybe) at the end of this we need to make sure that generally
         # explore > start_construction > transport > farm > eat > mine > wood > construction > find_home
+        # but only if the numbers are high, i.e. we only care to priorities farming over mining and wooding if there is no or little food in the barn
+        # other then that we dont care if people wanna mine or wood because there is food to eat
 
     def _set_find_home_priority(self):
         # if you've been 20 steps without a home, getting a home is priority 1
