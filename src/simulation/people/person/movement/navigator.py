@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import random
-from collections import defaultdict
 from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Set, Tuple
 
 import numpy as np
