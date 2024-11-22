@@ -69,7 +69,7 @@ class Mover:
 
     def _invalid(self, location: Location) -> bool:
         logger.debug(f"Checking if location {location} is invalid (barn, mine, or home).")
-        result = self._grid.is_barn(location) or self._grid.is_mine(location) or self._grid.is_home(location)
+        result = not self._grid.is_in_bounds(location) or self._grid.is_barn(location) or self._grid.is_mine(location) or self._grid.is_home(location)
         logger.debug(f"Location {location} is invalid: {result}")
         return result
 
