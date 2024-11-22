@@ -65,7 +65,7 @@ class PeopleGenerator:
             age: int = random.randint(
                 settings.get("inital_spawn_age_min", 20), settings.get("inital_spawn_age_max", 30)
             )
-            person: Person = Person(self._simulation, name, pk, location, age)
+            person: Person = self._make_person(name, pk, location, age)
             people.append(person)
         logger.info(f"Generated {len(people)} people")
         return people
@@ -74,6 +74,12 @@ class PeopleGenerator:
         name: str = random.choice(self._get_names())
         age: int = 0
         self._max_pk += 1
-        person: Person = Person(self._simulation, name, self._max_pk, location, age)
+        person: Person = self._make_person(name, self._max_pk, location, age)
         logger.info(f"Baby {name} was born!")
         return person
+
+    def _make_person(self, name, pk, location, age) -> Person:
+        building_locations = list(self._grid.get_buildings().keys())
+        return Person(self._simulation, name, pk, location, age, building_locations)
+
+

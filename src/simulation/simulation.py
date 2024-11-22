@@ -156,7 +156,3 @@ class Simulation:
     def get_people(self) -> People:
         logger.debug("Retrieving people object.")
         return self._people
-
-    def get_people_object(self) -> People:
-        logger.debug("Retrieving people object (via get_people_object).")
-        return self._people

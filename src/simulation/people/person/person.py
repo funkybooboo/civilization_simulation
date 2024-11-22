@@ -22,7 +22,7 @@ if TYPE_CHECKING:
 
 
 class Person:
-    def __init__(self, simulation: Simulation, name: str, pk: int, location: Location, age: int) -> None:
+    def __init__(self, simulation: Simulation, name: str, pk: int, location: Location, age: int, starter_memories: List[Location]) -> None:
         self._name: str = name
         self._pk: int = pk
         self._age: int = age
@@ -39,6 +39,8 @@ class Person:
         self._backpack: Backpack = Backpack()
         self._scheduler: Scheduler = Scheduler(simulation, self)
         self._memories: Memories = Memories(simulation.get_grid())
+        for memory in starter_memories:
+            self._memories.add(self._simulation.get_grid().get_grid()[memory.y][memory.x], memory)
         self._navigator: Navigator = Navigator(simulation, self)
         self._thinker: Thinker = Thinker(simulation, self)
 
