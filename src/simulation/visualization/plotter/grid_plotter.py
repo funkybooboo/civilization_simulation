@@ -22,7 +22,7 @@ class GridPlotter:
         logger.debug("Initialized _color_map dictionary for color assignments.")
 
         # Use a perceptually uniform palette to ensure distinct colors
-        self._palette = sns.color_palette("husl", n_colors=25)  # 100 distinct colors
+        self._palette = sns.color_palette("husl", n_colors=25)  # 25 distinct colors
         logger.debug("Initialized color palette with 100 distinct colors using 'husl'.")
 
         # Set a fixed salt for consistency
