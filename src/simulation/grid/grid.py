@@ -146,13 +146,13 @@ class Grid:
     def find_top_left_corner(self, where: Location) -> None:
         logger.debug(f"Finding top-left corner starting from {where}.")
 
-        while not self.is_empty(where):
+        while not self.is_empty(where) and self.is_in_bounds(Location(where.x - 1, where.y)):
             where.x -= 1
             logger.debug(f"Moved left to {where}.")
         where.x += 1
         logger.debug(f"Adjusted x-coordinate to {where.x}.")
 
-        while not self.is_empty(where):
+        while not self.is_empty(where) and self.is_in_bounds(Location(where.x, where.y - 1)):
             where.y -= 1
             logger.debug(f"Moved up to {where}.")
         where.y += 1
