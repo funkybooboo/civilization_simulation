@@ -26,7 +26,7 @@ All settings used throughout the program are stored in `example.dev_settings.yam
 development) and `example.prod_settings.yaml` (the settings used during production). Before running the program, change 
 these file names to `dev_settings.yaml` and `prod_settings.yaml`.
 
-Then, to run the simulation, run `python3 src/main.py`. The simulation will take some time to complete. 
+Then, to run the simulation, run `PYTHONPATH=$(pwd) python3 src/main.py`. The simulation will take some time to complete. 
 You will get the simulation results plotted as output of the program.
 
 ## Code Structure
