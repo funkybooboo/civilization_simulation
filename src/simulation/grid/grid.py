@@ -149,13 +149,15 @@ class Grid:
         while not self.is_empty(where) and self.is_in_bounds(Location(where.x - 1, where.y)):
             where.x -= 1
             logger.debug(f"Moved left to {where}.")
-        where.x += 1
+        if self.is_empty(where):
+            where.x += 1
         logger.debug(f"Adjusted x-coordinate to {where.x}.")
 
         while not self.is_empty(where) and self.is_in_bounds(Location(where.x, where.y - 1)):
             where.y -= 1
             logger.debug(f"Moved up to {where}.")
-        where.y += 1
+        if self.is_empty(where):
+            where.y += 1
         logger.debug(f"Adjusted y-coordinate to {where.y}. Top-left corner found at {where}.")
 
     def remove(self, structure: Structure, deconstruct: bool = False) -> None:
