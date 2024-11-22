@@ -117,6 +117,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-20 | 3     | Madi | Debug                             |
 | 2024-11-20 | 6     | Nate | Debug                             |
 | 2024-11-20 | 1.5   | Madi | added file descriptions to README |
+| 2024-11-21 | 9     | Nate | Debug                             |
 | 2024-11-21 |       |      |                                   |
 | 2024-11-22 |       |      |                                   |
 | 2024-11-23 |       |      |                                   |
