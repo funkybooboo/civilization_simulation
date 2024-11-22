@@ -124,6 +124,10 @@ class Memories:
 
     def add(self, what: str, where: Location) -> None:
         logger.debug(f"Adding a new memory with content '{what}' at location {where}.")
+        
+        if not self._grid.is_in_bounds(where):
+            logger.warning("Tried to add an out of bounds location to memory")
+            return 
 
         # Validate location and adjust if necessary
         if not self._grid.is_tree(where) or not self._grid.is_empty(where):
