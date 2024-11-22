@@ -126,7 +126,7 @@ class Memories:
         logger.debug(f"Adding a new memory with content '{what}' at location {where}.")
         
         if not self._grid.is_in_bounds(where):
-            logger.warning("Tried to add an out of bounds location to memory")
+            logger.warning(f"Tried to add an out of bounds location to memory {where}")
             return 
 
         # Validate location and adjust if necessary

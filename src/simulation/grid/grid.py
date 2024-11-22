@@ -419,6 +419,9 @@ class Grid:
 
     def is_char(self, location: Location, char: str) -> bool:
         logger.debug(f"Checking if location {location} contains character '{char}'.")
+        if not self.is_in_bounds(location):
+            logger.warning(f"You called is_char with a location that is out of bounds {location}")
+            
         return self._grid[location.y][location.x] == char
 
     def get_width(self) -> int:
