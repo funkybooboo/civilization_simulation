@@ -152,8 +152,8 @@ class Thinker:
         # eat should be more important the more hungry you are, but only if there's food in the barns or at home
         self._set_eat_priority()
 
-        # at the end of this we need to make sure that generally
-        # explore > start_construction > transport > resource_gathering > eat > construction > find_home
+        # TODO (maybe) at the end of this we need to make sure that generally
+        # explore > start_construction > transport > farm > eat > mine > wood > construction > find_home
 
     def _set_find_home_priority(self):
         # if you've been 20 steps without a home, getting a home is priority 1
