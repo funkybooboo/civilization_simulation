@@ -46,6 +46,6 @@ def get_temperature_for_day(
 
 if __name__ == "__main__":
     # Example usage:
-    for day in range(1, 366):
+    for day in range(1, 30):
         temperature = get_temperature_for_day(day)
         print(f"Temperature on day {day}: {temperature:.2f}°F")
