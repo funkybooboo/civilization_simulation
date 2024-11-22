@@ -21,16 +21,16 @@ def get_temperature_for_day(
     - float: Temperature for the given day in Fahrenheit
     """
 
-    # Ensure the day_of_year is within the valid range (1 to 365)
-    if not (1 <= day_of_year <= settings.get("days_in_year", 365)):
-        logger.error(f"Invalid day_of_year: {day_of_year}. Must be between 1 and 365.")
+    # Ensure the day_of_year is within the valid range (1 to 30)
+    if not (1 <= day_of_year <= settings.get("days_per_year", 30)):
+        logger.error(f"Invalid day_of_year: {day_of_year}. Must be between 1 and 30.")
         raise ValueError("day_of_year must be between 1 and 365")
     logger.debug(
         f"Getting temperature for day {day_of_year} with mean={mean_temp_f}, amplitude={amplitude_f}, std_dev={std_dev_f}"
     )
 
     # Calculate the seasonal variation using a sine wave
-    seasonal_variation_f = amplitude_f * np.sin(2 * np.pi * (day_of_year - 81) / settings.get("days_in_year", 365))
+    seasonal_variation_f = amplitude_f * np.sin(2 * np.pi * (day_of_year - 81) / settings.get("days_per_year", 30))
     logger.debug(f"Seasonal variation for day {day_of_year}: {seasonal_variation_f:.2f}°F")
 
     # The mean of the normal distribution is the mean_temp adjusted by the seasonal variation
