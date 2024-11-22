@@ -9,6 +9,12 @@ class Simulation:
     def __init__(self) -> None:
         logger.debug("Initializing simulation settings.")
 
+        self._day: int = 0
+        logger.debug("self._day initialized to 0.")
+    
+        self._time: int = 0
+        logger.debug("self._time initialized to 0.")
+
         actions_per_day = settings.get("actions_per_day", 5)
         logger.debug(f"actions_per_day set to {actions_per_day}.")
 
@@ -38,14 +44,6 @@ class Simulation:
 
         self._max_days: int = self._years * self._days_per_year
         logger.debug(f"self._max_days calculated as {self._max_days}.")
-
-        self._day: int = 0
-        logger.debug("self._day initialized to 0.")
-
-        self._time: int = 0
-        logger.debug("self._time initialized to 0.")
-
-        # Log initializ
 
     def actions_per_year(self) -> int:
         result = self._days_per_year * self._actions_per_day
