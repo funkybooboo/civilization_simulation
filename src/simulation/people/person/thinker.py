@@ -152,7 +152,7 @@ class Thinker:
         grid_width = self._simulation.get_grid().get_width()
         grid_height = self._simulation.get_grid().get_height()
         # Calculate max memories as a third of the total grid cells
-        max_memories = (grid_width * grid_height) // 3
+        max_memories = (grid_width * grid_height) // 4
         # Get the current number of memories the person has
         memory_count = len(self._person.get_memories().get_memories())
         # Calculate the priority for 'EXPLORE' using linear scaling from 1 to 10
@@ -177,10 +177,10 @@ class Thinker:
         # Set the start construction tasks priority relative to explore priority
         if explore_priority >= 5:
             # If explore priority is 5 or higher, make construction tasks lower priority than explore
-            construction_priority = explore_priority + 1  # This ensures construction is lower than explore
+            construction_priority = 1  # This ensures construction is higher than explore
         else:
             # If explore priority is less than 5, give construction tasks a higher priority
-            construction_priority = explore_priority - 1  # This ensures construction is higher than explore
+            construction_priority = min(explore_priority + 1, 10)
 
         # Assign the calculated priority to all start construction tasks
         for task in start_construction_tasks:
@@ -196,8 +196,8 @@ class Thinker:
     
         # Calculate the transport priority (between 1 and 10)
         # The fuller the backpack, the higher the transport priority
-        transport_priority = int(1 + (9 * fullness_percentage))
-    
+        transport_priority = 10 - int(10 * fullness_percentage)
+        
         # Ensure the priority is between 1 and 10
         transport_priority = max(1, min(transport_priority, 10))
     
@@ -234,26 +234,38 @@ class Thinker:
         self._adjust_work_mine_priority(stone_percentage)
     
     def _adjust_work_farm_priority(self, food_percentage: float):
-        self._task_type_priorities[TaskType.WORK_FARM] = max(1, min(10, int(10 - (1 - food_percentage) * 10)))
+        self._task_type_priorities[TaskType.WORK_FARM] = max(1, min(10, int(10 * food_percentage)))
     
     def _adjust_chop_wood_priority(self, wood_percentage: float):
-        self._task_type_priorities[TaskType.CHOP_TREE] = max(1, min(10, int(10 - (1 - wood_percentage) * 10)))
+        self._task_type_priorities[TaskType.CHOP_TREE] = max(1, min(10, int(10 * wood_percentage)))
     
     def _adjust_work_mine_priority(self, stone_percentage: float):
-        self._task_type_priorities[TaskType.WORK_MINE] = max(1, min(10, int(10 - (1 - stone_percentage) * 10)))
+        self._task_type_priorities[TaskType.WORK_MINE] = max(1, min(10, int(10 * stone_percentage)))
 
     def _set_barn_construction_priorities(self):
         construction_count = len(self._person.get_memories().get_barn_construction_locations())
-        self._task_type_priorities[TaskType.BUILD_BARN] = max(1, min(10, 10 - construction_count))
+        if construction_count == 0:
+            self._task_type_priorities[TaskType.BUILD_BARN] = 10
+            return 
+        self._task_type_priorities[TaskType.BUILD_BARN] = max(1, min(10, 3 - construction_count))
     
     def _set_farm_construction_priorities(self):
         construction_count = len(self._person.get_memories().get_farm_construction_locations())
-        self._task_type_priorities[TaskType.BUILD_FARM] = max(1, min(10, 10 - construction_count))
+        if construction_count == 0:
+            self._task_type_priorities[TaskType.BUILD_FARM] = 10
+            return
+        self._task_type_priorities[TaskType.BUILD_FARM] = max(1, min(10, 3 - construction_count))
     
     def _set_home_construction_priorities(self):
         construction_count = len(self._person.get_memories().get_home_construction_locations())
-        self._task_type_priorities[TaskType.BUILD_HOME] = max(1, min(10, 10 - construction_count))
+        if construction_count == 0:
+            self._task_type_priorities[TaskType.BUILD_HOME] = 10
+            return
+        self._task_type_priorities[TaskType.BUILD_HOME] = max(1, min(10, 3 - construction_count))
     
     def _set_mine_construction_priorities(self):
         construction_count = len(self._person.get_memories().get_mine_construction_locations())
-        self._task_type_priorities[TaskType.BUILD_MINE] = max(1, min(10, 10 - construction_count))
+        if construction_count == 0:
+            self._task_type_priorities[TaskType.BUILD_MINE] = 10
+            return
+        self._task_type_priorities[TaskType.BUILD_MINE] = max(1, min(10, 3 - construction_count))
