@@ -114,7 +114,9 @@ class Navigator:
             if failed:
                 logger.warning("Failed to find the structure. Returning failure result.")
                 return MoveResult(failed, None)
-
+        
+        if not self._structure:
+            return MoveResult(False, None)
         if self._is_structure_nearby_and_has_capacity(resource_name):
             logger.debug("Found workable structure with capacity.")
             return MoveResult(False, self._structure)
