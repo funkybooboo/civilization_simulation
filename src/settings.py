@@ -1,27 +1,33 @@
 import argparse
-
-from dynaconf import Dynaconf
+import os
+import yaml
+from typing import Dict, Any
 
 
 class Settings:
-    def __init__(self, environment: str):
+    def __init__(self, e: str):
         """Initialize Settings and load environment-specific configurations."""
-        self._environment = environment
-        self._settings = self._load_settings()
+        self._settings: Dict[str, Any] = self._load_settings(e)
+    
+    @staticmethod
+    def _load_settings(e: str) -> Dict[str, Any]:
+        """Load settings from the environment-specific yaml file"""
+        settings_file = f"../settings/{e}_settings.yaml"
+        if not os.path.isfile(settings_file):
+            raise FileNotFoundError(f"Settings file {settings_file} not found.")
 
-    def _load_settings(self) -> Dynaconf:
-        """Load settings from the environment-specific file and .env."""
-        settings_file = f"../settings/{self._environment}_settings.yaml"
-        return Dynaconf(
-            settings_files=[settings_file],  # Use both settings file and .env
-            environments=True,  # Enable environment-specific configuration
-            load_dotenv=True,  # Optionally load .env variables if needed
-        )
+        # Load the YAML file into a dictionary
+        with open(settings_file, 'r') as file:
+            s = yaml.safe_load(file)
+
+        return s
 
     def get(self, key: str, default=None):
         """Get a configuration value by key."""
-        return self._settings.get(key, default)
-
+        value = self._settings.get(key)
+        if value is None:
+            return default
+        return value
 
 # Helper function to get environment from command line args
 def get_environment() -> str:
@@ -32,5 +38,9 @@ def get_environment() -> str:
     return args.settings
 
 
+# Get the environment and load settings
 environment = get_environment()
 settings = Settings(environment)  # This will initialize the global `settings` object
+
+# Example of accessing a setting
+print(settings.get('max_simulations'))  # Should print: 1 (based on your example YAML)
