@@ -101,7 +101,7 @@ tree_obstacle_rating: 10
 # grid_generator.py
 tree_density: 0.4
 ca_iterations: 40
-town_clearance_radius: 20
+town_clearance_radius: 15
 building_buffer: 1
 
 num_house_min: 5
