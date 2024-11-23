@@ -26,7 +26,6 @@ class Thinker:
             settings.get("hunger_pref_min", 50), settings.get("hunger_pref_max", 100)
         )
 
-        self._personal_time: int = 0
         self._time_without_home: int = 0
 
         self._work_rewards: Dict[TaskType, int] = {TaskType.WORK_FARM: 0, TaskType.WORK_MINE: 0, TaskType.CHOP_TREE: 0}
@@ -57,7 +56,6 @@ class Thinker:
         return self._task_type_priorities[task_type]
 
     def take_action(self) -> None:
-        self._personal_time += 1
         if not self._person.has_home():
             self._time_without_home += 1
         else:
@@ -217,7 +215,7 @@ class Thinker:
                     self._task_type_priorities[task_type] = self._task_type_priorities[TaskType.CHOP_TREE] + 1
 
         # if the person is young, or if exploring needs to happen, make sure exploring is the most important thing
-        if self._personal_time < 3 or self._task_type_priorities[TaskType.EXPLORE] <= 3:
+        if self._task_type_priorities[TaskType.EXPLORE] <= 3:
             for task_type, priority in self._task_type_priorities.items():
                 if task_type == TaskType.EXPLORE:
                     self._task_type_priorities[task_type] = 1
