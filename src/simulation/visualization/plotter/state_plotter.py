@@ -29,7 +29,7 @@ class StatePlotter:
             GridState(grid),
             PeopleDisasterState(people),
             PeopleState(people),
-            ResourceState(grid),
+            ResourceState(grid, people),
             TaskState(people),
         ]
 

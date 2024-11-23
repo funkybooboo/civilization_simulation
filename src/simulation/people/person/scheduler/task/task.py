@@ -37,7 +37,7 @@ class Task(ABC):
         self._interruptions += 1
         self._clean_up_task()
 
-    def get_priority(self) -> int:
+    def get_priority(self) -> int:      # todo (maybe) return the field of priorities so that snapshot stays locked?????
         return self._person.get_task_type_priority(self._task_type)
 
     def _finished(self, is_completed: bool = True) -> None:
