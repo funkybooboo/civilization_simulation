@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 class Explore(Task):
     def __init__(self, simulation: Simulation, person: Person) -> None:
         super().__init__(simulation, person, TaskType.EXPLORE)
-        self._max_how_far: int = 3
+        self._max_how_far: int = 5
         self._how_far: int = 0
 
     @override
