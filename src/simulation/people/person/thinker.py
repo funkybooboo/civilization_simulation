@@ -217,7 +217,7 @@ class Thinker:
                     self._task_type_priorities[task_type] = self._task_type_priorities[TaskType.CHOP_TREE] + 1
 
         # if the person is young, or if exploring needs to happen, make sure exploring is the most important thing
-        if self._personal_time < 10 or self._task_type_priorities[TaskType.EXPLORE] <= 3:
+        if self._personal_time < 3 or self._task_type_priorities[TaskType.EXPLORE] <= 3:
             for task_type, priority in self._task_type_priorities.items():
                 if task_type == TaskType.EXPLORE:
                     self._task_type_priorities[task_type] = 1
