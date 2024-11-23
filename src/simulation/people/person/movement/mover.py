@@ -49,11 +49,10 @@ class Mover:
             logger.debug(f"Target location {target} is invalid, adjusting target.")
             target = self._adjust_target(target)
 
-        vision = Vision(self._person, self._grid, settings.get("visibility", 10))
-
         for step in range(self._speed):
             logger.debug(f"Step {step}: Combining vision with current memories.")
-            self._memories.combine(vision.look_around())
+            if step % 2 == 0:
+                self._memories.combine(self._vision.look_around())
             path = self._get_path(target)
 
             if path and len(path) >= 2:
