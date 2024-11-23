@@ -7,7 +7,7 @@ from src.logger import logger
 
 
 class State(ABC):
-    def get_data(self) -> Tuple[str, Dict[str, Number]]:
+    def get_data(self, child) -> Tuple[str, Dict[str, Number]]:
         """
         Returns the data dictionary with labels formatted and mapped to their corresponding values.
         Subclasses should implement this method to specify the class-specific title and attributes.
@@ -16,12 +16,12 @@ class State(ABC):
         title = self.get_title()  # Get the title dynamically using each subclass's title
         logger.debug(f"Title obtained: {title}")
 
-        data = self._data_generator()  # Use the common data generation logic
+        data = self._data_generator(child)  # Use the common data generation logic
         logger.debug(f"Generated data: {data}")
 
         return title, data
 
-    def _data_generator(self) -> Dict[str, Number]:
+    def _data_generator(self, child) -> Dict[str, Number]:
         """
         Generates a dictionary with human-readable labels for the attributes and their corresponding values.
         """
@@ -29,14 +29,12 @@ class State(ABC):
         data = {}
 
         # Iterate over instance variables (attributes)
-        for attr_name, value in vars(self).items():
-            # Skip private attributes (those starting with '_')
-            if not attr_name.startswith("_"):
-                # Generate a human-readable label
-                label = self._format_label(attr_name)
-                logger.debug(f"Adding attribute: {label} with value: {value}")
-                # Add to the data dictionary
-                data[label] = value
+        for attr_name, value in vars(child).items():
+            # Generate a human-readable label
+            label = self._format_label(attr_name)
+            logger.debug(f"Adding attribute: {label} with value: {value}")
+            # Add to the data dictionary
+            data[label] = value
 
         logger.debug(f"Final generated data dictionary: {data}")
         return data

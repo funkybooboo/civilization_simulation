@@ -35,7 +35,7 @@ class StatePlotter:
 
         # Add data for each state class
         for state in states:
-            title, data = state.get_data()
+            title, data = state.get_data(state)
 
             # Log state data being added
             logger.debug(f"Adding data for state: {title}, Year: {year}")
