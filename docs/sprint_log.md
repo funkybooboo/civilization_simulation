@@ -125,7 +125,7 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-22 | 2     | Ann Marie | wrote dire circumstances functions for thinker.py |
 | 2024-11-22 | 6     | Nate      | Debug                                             |
 | 2024-11-22 | 6     | Brighton  | debugging state_plotter.                          |
-| 2024-11-23 |       |           |                                                   |
+| 2024-11-23 | 6     | Nate      | Try to make it faster                             |
 | 2024-11-24 |       |           |                                                   |
 | 2024-11-25 |       |           |                                                   |
 | 2024-11-26 |       |           |                                                   |
