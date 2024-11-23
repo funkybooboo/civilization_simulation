@@ -32,45 +32,31 @@ class Vision:
         """Initiates the visibility check and returns updated memories."""
         logger.debug(f"{self._person} is looking around.")
         memories: Memories = Memories(self._grid)
-        current_location = deepcopy(self._person.get_location())
-        logger.debug(f"Starting vision search from {current_location}.")
+        start_location = deepcopy(self._person.get_location())
 
-        # Using the new search method
-        self._search(current_location, self._visibility, memories, set())
-
-        logger.debug(f"Vision search complete for {self._person}. Memory updated.", self._person)
-        return memories
-
-    def _search(
-            self,
-            start_location: Location,
-            visibility: int,
-            memory: Memories,
-            blocked: set[Location],
-    ) -> None:
-        stack = [(start_location, visibility)]
+        stack = [(start_location, self._visibility)]
         visited = set()
+        blocked = set()
+        
+        visited.add(start_location)
     
         while stack:
             current_location, current_visibility = stack.pop()
     
             if current_visibility <= 0:
-                logger.debug(f"Visibility range exhausted at {current_location}.")
                 continue
             if current_location in blocked:
-                logger.debug(f"Location {current_location} is already blocked. Skipping.")
                 continue
+            
+            self._process_location(memories, blocked, current_location)
     
-            if current_location not in visited:
-                visited.add(current_location)  # Mark this location as visited for this call
-                self._process_location(memory, blocked, current_location)
-    
-                for dx, dy in self._directions:
-                    neighbor = Location(current_location.x + dx, current_location.y + dy)
-                    if self._grid.is_in_bounds(neighbor) and neighbor not in blocked:
-                        stack.append((neighbor, current_visibility - 1))
-                    else:
-                        logger.debug(f"Neighbor {neighbor} is out of bounds or blocked. Skipping.")
+            for dx, dy in self._directions:
+                neighbor = Location(current_location.x + dx, current_location.y + dy)
+                if self._grid.is_in_bounds(neighbor) and neighbor not in blocked and neighbor not in visited:
+                    visited.add(neighbor)
+                    stack.append((neighbor, current_visibility - 1))
+
+        return memories
 
     def _process_location(self, memories: Memories, blocked: set[Location], location: Location) -> None:
         """Processes a location and updates memory if an object is found."""
