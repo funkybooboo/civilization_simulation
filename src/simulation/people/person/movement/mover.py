@@ -39,6 +39,7 @@ class Mover:
         self.towards(random_location)
 
     def towards(self, target: Location) -> None:
+        self._path_finding_grid = self._get_path_finding_grid()
         logger.debug(f"Moving towards target location: {target}.")
         if not self._grid.is_in_bounds(target):
             logger.warning(f"Target location {target} is out of bounds, aborting movement.")
