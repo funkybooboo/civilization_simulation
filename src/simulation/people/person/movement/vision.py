@@ -3,7 +3,6 @@ from __future__ import annotations
 from copy import deepcopy
 from enum import Enum
 from typing import TYPE_CHECKING, Callable, Dict, List, Tuple
-from multiprocessing import Process, Manager, Lock
 
 from src.simulation.grid.location import Location
 from src.simulation.people.person.memories import Memories
@@ -35,34 +34,16 @@ class Vision:
         memories: Memories = Memories(self._grid)
         current_location = deepcopy(self._person.get_location())
         logger.debug(f"Starting vision search from {current_location}.")
-
-        with Manager() as manager:
-            blocked = manager.list()  # Shared list for blocked locations
-            lock = Lock()  # Lock for synchronizing access to shared resources
-
-            # Start parallel search processes for each direction
-            processes = []
-            for dx, dy in self._directions:
-                neighbor = Location(current_location.x + dx, current_location.y + dy)
-                if self._grid.is_in_bounds(neighbor):
-                    p = Process(target=self._search, args=(neighbor, self._visibility, memories, blocked, lock))
-                    p.start()
-                    processes.append(p)
-
-            # Wait for all processes to complete
-            for p in processes:
-                p.join()
-
+        self._search(current_location, self._visibility, memories, set())
         logger.debug(f"Vision search complete for {self._person}. Memory updated.", self._person)
         return memories
 
     def _search(
-            self,
-            location: Location,
-            visibility: int,
-            memory: Memories,
-            blocked: list[Location],
-            lock: Lock
+        self,
+        location: Location,
+        visibility: int,
+        memory: Memories,
+        blocked: set[Location],
     ) -> None:
         if visibility <= 0:
             logger.debug(f"Visibility range exhausted at {location}.")
@@ -71,21 +52,19 @@ class Vision:
             logger.debug(f"Location {location} is already blocked. Skipping.")
             return
 
-        with lock:
-            blocked.append(location)  # Safely add location to the shared list
-            logger.debug(f"Searching location {location} with visibility {visibility}.")
+        blocked.add(location)
+        logger.debug(f"Searching location {location} with visibility {visibility}.")
 
         for dx, dy in self._directions:
             neighbor = Location(location.x + dx, location.y + dy)
             if self._grid.is_in_bounds(neighbor):
-                with lock:
-                    if neighbor not in blocked:
-                        self._process_location(memory, blocked, neighbor)
-                self._search(neighbor, visibility - 1, memory, blocked, lock)
+                if neighbor not in blocked:
+                    self._process_location(memory, blocked, neighbor)
+                    self._search(neighbor, visibility - 1, memory, blocked)
             else:
                 logger.debug(f"Neighbor {neighbor} is out of bounds. Skipping.")
 
-    def _process_location(self, memories: Memories, blocked: list[Location], location: Location) -> None:
+    def _process_location(self, memories: Memories, blocked: set[Location], location: Location) -> None:
         """Processes a location and updates memory if an object is found."""
         logger.debug(f"Processing location {location}.")
 
@@ -133,30 +112,30 @@ class Vision:
                 return True
         return False
 
-    def _block_view(self, blocked: list[Location], location: Location) -> None:
+    def _block_view(self, blocked: set[Location], location: Location) -> None:
         """Marks the view as blocked for the given location."""
         logger.debug(f"Blocking view from {location}.")
-        blocked.append(location)
+        blocked.add(location)
         for direction in Direction:
             self._mark_blocked_in_direction(blocked, location, direction)
 
-    def _mark_blocked_in_direction(self, blocked: list[Location], location: Location, direction: Direction) -> None:
+    def _mark_blocked_in_direction(self, blocked: set[Location], location: Location, direction: Direction) -> None:
         """Blocks visibility in a specific direction from the given location."""
         logger.debug(f"Blocking view from location {location} towards {direction.name}.")
         x, y = location.x, location.y
         if direction == Direction.LEFT:
             for k in range(x, -1, -1):
-                blocked.append(Location(k, y))
+                blocked.add(Location(k, y))
                 logger.debug(f"Location {Location(k, y)} blocked.")
         elif direction == Direction.RIGHT:
             for k in range(x, self._grid.get_width()):
-                blocked.append(Location(k, y))
+                blocked.add(Location(k, y))
                 logger.debug(f"Location {Location(k, y)} blocked.")
         elif direction == Direction.DOWN:
             for k in range(y, self._grid.get_height()):
-                blocked.append(Location(x, k))
+                blocked.add(Location(x, k))
                 logger.debug(f"Location {Location(x, k)} blocked.")
         elif direction == Direction.UP:
             for k in range(y, -1, -1):
-                blocked.append(Location(x, k))
+                blocked.add(Location(x, k))
                 logger.debug(f"Location {Location(x, k)} blocked.")
