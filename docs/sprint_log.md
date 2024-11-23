@@ -104,6 +104,8 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-19 | 4.5   | Brighton  | Complete logging of Visualization directory, added file descriptions to README                  |
 | 2024-11-19 | 2     | Madi      | Complete logging of People directory                                                            |
 | 2024-11-19 | 4     | Madi      | Complete logging of Scheduler and tasks directories, started debugging                          |
+| 2024-11-19 | 3.5   | Ann Marie | Complete logging of Person directory and Movement directory, described files in README          |
+
 
 ## Sprint 4
 
@@ -112,18 +114,20 @@ Stay organized and on track with your assignments and tasks!
 - **Goals**:
     - wrap up the project
 
-| Date       | Hours | Name | Notes                             |
-|------------|-------|------|-----------------------------------|
-| 2024-11-20 | 3     | Madi | Debug                             |
-| 2024-11-20 | 6     | Nate | Debug                             |
-| 2024-11-20 | 1.5   | Madi | added file descriptions to README |
-| 2024-11-21 | 9     | Nate | Debug                             |
-| 2024-11-21 |       |      |                                   |
-| 2024-11-22 |       |      |                                   |
-| 2024-11-23 |       |      |                                   |
-| 2024-11-24 |       |      |                                   |
-| 2024-11-25 |       |      |                                   |
-| 2024-11-26 |       |      |                                   |
+| Date       | Hours | Name      | Notes                                             |
+|------------|-------|-----------|---------------------------------------------------|
+| 2024-11-20 | 3     | Madi      | Debug                                             |
+| 2024-11-20 | 1     | Ann Marie | Debug                                             |
+| 2024-11-20 | 6     | Nate      | Debug                                             |
+| 2024-11-20 | 1.5   | Madi      | added file descriptions to README                 |
+| 2024-11-21 | 9     | Nate      | Debug                                             |
+| 2024-11-21 | 5.5   | Ann Marie | Debug                                             |
+| 2024-11-22 | 2     | Ann Marie | wrote dire circumstances functions for thinker.py |
+| 2024-11-22 |       |           |                                                   |
+| 2024-11-23 |       |           |                                                   |
+| 2024-11-24 |       |           |                                                   |
+| 2024-11-25 |       |           |                                                   |
+| 2024-11-26 |       |           |                                                   |
 
 ## Important Dates
 
