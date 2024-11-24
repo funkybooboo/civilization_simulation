@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import random
 from copy import deepcopy
 from typing import TYPE_CHECKING, List
@@ -26,7 +27,11 @@ class PeopleGenerator:
     @staticmethod
     def _get_names() -> List[str]:
         try:
-            with open("../../../data/first_names.txt", "r") as file:
+            # Get the directory of the current script
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            # Construct the absolute path to the file
+            file_path = os.path.join(script_dir, "../../../data/first_names.txt")
+            with open(file_path, "r") as file:
                 names: List[str] = [line.strip() for line in file if line.strip()]
         except FileNotFoundError:
             logger.error("Could not find names file. Using default names.")
