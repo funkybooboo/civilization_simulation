@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from enum import Enum
-from typing import TYPE_CHECKING, Callable, Dict, List, Tuple
+from typing import TYPE_CHECKING, Callable, Dict, List, Tuple, Set
 
 from src.simulation.grid.location import Location
 from src.simulation.people.person.memories import Memories
@@ -43,7 +43,7 @@ class Vision:
         location: Location,
         visibility: int,
         memory: Memories,
-        blocked: set[Location],
+        blocked: Set[Location],
     ) -> None:
         if visibility <= 0:
             logger.debug(f"Visibility range exhausted at {location}.")

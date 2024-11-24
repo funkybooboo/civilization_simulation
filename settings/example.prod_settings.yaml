@@ -145,6 +145,6 @@ fig_size: 8                   # how wide the plot should be
 # misc
 near: 5
 mean_temp_f: 70
-visibility: 15                # how far people can see (if it's higher than 15, things get slow)
-speed: 15
+visibility: 10                # how far people can see (if it's higher than 15, things get slow)
+speed: 10
 memory_expire: 30

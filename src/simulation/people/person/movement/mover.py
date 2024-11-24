@@ -39,6 +39,7 @@ class Mover:
         self.towards(random_location)
 
     def towards(self, target: Location) -> None:
+        self._path_finding_grid = self._get_path_finding_grid()
         logger.debug(f"Moving towards target location: {target}.")
         if not self._grid.is_in_bounds(target):
             logger.warning(f"Target location {target} is out of bounds, aborting movement.")
@@ -48,11 +49,10 @@ class Mover:
             logger.debug(f"Target location {target} is invalid, adjusting target.")
             target = self._adjust_target(target)
 
-        vision = Vision(self._person, self._grid, settings.get("visibility", 10))
-
         for step in range(self._speed):
             logger.debug(f"Step {step}: Combining vision with current memories.")
-            self._memories.combine(vision.look_around())
+            if step % 2 == 0:
+                self._memories.combine(self._vision.look_around())
             path = self._get_path(target)
 
             if path and len(path) >= 2:
