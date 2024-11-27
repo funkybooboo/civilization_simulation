@@ -41,7 +41,7 @@ class StartConstruction(Task, ABC):
         empties: List[Location] = self._person.get_empties()
         location = self._find_fitting_group(empties)
         if location:
-            if self._person.get_location().is_one_away(location):
+            if self._person.get_location().is_one_away(location) or self._person.get_location().is_one_away(location):
                 logger.debug(f"{self._person} is at site to start construction for {self._building_type}")
                 self._simulation.get_grid().start_building_construction(self._building_type, location)
                 self._finished()

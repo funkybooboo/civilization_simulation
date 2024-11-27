@@ -89,7 +89,7 @@ class Navigator:
         self._structure = self._person.get_home()
         self._mover.towards(self._structure.get_location())
 
-        if self._person.get_location().is_one_away(self._structure.get_location()):
+        if self._person.get_location().is_one_away(self._structure.get_location()) or self._person.get_location().is_one_away(self._structure.get_location()):
             logger.debug("Person is one step away from home. Resetting moving state.")
             self._reset_moving_state(None)
             return self._structure
@@ -237,7 +237,7 @@ class Navigator:
     def _is_structure_nearby_and_has_capacity(self, resource_name: Optional[str]) -> bool:
         """Check if the building is nearby and has capacity."""
         logger.debug(f"Checking if structure {self._structure} is nearby and has capacity.")
-        if self._person.get_location().is_one_away(self._structure.get_location()):
+        if self._person.get_location().is_one_away(self._structure.get_location()) or self._person.get_location().is_one_away(self._structure.get_location()):
             if resource_name and isinstance(self._structure, Store):
                 resource_quantity = self._structure.get_resource(resource_name)
                 logger.debug(f"Resource {resource_name} in structure: {resource_quantity} available.")

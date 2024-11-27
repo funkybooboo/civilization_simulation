@@ -168,11 +168,11 @@ class Thinker:
                 or self._task_type_priorities[TaskType.WORK_MINE] < 3
         ):
             if self._task_type_priorities[TaskType.CHOP_TREE] < 3:
-                self._task_type_priorities[TaskType.CHOP_TREE] = self._task_type_priorities[TaskType.TRANSPORT] + 1
+                self._task_type_priorities[TaskType.CHOP_TREE] = min(10, self._task_type_priorities[TaskType.TRANSPORT] + 1)
             if self._task_type_priorities[TaskType.WORK_MINE] < 3:
-                self._task_type_priorities[TaskType.WORK_MINE] = self._task_type_priorities[TaskType.TRANSPORT] + 1
+                self._task_type_priorities[TaskType.WORK_MINE] = min(10, self._task_type_priorities[TaskType.TRANSPORT] + 1)
             if self._task_type_priorities[TaskType.WORK_FARM] < 3:
-                self._task_type_priorities[TaskType.WORK_FARM] = self._task_type_priorities[TaskType.TRANSPORT] + 1
+                self._task_type_priorities[TaskType.WORK_FARM] = min(10, self._task_type_priorities[TaskType.TRANSPORT] + 1)
 
         # if there is no food, wood, or stone, food is the highest priority
         if (
@@ -180,39 +180,39 @@ class Thinker:
                 and self._task_type_priorities[TaskType.CHOP_TREE] < 3
                 and self._task_type_priorities[TaskType.WORK_MINE] < 3
         ):
-            self._task_type_priorities[TaskType.CHOP_TREE] = self._task_type_priorities[TaskType.WORK_FARM] + 1
-            self._task_type_priorities[TaskType.WORK_MINE] = self._task_type_priorities[TaskType.WORK_FARM] + 1
+            self._task_type_priorities[TaskType.CHOP_TREE] = min(10, self._task_type_priorities[TaskType.WORK_FARM] + 1)
+            self._task_type_priorities[TaskType.WORK_MINE] = min(10, self._task_type_priorities[TaskType.WORK_FARM] + 1)
 
         # if you really need to eat, that's more important than building, or getting stone or wood
         if (
                 self._task_type_priorities[TaskType.EAT] < 3 <= self._task_type_priorities[TaskType.WORK_FARM]
         ):
             if self._task_type_priorities[TaskType.CHOP_TREE] < 3:
-                self._task_type_priorities[TaskType.CHOP_TREE] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.CHOP_TREE] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.WORK_MINE] < 3:
-                self._task_type_priorities[TaskType.WORK_MINE] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.WORK_MINE] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.BUILD_BARN] < 3:
-                self._task_type_priorities[TaskType.BUILD_BARN] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.BUILD_BARN] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.BUILD_HOME] < 3:
-                self._task_type_priorities[TaskType.BUILD_HOME] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.BUILD_HOME] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.BUILD_MINE] < 3:
-                self._task_type_priorities[TaskType.BUILD_MINE] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.BUILD_MINE] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.BUILD_FARM] < 3:
-                self._task_type_priorities[TaskType.BUILD_FARM] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.BUILD_FARM] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.FIND_HOME] < 3:
-                self._task_type_priorities[TaskType.FIND_HOME] = self._task_type_priorities[TaskType.EAT] + 1
+                self._task_type_priorities[TaskType.FIND_HOME] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
 
         # if you're low on stone, then that is more important than building
         if self._task_type_priorities[TaskType.WORK_MINE] < 3:
             for task_type, priority in self._task_type_priorities.items():
                 if task_type == TaskType.BUILD_MINE or task_type == TaskType.BUILD_HOME or task_type == TaskType.BUILD_BARN:
-                    self._task_type_priorities[task_type] = self._task_type_priorities[TaskType.WORK_MINE] + 1
+                    self._task_type_priorities[task_type] = min(10, self._task_type_priorities[TaskType.WORK_MINE] + 1)
 
         # if you're low on wood, then that is more important than building
         if self._task_type_priorities[TaskType.CHOP_TREE] < 3:
             for task_type, priority in self._task_type_priorities.items():
                 if task_type == TaskType.BUILD_MINE or task_type == TaskType.BUILD_HOME or task_type == TaskType.BUILD_FARM or task_type == TaskType.BUILD_BARN:
-                    self._task_type_priorities[task_type] = self._task_type_priorities[TaskType.CHOP_TREE] + 1
+                    self._task_type_priorities[task_type] = min(10, self._task_type_priorities[TaskType.CHOP_TREE] + 1)
 
         # if the person is young, or if exploring needs to happen, make sure exploring is the most important thing
         if self._task_type_priorities[TaskType.EXPLORE] < 3:
@@ -248,8 +248,8 @@ class Thinker:
         # Get the grid dimensions
         grid_width = self._simulation.get_grid().get_width()
         grid_height = self._simulation.get_grid().get_height()
-        # Calculate max memories as a third of the total grid cells
-        max_memories = (grid_width * grid_height) // 4
+        # Calculate max memories as 160 total grid cells
+        max_memories = 160
         # Get the current number of memories the person has
         memory_count = len(self._person.get_memories().get_memories())
         # Calculate the priority for 'EXPLORE' using linear scaling from 1 to 10

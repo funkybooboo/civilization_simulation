@@ -51,7 +51,7 @@ class Mover:
 
         for step in range(self._speed):
             logger.debug(f"Step {step}: Combining vision with current memories.")
-            if step % 2 == 0:
+            if step % 4 == 0:
                 self._memories.combine(self._vision.look_around())
             path = self._get_path(target)
 
