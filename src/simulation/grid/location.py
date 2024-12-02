@@ -65,6 +65,12 @@ class Location:
         logger.debug(f"One step away: False")
         return False
 
+    def is_at_same_location(self, wanted_location: "Location") -> bool:
+        if self.x == wanted_location.x and self.y == wanted_location.y:
+            return True
+        else:
+            return False
+
 
     def get_neighbors(self) -> List["Location"]:
         logger.debug(f"Getting neighbors for Location({self.x}, {self.y})")
