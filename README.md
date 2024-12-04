@@ -29,6 +29,18 @@ these file names to `dev_settings.yaml` and `prod_settings.yaml`.
 Then, to run the simulation, run `PYTHONPATH=$(pwd) python3 src/main.py`. The simulation will take some time to complete. 
 You will get the simulation results plotted as output of the program.
 
+A note on run time: the simulation spends a lot of time computing each villager's vision as they move. One way to run 
+the program faster is to change how often villagers look around. This can be done in `mover.py`, in the `towards()` 
+method. The modulo in `towards()` (see below) is telling villagers to look around every four steps. You can increase
+this number if you want villagers to look around less often. (Caution: if villagers look around too infrequently, they
+may not remember the structures they passed at all.)
+
+```
+            if step % 4 == 0:
+                self._memories.combine(self._vision.look_around())
+```
+
+
 ## Code Structure
 
 The project directories are organized like so:
