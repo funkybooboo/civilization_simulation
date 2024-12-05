@@ -168,6 +168,8 @@ class Navigator:
                 structure = self._move_to_closest_structure(locations)
         else:
             structure = None
+            self._person.get_scheduler().add(TaskType.EXPLORE)
+            return True, structure
         
         if (
             structure_type != StructureType.TREE and 
