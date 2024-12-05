@@ -275,7 +275,7 @@ class Thinker:
         # Set the start construction tasks priority relative to explore priority
         if explore_priority >= 5:
             # If explore priority is 5 or higher, make construction tasks lower priority than explore
-            construction_priority = 1  # This ensures construction is higher than explore
+            construction_priority = 3  # This ensures construction is higher than explore
         else:
             # If explore priority is less than 5, give construction tasks a higher priority
             construction_priority = min(explore_priority + 1, 10)
