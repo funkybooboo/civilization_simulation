@@ -250,7 +250,7 @@ class Thinker:
         grid_width = self._simulation.get_grid().get_width()
         grid_height = self._simulation.get_grid().get_height()
         # Calculate max memories as 160 total grid cells
-        max_memories = 160
+        max_memories = 200
         # Get the current number of memories the person has
         memory_count = len(self._person.get_memories().get_memories())
         # Calculate the priority for 'EXPLORE' using linear scaling from 1 to 10
