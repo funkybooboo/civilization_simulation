@@ -37,12 +37,13 @@ class People:
                     continue
                 person.take_action()
                 logger.debug(f"{person.get_name()} should have taken action for the {action} time.")
-                self._grid.work_structures_exchange_memories()  # workers talk while working
                 logger.debug("These people are talking a lot and should have gotten others memories.")
             for person in dead:
                 person.divorce()
                 self._people.remove(person)
                 logger.info(f"{person.get_name()} is dead. Their spouse is widowed. :(")
+            if action % 3 == 0:
+                self._grid.work_structures_exchange_memories()  # workers talk while working
 
     def swap_homes(self) -> None:
         self._home_manager.swap_homes()
