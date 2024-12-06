@@ -121,14 +121,21 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-20 | 6     | Nate      | Debug                                             |
 | 2024-11-20 | 1.5   | Madi      | added file descriptions to README                 |
 | 2024-11-21 | 9     | Nate      | Debug                                             |
+| 2024-11-21 | 6     | Madi      | Debug, meeting, running program                   |
 | 2024-11-21 | 5.5   | Ann Marie | Debug                                             |
 | 2024-11-22 | 2     | Ann Marie | wrote dire circumstances functions for thinker.py |
 | 2024-11-22 | 6     | Nate      | Debug                                             |
 | 2024-11-22 | 6     | Brighton  | debugging state_plotter.                          |
+| 2024-11-22 | 3     | Madi      | meeting and running program                       |
 | 2024-11-23 | 6     | Nate      | Try to make it faster                             |
+| 2024-11-23 |       |           |                                                   |
 | 2024-11-24 |       |           |                                                   |
-| 2024-11-25 |       |           |                                                   |
-| 2024-11-26 |       |           |                                                   |
+| 2024-11-24 | 2     | Madi      | Debugging                                         |
+| 2024-11-25 | 1     | Madi      | Meeting                                           |
+| 2024-11-27 | 4     | Madi      | Running program, fixing bugs                      |
+| 2024-12-02 | 4     | Madi      | Fixing bugs                                       |
+| 2024-12-04 | 4     | Madi      | Fixing bugs                                       |
+| 2024-12-05 | 1     | Madi      | Meeting                                           |
 
 ## Important Dates
 
