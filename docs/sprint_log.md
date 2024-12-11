@@ -128,20 +128,25 @@ Stay organized and on track with your assignments and tasks!
 | 2024-11-22 | 6     | Brighton  | debugging state_plotter.                          |
 | 2024-11-22 | 3     | Madi      | meeting and running program                       |
 | 2024-11-23 | 6     | Nate      | Try to make it faster                             |
-| 2024-11-23 |       |           |                                                   |
+| 2024-11-23 | 1.3   | Ann Marie | Debugging                                         |
 | 2024-11-24 |       |           |                                                   |
 | 2024-11-24 | 2     | Madi      | Debugging                                         |
 | 2024-11-25 | 4     | Brighton  | Debugging/meeting                                 |
 | 2024-11-25 | 1     | Madi      | Meeting                                           |
+| 2024-11-25 | 1.3   | Ann Marie | Debugging                                         |
+| 2024-11-26 | 4.5   | Ann Marie | Debugging                                         |
 | 2024-11-26 | 2     | Brighton  | debugging, state_plotter                          |
 | 2024-11-27 | 4     | Madi      | Running program, fixing bugs                      |
 | 2024-11-28 |       |           |                                                   |
 | 2024-11-30 |       |           |                                                   |
 | 2024-12-02 | 3     | Brighton  | Presentation prep                                 |
 | 2024-12-02 | 4     | Madi      | Fixing bugs                                       |
+| 2024-12-02 | 2.1   | Ann Marie | Writing my section of the final report            |
 | 2024-12-04 |       |           |                                                   |
 | 2024-12-04 | 4     | Madi      | Fixing bugs                                       |
 | 2024-12-05 | 1     | Madi      | Meeting                                           |
+| 2024-12-05 | 1.5   | Ann Marie | Meeting                                           |
+
 | 2024-12-05 | 2     | Brighton  | Meeting                                           |
 
 
