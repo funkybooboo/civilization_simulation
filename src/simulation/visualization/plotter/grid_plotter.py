@@ -77,7 +77,7 @@ class GridPlotter:
         for row_idx, row in tqdm(enumerate(grid), desc="Adding Grid to Plot", total=num_rows):
             for col_idx, char in enumerate(row):
                 color = self._get_color_for_char(char)
-                ax.scatter(col_idx, row_idx, color=color, s=square_size ** 2 * 100, marker="s")
+                ax.scatter(col_idx, row_idx, color=color, s=square_size**2 * 100, marker="s")
 
         # Add the color legend (key)
         logger.info("Adding color legend to the plot...")
@@ -87,30 +87,29 @@ class GridPlotter:
         self._years[year] = fig
         logger.info(f"Grid snapshot for year {year} added successfully.")
 
-
     def _add_color_key(self, ax) -> None:
-            """Add a color key showing the terrain types and their associated colors."""
-            # Dynamically generate terrain types (for example, we use characters 'a', 'b', 'c', etc.)
-            terrain_types = list(self._color_map.keys())  # Use the terrain types from color_map
+        """Add a color key showing the terrain types and their associated colors."""
+        # Dynamically generate terrain types (for example, we use characters 'a', 'b', 'c', etc.)
+        terrain_types = list(self._color_map.keys())  # Use the terrain types from color_map
 
-            # Create a list of scatter objects (one per terrain type)
-            handles = []
-            for char in terrain_types:
-                color = self._get_color_for_char(char)
-                handle = plt.Line2D(
-                    [0],
-                    [0],
-                    marker="s",
-                    color="w",
-                    markerfacecolor=color,
-                    markersize=10,
-                    label=char,
-                )
-                handles.append(handle)
+        # Create a list of scatter objects (one per terrain type)
+        handles = []
+        for char in terrain_types:
+            color = self._get_color_for_char(char)
+            handle = plt.Line2D(
+                [0],
+                [0],
+                marker="s",
+                color="w",
+                markerfacecolor=color,
+                markersize=10,
+                label=char,
+            )
+            handles.append(handle)
 
-            # Add the legend
-            ax.legend(handles=handles, loc="upper right", fontsize=8, title="Terrain Types")
-            logger.info("Color key added to the plot.")
+        # Add the legend
+        ax.legend(handles=handles, loc="upper right", fontsize=8, title="Terrain Types")
+        logger.info("Color key added to the plot.")
 
     def show_slide_show(self, pause_time: float = 2.0) -> None:
         """Displays a slideshow of the stored figures."""

@@ -64,7 +64,9 @@ class Navigator:
         if not self._structure:
             logger.debug("No structure set, returning default time estimate of 5.")
             return 5  # Default estimate if no building is set
-        time_estimate = self._structure.get_location().distance_to(self._person.get_location()) // settings.get("speed", 10)
+        time_estimate = self._structure.get_location().distance_to(self._person.get_location()) // settings.get(
+            "speed", 10
+        )
         logger.debug(f"Estimated time to move to the current structure: {time_estimate}")
         return time_estimate
 
@@ -88,7 +90,9 @@ class Navigator:
         self._structure = self._person.get_home()
         self._mover.towards(self._structure.get_location())
 
-        if self._person.get_location().is_one_away(self._structure.get_location()) or self._person.get_location().is_one_away(self._structure.get_location()):
+        if self._person.get_location().is_one_away(
+            self._structure.get_location()
+        ) or self._person.get_location().is_one_away(self._structure.get_location()):
             logger.debug("Person is one step away from home. Resetting moving state.")
             self._reset_moving_state(None)
             return self._structure
@@ -121,7 +125,6 @@ class Navigator:
         if self._is_structure_nearby_and_has_capacity(resource_name):
             logger.debug("Found workable structure with capacity.")
             return MoveResult(False, self._structure)
-
 
         logger.warning("Structure is not nearby or lacks capacity. Returning failure result.")
         return MoveResult(True, None)
@@ -160,7 +163,7 @@ class Navigator:
 
         locations = list(structure_data[structure_type]())
         logger.debug(f"Retrieved {len(locations)} known locations for structure type: {structure_type}")
-        
+
         if locations:
             if structure_type in [StructureType.FARM, StructureType.TREE, StructureType.MINE]:
                 structure = self._move_to_chosen_structure(structure_type, locations)
@@ -170,22 +173,23 @@ class Navigator:
             structure = None
             self._person.get_scheduler().add(TaskType.EXPLORE)
             return True, structure
-        
-        if (
-            structure_type != StructureType.TREE and 
-                (not structure or self._searched_structure_count >= (len(locations) * 0.37))
+
+        if structure_type != StructureType.TREE and (
+            not structure or self._searched_structure_count >= (len(locations) * 0.37)
         ):
             construction_tasks = self._get_start_construction_tasks()
             construction_site_data = self._get_construction_structure_locations()
             build_tasks = self._get_construction_tasks()
             if structure_type not in list(build_tasks.keys()):
-                logger.warning("You couldn't find a construction site even tho we only add build tasks when you know about construction sites")
+                logger.warning(
+                    "You couldn't find a construction site even tho we only add build tasks when you know about construction sites"
+                )
                 return True, None
-    
+
             construction_type = construction_tasks.get(structure_type)
             construction_sites = list(construction_site_data[structure_type]())
             build_type = build_tasks.get(structure_type)
-        
+
             if construction_sites:
                 self._person.get_scheduler().add(build_type)
             else:
@@ -241,8 +245,11 @@ class Navigator:
     def _is_structure_nearby_and_has_capacity(self, resource_name: Optional[str]) -> bool:
         """Check if the building is nearby and has capacity."""
         from src.simulation.grid.structure.store.store import Store
+
         logger.debug(f"Checking if structure {self._structure} is nearby and has capacity.")
-        if self._person.get_location().is_one_away(self._structure.get_location()) or self._person.get_location().is_one_away(self._structure.get_location()):
+        if self._person.get_location().is_one_away(
+            self._structure.get_location()
+        ) or self._person.get_location().is_one_away(self._structure.get_location()):
             if resource_name and isinstance(self._structure, Store):
                 resource_quantity = self._structure.get_resource(resource_name)
                 logger.debug(f"Resource {resource_name} in structure: {resource_quantity} available.")
@@ -277,7 +284,7 @@ class Navigator:
         logger.debug(f"Choosing structure of type {structure_type} from {len(locations)} locations.")
 
         actions, rewards = self._update_rewards_and_actions(locations, structure_type)
-        
+
         self._calculate_epsilon(structure_type)
 
         logger.debug(f"Actions: {actions} | Rewards: {rewards} | Epsilon: {self._epsilon[structure_type]:.4f}")
@@ -300,10 +307,14 @@ class Navigator:
 
         # Update epsilon value based on action count
         self._epsilon[structure_type] = self._logarithmic_decay(action_count)
-        logger.debug(f"Updated epsilon for structure type {structure_type} to {self._epsilon[structure_type]:.4f} based on action count.")
+        logger.debug(
+            f"Updated epsilon for structure type {structure_type} to {self._epsilon[structure_type]:.4f} based on action count."
+        )
 
         if self._person.get_time() - action_count > self._epsilon_reset:
-            logger.debug(f"Time since last action exceeds reset threshold ({self._person.get_time() - action_count} > {self._epsilon_reset}). Resetting epsilon and clearing actions.")
+            logger.debug(
+                f"Time since last action exceeds reset threshold ({self._person.get_time() - action_count} > {self._epsilon_reset}). Resetting epsilon and clearing actions."
+            )
             self._epsilon[structure_type] = 1
             actions.clear()
 

@@ -6,8 +6,7 @@ from typing import TYPE_CHECKING, Dict, Iterator, List
 from src.settings import settings
 from src.logger import logger
 from src.simulation.people.home_manager import HomeManager
-from src.simulation.people.people_disaster_generator import \
-    PeopleDisasterGenerator
+from src.simulation.people.people_disaster_generator import PeopleDisasterGenerator
 from src.simulation.people.people_generator import PeopleGenerator
 
 if TYPE_CHECKING:
@@ -113,7 +112,9 @@ class People:
             ):
                 # create a baby next to the person's house
                 baby = self._people_generator.make_baby(deepcopy(person.get_location()))
-                logger.debug(f"Baby {baby} born at {person.get_location()}. Parents house is at {person.get_home().get_location()}")
+                logger.debug(
+                    f"Baby {baby} born at {person.get_location()}. Parents house is at {person.get_home().get_location()}"
+                )
                 self._people.append(baby)
 
     def get_married_people(self) -> List[Person]:

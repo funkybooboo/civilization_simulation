@@ -13,7 +13,9 @@ class PeopleState(State):
         self._average_health: float = self._get_average_health()
         self._average_hunger: float = self._get_average_hunger()
 
-        logger.debug(f"Initialized with {self._people_count} people, average health: {self._average_health}, average hunger: {self._average_hunger}.")
+        logger.debug(
+            f"Initialized with {self._people_count} people, average health: {self._average_health}, average hunger: {self._average_hunger}."
+        )
 
         del self._people
 
@@ -40,4 +42,3 @@ class PeopleState(State):
             average_hunger /= len(self._people)
         logger.debug(f"Calculated average hunger: {average_hunger}.")
         return average_hunger
-

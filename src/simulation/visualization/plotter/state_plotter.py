@@ -7,11 +7,9 @@ from matplotlib import pyplot as plt
 from src.simulation.grid.grid import Grid
 from src.logger import logger
 from src.simulation.people.people import People
-from src.simulation.visualization.state.grid_disaster_state import \
-    GridDisasterState
+from src.simulation.visualization.state.grid_disaster_state import GridDisasterState
 from src.simulation.visualization.state.grid_state import GridState
-from src.simulation.visualization.state.people_disaster_state import \
-    PeopleDisasterState
+from src.simulation.visualization.state.people_disaster_state import PeopleDisasterState
 from src.simulation.visualization.state.people_state import PeopleState
 from src.simulation.visualization.state.resource_state import ResourceState
 from src.simulation.visualization.state.task_state import TaskState

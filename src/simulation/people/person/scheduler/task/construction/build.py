@@ -11,8 +11,7 @@ if TYPE_CHECKING:
     from src.simulation.grid.structure.store.store import Store
     from src.simulation.grid.structure.structure import Structure
     from src.simulation.grid.structure.structure_type import StructureType
-    from src.simulation.grid.structure.work.construction.construction import \
-        Construction
+    from src.simulation.grid.structure.work.construction.construction import Construction
     from src.simulation.people.person.movement.move_result import MoveResult
     from src.simulation.people.person.person import Person
     from src.simulation.simulation import Simulation
@@ -25,7 +24,7 @@ class Build(Task, ABC):
         person: Person,
         build_structure: StructureType,
         store_structure: StructureType,
-        task_type: TaskType
+        task_type: TaskType,
     ) -> None:
         super().__init__(simulation, person, task_type)
         self._build_structure: StructureType = build_structure
@@ -38,13 +37,17 @@ class Build(Task, ABC):
 
     @override
     def execute(self) -> None:
-        if self._build and not (self._person.get_location().is_one_away(self._build.get_location())
-                               or self._person.get_location().is_at_same_location(self._build.get_location())):
+        if self._build and not (
+            self._person.get_location().is_one_away(self._build.get_location())
+            or self._person.get_location().is_at_same_location(self._build.get_location())
+        ):
 
             self._person.go_to_location(self._build.get_location())
 
-        if self._build and (self._person.get_location().is_one_away(self._build.get_location())
-                           or self._person.get_location().is_at_same_location(self._build.get_location())):
+        if self._build and (
+            self._person.get_location().is_one_away(self._build.get_location())
+            or self._person.get_location().is_at_same_location(self._build.get_location())
+        ):
             if self._build.needs_stone():
                 self._what_resource = "stone"
                 logger.debug(f"Needs stone to build")

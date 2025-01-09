@@ -4,8 +4,7 @@ from typing import TYPE_CHECKING
 
 from src.settings import settings
 from src.simulation.grid.structure.structure_type import StructureType
-from src.simulation.people.person.scheduler.task.start_construction.start_construction import \
-    StartConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_construction import StartConstruction
 from src.simulation.people.person.scheduler.task.task_type import TaskType
 
 if TYPE_CHECKING:
@@ -21,5 +20,5 @@ class StartHomeConstruction(StartConstruction):
             settings.get("home_size", 2),
             settings.get("home_size", 2),
             StructureType.CONSTRUCTION_HOME,
-            TaskType.START_HOME_CONSTRUCTION
+            TaskType.START_HOME_CONSTRUCTION,
         )

@@ -23,7 +23,7 @@ class StartConstruction(Task, ABC):
         width: int,
         height: int,
         building_type: StructureType,
-        task_type: TaskType
+        task_type: TaskType,
     ) -> None:
         super().__init__(simulation, person, task_type)
         self._width: int = width + 2
@@ -98,11 +98,15 @@ class StartConstruction(Task, ABC):
             # Check if the bounding box fits within the given width and height
             # First orientation (width × height)
             if group_width <= self._width and group_height <= self._height:
-                logger.debug(f"Found location to start construction for {self._building_type}: {Location(min_x, min_y)}")
+                logger.debug(
+                    f"Found location to start construction for {self._building_type}: {Location(min_x, min_y)}"
+                )
                 return Location(min_x, min_y)
             # Second orientation (height × width), checking if rotated box fits
             elif group_width <= self._height and group_height <= self._width:
-                logger.debug(f"Found location to start construction for {self._building_type}: {Location(min_x, min_y)}")
+                logger.debug(
+                    f"Found location to start construction for {self._building_type}: {Location(min_x, min_y)}"
+                )
                 return Location(min_x, min_y)
         logger.debug(f"Could not find location to start construction for {self._building_type}")
         return None

@@ -5,6 +5,7 @@ from src.simulation.grid.grid import Grid
 from src.simulation.grid.location import Location
 from src.logger import logger
 
+
 class Memory:
     def __init__(self, what: str, where: Location, when: int):
         self._what: str = what
@@ -124,10 +125,10 @@ class Memories:
 
     def add(self, what: str, where: Location) -> None:
         logger.debug(f"Adding a new memory with content '{what}' at location {where}.")
-        
+
         if not self._grid.is_in_bounds(where):
             logger.warning(f"Tried to add an out of bounds location to memory {where}")
-            return 
+            return
 
         # Validate location and adjust if necessary
         if not self._grid.is_tree(where) or not self._grid.is_empty(where):

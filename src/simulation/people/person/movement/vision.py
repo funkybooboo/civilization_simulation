@@ -26,7 +26,9 @@ class Vision:
         self._grid = grid
         self._visibility = visibility
         self._directions: List[Tuple[int, int]] = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
-        logger.debug(f"Vision system initialized for {self._person} with visibility radius {self._visibility}.", self._person)
+        logger.debug(
+            f"Vision system initialized for {self._person} with visibility radius {self._visibility}.", self._person
+        )
 
     def look_around(self) -> Memories:
         """Initiates the visibility check and returns updated memories."""

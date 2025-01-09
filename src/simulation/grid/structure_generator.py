@@ -15,8 +15,7 @@ from src.simulation.grid.structure.work.tree import Tree
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
     from src.simulation.grid.structure.structure import Structure
-    from src.simulation.grid.structure.structure_factory import \
-        StructureFactory
+    from src.simulation.grid.structure.structure_factory import StructureFactory
 
 
 class StructureGenerator:

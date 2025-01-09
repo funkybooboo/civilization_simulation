@@ -11,7 +11,7 @@ class Simulation:
 
         self._day: int = 0
         logger.debug("self._day initialized to 0.")
-    
+
         self._time: int = 0
         logger.debug("self._time initialized to 0.")
 
@@ -89,23 +89,23 @@ class Simulation:
                 logger.info(f"Year completed on day {day}. Performing yearly actions.")
                 self._people.swap_homes()  # people want to live close to work
                 logger.info("People swapped homes.")
-                
+
                 self._people.age()
                 logger.info("People aged.")
-                
+
                 self._people.make_babies()
                 logger.info("New babies made.")
-                
+
                 self._grid.grow_trees()
                 logger.info("Grid growing trees.")
-                
+
                 self._create_disasters()
                 logger.info("Disasters created for the year.")
 
                 year = self._get_year(day)
                 logger.info(f"Year {year} logged into the visualizer.")
                 visualizer.add(year, self._grid, self._people)
-                
+
                 # for debugging
                 # visualizer.display_town_slide_show()
 
@@ -114,7 +114,7 @@ class Simulation:
 
         logger.info("Simulation ended.")
         return visualizer
-    
+
     def flush(self) -> None:
         logger.debug("Flushing people and grid data...")
         self._people.flush()
@@ -142,9 +142,7 @@ class Simulation:
 
     def _get_year(self, day: int) -> int:
         year = day // self._days_per_year
-        logger.debug(
-            f"Calculating year from day {day}. Days per year: {self._days_per_year}. Year: {year}."
-        )
+        logger.debug(f"Calculating year from day {day}. Days per year: {self._days_per_year}. Year: {year}.")
         return year
 
     def get_grid(self) -> Grid:

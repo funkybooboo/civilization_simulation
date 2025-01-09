@@ -46,12 +46,12 @@ class Thinker:
             TaskType.START_FARM_CONSTRUCTION: 1,
             TaskType.START_BARN_CONSTRUCTION: 1,
             TaskType.START_MINE_CONSTRUCTION: 1,
-            TaskType.START_HOME_CONSTRUCTION: 1
+            TaskType.START_HOME_CONSTRUCTION: 1,
         }
 
     def get_hunger_preference(self) -> int:
         return self._hunger_preference
-        
+
     def get_task_type_priority(self, task_type: TaskType) -> int:
         return self._task_type_priorities[task_type]
 
@@ -60,22 +60,30 @@ class Thinker:
             self._time_without_home += 1
         else:
             self._time_without_home = 0
-        logger.info(f"{self._person.get_name()} is starting an action with current hunger={self._person.get_hunger()} and health={self._person.get_health()}")
+        logger.info(
+            f"{self._person.get_name()} is starting an action with current hunger={self._person.get_hunger()} and health={self._person.get_health()}"
+        )
         self._person.set_hunger(-1)
         logger.debug(f"{self._person.get_name()}'s hunger decreased by 1 to {self._person.get_hunger()}")
 
         if self._person.get_hunger() < settings.get("hunger_damage_threshold", 20):
             self._person.set_health(-1)
-            logger.debug(f"{self._person.get_name()}'s health decreased due to being hungry (Health: {self._person.get_health()})")
+            logger.debug(
+                f"{self._person.get_name()}'s health decreased due to being hungry (Health: {self._person.get_health()})"
+            )
         elif self._person.get_hunger() > settings.get("hunger_regen_threshold", 50):
             self._person.set_health(1)
-            logger.debug(f"{self._person.get_name()}'s health increased due to being full (Health: {self._person.get_health()})")
+            logger.debug(
+                f"{self._person.get_name()}'s health increased due to being full (Health: {self._person.get_health()})"
+            )
 
         self._add_tasks()
         self._scheduler.execute()
         self._adjust_priorities()
 
-        logger.debug(f"{self._person.get_name()} completed action with health={self._person.get_health()} and hunger={self._person.get_hunger()}")
+        logger.debug(
+            f"{self._person.get_name()} completed action with health={self._person.get_health()} and hunger={self._person.get_hunger()}"
+        )
 
     def update_scheduler_rewards(self, task_type: TaskType, reward: int) -> None:
         old_reward = self._work_rewards.get(task_type, 0)
@@ -163,31 +171,35 @@ class Thinker:
 
         # if you really need to work and your backpack is full, unload your backpack first
         if (
-                self._task_type_priorities[TaskType.TRANSPORT] < 3
-                and self._task_type_priorities[TaskType.WORK_FARM] < 3
-                or self._task_type_priorities[TaskType.CHOP_TREE] < 3
-                or self._task_type_priorities[TaskType.WORK_MINE] < 3
+            self._task_type_priorities[TaskType.TRANSPORT] < 3
+            and self._task_type_priorities[TaskType.WORK_FARM] < 3
+            or self._task_type_priorities[TaskType.CHOP_TREE] < 3
+            or self._task_type_priorities[TaskType.WORK_MINE] < 3
         ):
             if self._task_type_priorities[TaskType.CHOP_TREE] < 3:
-                self._task_type_priorities[TaskType.CHOP_TREE] = min(10, self._task_type_priorities[TaskType.TRANSPORT] + 1)
+                self._task_type_priorities[TaskType.CHOP_TREE] = min(
+                    10, self._task_type_priorities[TaskType.TRANSPORT] + 1
+                )
             if self._task_type_priorities[TaskType.WORK_MINE] < 3:
-                self._task_type_priorities[TaskType.WORK_MINE] = min(10, self._task_type_priorities[TaskType.TRANSPORT] + 1)
+                self._task_type_priorities[TaskType.WORK_MINE] = min(
+                    10, self._task_type_priorities[TaskType.TRANSPORT] + 1
+                )
             if self._task_type_priorities[TaskType.WORK_FARM] < 3:
-                self._task_type_priorities[TaskType.WORK_FARM] = min(10, self._task_type_priorities[TaskType.TRANSPORT] + 1)
+                self._task_type_priorities[TaskType.WORK_FARM] = min(
+                    10, self._task_type_priorities[TaskType.TRANSPORT] + 1
+                )
 
         # if there is no food, wood, or stone, food is the highest priority
         if (
-                self._task_type_priorities[TaskType.WORK_FARM] < 3
-                and self._task_type_priorities[TaskType.CHOP_TREE] < 3
-                and self._task_type_priorities[TaskType.WORK_MINE] < 3
+            self._task_type_priorities[TaskType.WORK_FARM] < 3
+            and self._task_type_priorities[TaskType.CHOP_TREE] < 3
+            and self._task_type_priorities[TaskType.WORK_MINE] < 3
         ):
             self._task_type_priorities[TaskType.CHOP_TREE] = min(10, self._task_type_priorities[TaskType.WORK_FARM] + 1)
             self._task_type_priorities[TaskType.WORK_MINE] = min(10, self._task_type_priorities[TaskType.WORK_FARM] + 1)
 
         # if you really need to eat, that's more important than building, or getting stone or wood
-        if (
-                self._task_type_priorities[TaskType.EAT] < 3 <= self._task_type_priorities[TaskType.WORK_FARM]
-        ):
+        if self._task_type_priorities[TaskType.EAT] < 3 <= self._task_type_priorities[TaskType.WORK_FARM]:
             if self._task_type_priorities[TaskType.CHOP_TREE] < 3:
                 self._task_type_priorities[TaskType.CHOP_TREE] = min(10, self._task_type_priorities[TaskType.EAT] + 1)
             if self._task_type_priorities[TaskType.WORK_MINE] < 3:
@@ -206,13 +218,22 @@ class Thinker:
         # if you're low on stone, then that is more important than building
         if self._task_type_priorities[TaskType.WORK_MINE] < 3:
             for task_type, priority in self._task_type_priorities.items():
-                if task_type == TaskType.BUILD_MINE or task_type == TaskType.BUILD_HOME or task_type == TaskType.BUILD_BARN:
+                if (
+                    task_type == TaskType.BUILD_MINE
+                    or task_type == TaskType.BUILD_HOME
+                    or task_type == TaskType.BUILD_BARN
+                ):
                     self._task_type_priorities[task_type] = min(10, self._task_type_priorities[TaskType.WORK_MINE] + 1)
 
         # if you're low on wood, then that is more important than building
         if self._task_type_priorities[TaskType.CHOP_TREE] < 3:
             for task_type, priority in self._task_type_priorities.items():
-                if task_type == TaskType.BUILD_MINE or task_type == TaskType.BUILD_HOME or task_type == TaskType.BUILD_FARM or task_type == TaskType.BUILD_BARN:
+                if (
+                    task_type == TaskType.BUILD_MINE
+                    or task_type == TaskType.BUILD_HOME
+                    or task_type == TaskType.BUILD_FARM
+                    or task_type == TaskType.BUILD_BARN
+                ):
                     self._task_type_priorities[task_type] = min(10, self._task_type_priorities[TaskType.CHOP_TREE] + 1)
 
         # if the person is young, or if exploring needs to happen, make sure exploring is the most important thing
@@ -266,7 +287,7 @@ class Thinker:
             TaskType.START_FARM_CONSTRUCTION,
             TaskType.START_BARN_CONSTRUCTION,
             TaskType.START_MINE_CONSTRUCTION,
-            TaskType.START_HOME_CONSTRUCTION
+            TaskType.START_HOME_CONSTRUCTION,
         ]
 
         # Get the current 'EXPLORE' priority
@@ -288,55 +309,55 @@ class Thinker:
         # Get the current capacity and remaining capacity of the backpack
         backpack_capacity = self._person.get_backpack().get_capacity()
         remaining_capacity = self._person.get_backpack().get_remaining_capacity()
-    
+
         # Calculate how full the backpack is (between 0 and 1)
         fullness_percentage = (backpack_capacity - remaining_capacity) / backpack_capacity
-    
+
         # Calculate the transport priority (between 1 and 10)
         # The fuller the backpack, the higher the transport priority
         transport_priority = 10 - int(10 * fullness_percentage)
-        
+
         # Ensure the priority is between 1 and 10
         transport_priority = max(1, min(transport_priority, 10))
-    
+
         # Assign the calculated priority to the 'TRANSPORT' task
         self._task_type_priorities[TaskType.TRANSPORT] = int(transport_priority)
 
     def _set_resource_gathering_priorities(self):
         # Retrieve barn locations and capacities
         barn_locations = self._person.get_memories().get_barn_locations()
-    
+
         total_food = 0
         total_wood = 0
         total_stone = 0
         total_capacity = 0
-    
+
         # Iterate through all barns to calculate total food, wood, stone, and capacity
         for barn_location in barn_locations:
             barn = self._person.get_simulation().get_grid().get_structure(barn_location)
-    
-            if isinstance(barn, Barn): 
-                total_food += barn.get_resource("food") 
-                total_wood += barn.get_resource("wood")  
-                total_stone += barn.get_resource("stone")  
-                total_capacity += barn.get_capacity() 
-    
+
+            if isinstance(barn, Barn):
+                total_food += barn.get_resource("food")
+                total_wood += barn.get_resource("wood")
+                total_stone += barn.get_resource("stone")
+                total_capacity += barn.get_capacity()
+
         # Calculate the amount of food, wood, and stone relative to the barn's capacity
         food_percentage = total_food / total_capacity if total_capacity > 0 else 0
         wood_percentage = total_wood / total_capacity if total_capacity > 0 else 0
         stone_percentage = total_stone / total_capacity if total_capacity > 0 else 0
-    
+
         # Adjust priorities based on these values
         self._adjust_work_farm_priority(food_percentage)
         self._adjust_chop_wood_priority(wood_percentage)
         self._adjust_work_mine_priority(stone_percentage)
-    
+
     def _adjust_work_farm_priority(self, food_percentage: float):
         self._task_type_priorities[TaskType.WORK_FARM] = max(1, min(10, int(10 * food_percentage)))
-    
+
     def _adjust_chop_wood_priority(self, wood_percentage: float):
         self._task_type_priorities[TaskType.CHOP_TREE] = max(1, min(10, int(10 * wood_percentage)))
-    
+
     def _adjust_work_mine_priority(self, stone_percentage: float):
         self._task_type_priorities[TaskType.WORK_MINE] = max(1, min(10, int(10 * stone_percentage)))
 
@@ -344,23 +365,23 @@ class Thinker:
         construction_count = len(self._person.get_memories().get_barn_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_BARN] = 10
-            return 
+            return
         self._task_type_priorities[TaskType.BUILD_BARN] = max(1, min(10, 3 - construction_count))
-    
+
     def _set_farm_construction_priority(self):
         construction_count = len(self._person.get_memories().get_farm_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_FARM] = 10
             return
         self._task_type_priorities[TaskType.BUILD_FARM] = max(1, min(10, 3 - construction_count))
-    
+
     def _set_home_construction_priority(self):
         construction_count = len(self._person.get_memories().get_home_construction_locations())
         if construction_count == 0:
             self._task_type_priorities[TaskType.BUILD_HOME] = 10
             return
         self._task_type_priorities[TaskType.BUILD_HOME] = max(1, min(10, 3 - construction_count))
-    
+
     def _set_mine_construction_priority(self):
         construction_count = len(self._person.get_memories().get_mine_construction_locations())
         if construction_count == 0:

@@ -69,7 +69,12 @@ class Mover:
 
     def _invalid(self, location: Location) -> bool:
         logger.debug(f"Checking if location {location} is invalid (barn, mine, or home).")
-        result = not self._grid.is_in_bounds(location) or self._grid.is_barn(location) or self._grid.is_mine(location) or self._grid.is_home(location)
+        result = (
+            not self._grid.is_in_bounds(location)
+            or self._grid.is_barn(location)
+            or self._grid.is_mine(location)
+            or self._grid.is_home(location)
+        )
         logger.debug(f"Location {location} is invalid: {result}")
         return result
 
@@ -113,7 +118,9 @@ class Mover:
         current_location = deepcopy(self._person.get_location())
 
         if not current_location.is_one_away(location):
-            logger.error(f"Attempted to place person at location {location}, which is not one away from current location {current_location}.")
+            logger.error(
+                f"Attempted to place person at location {location}, which is not one away from current location {current_location}."
+            )
             raise ValueError(f"Location is not one away: {location}")
 
         if not self._grid.is_in_bounds(location) or self._invalid(location):

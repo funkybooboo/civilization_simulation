@@ -86,5 +86,3 @@ class PeopleGenerator:
     def _make_person(self, name, pk, location, age) -> Person:
         building_locations = list(self._grid.get_buildings().keys())
         return Person(self._simulation, name, pk, location, age, building_locations)
-
-

@@ -22,7 +22,9 @@ if TYPE_CHECKING:
 
 
 class Person:
-    def __init__(self, simulation: Simulation, name: str, pk: int, location: Location, age: int, starter_memories: List[Location]) -> None:
+    def __init__(
+        self, simulation: Simulation, name: str, pk: int, location: Location, age: int, starter_memories: List[Location]
+    ) -> None:
         self._name: str = name
         self._pk: int = pk
         self._age: int = age
@@ -35,7 +37,7 @@ class Person:
 
         self._home: Optional[Home] = None
         self._spouse: Optional[Person] = None
-        
+
         self._backpack: Backpack = Backpack()
         self._scheduler: Scheduler = Scheduler(simulation, self)
         self._memories: Memories = Memories(simulation.get_grid())
@@ -46,7 +48,7 @@ class Person:
 
     def get_task_type_priority(self, task_type: TaskType) -> int:
         return self._thinker.get_task_type_priority(task_type)
-        
+
     def __str__(self) -> str:
         return f"Person({self._pk}, {self._name})"
 

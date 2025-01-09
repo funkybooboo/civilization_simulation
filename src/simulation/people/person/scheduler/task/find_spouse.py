@@ -31,7 +31,9 @@ class FindSpouse(Task):
                     else:
                         if other.has_home():
                             self._person.assign_home(other.get_home())
-                    logger.debug(f"{self._person.get_name()} and {other.get_name()} should have the same house: {self._person.get_home() == other.get_home()}")
+                    logger.debug(
+                        f"{self._person.get_name()} and {other.get_name()} should have the same house: {self._person.get_home() == other.get_home()}"
+                    )
                     break
         # if you have a spouse, or there are no options, finish the task
         self._finished()

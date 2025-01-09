@@ -8,7 +8,7 @@ class Settings:
     def __init__(self, e: str):
         """Initialize Settings and load environment-specific configurations."""
         self._settings: Dict[str, Any] = self._load_settings(e)
-    
+
     @staticmethod
     def _load_settings(e: str) -> Dict[str, Any]:
         """Load settings from the environment-specific yaml file"""
@@ -17,7 +17,7 @@ class Settings:
             raise FileNotFoundError(f"Settings file {settings_file} not found.")
 
         # Load the YAML file into a dictionary
-        with open(settings_file, 'r') as file:
+        with open(settings_file, "r") as file:
             s = yaml.safe_load(file)
 
         return s
@@ -28,6 +28,7 @@ class Settings:
         if value is None:
             return default
         return value
+
 
 # Helper function to get environment from command line args
 def get_environment() -> str:
@@ -43,4 +44,4 @@ environment = get_environment()
 settings = Settings(environment)  # This will initialize the global `settings` object
 
 # Example of accessing a setting
-print(settings.get('max_simulations'))  # Should print: 1 (based on your example YAML)
+print(settings.get("max_simulations"))  # Should print: 1 (based on your example YAML)

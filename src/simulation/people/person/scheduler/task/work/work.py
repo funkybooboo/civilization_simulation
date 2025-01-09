@@ -35,13 +35,17 @@ class Work(Task, ABC):
 
     @override
     def execute(self) -> None:
-        if self._work and not (self._person.get_location().is_one_away(self._work.get_location())
-                               or self._person.get_location().is_at_same_location(self._work.get_location())):
+        if self._work and not (
+            self._person.get_location().is_one_away(self._work.get_location())
+            or self._person.get_location().is_at_same_location(self._work.get_location())
+        ):
 
             self._person.go_to_location(self._work.get_location())
 
-        if self._work and (self._person.get_location().is_one_away(self._work.get_location())
-                           or self._person.get_location().is_at_same_location(self._work.get_location())):
+        if self._work and (
+            self._person.get_location().is_one_away(self._work.get_location())
+            or self._person.get_location().is_at_same_location(self._work.get_location())
+        ):
 
             resource: Optional[int] = self._work.work(self._person)
 

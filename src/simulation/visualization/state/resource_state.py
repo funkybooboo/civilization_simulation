@@ -9,6 +9,7 @@ from src.simulation.visualization.state.state import State
 from src.simulation.people.person.backpack import Backpack
 from src.simulation.grid.structure.store.home import Home
 
+
 class ResourceState(State):
     def __init__(self, grid: Grid, people: People):
         logger.debug("Initializing YourClassName with grid.")
@@ -190,8 +191,6 @@ class ResourceState(State):
         logger.debug(f"Total food: {total_food}")
         return total_food
 
-
-
     def _get_total_home_capacity(self) -> int:
         logger.debug("Calculating total home capacity.")
         total_capacity = 0
@@ -213,4 +212,3 @@ class ResourceState(State):
 
         logger.debug(f"Total remaining capacity: {total_remaining_capacity}")
         return total_remaining_capacity
-

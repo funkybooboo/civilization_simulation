@@ -1,25 +1,17 @@
 from src.logger import logger
 from src.simulation.people.people import People
-from src.simulation.people.person.scheduler.task.construction.build_barn import \
-    BuildBarn
-from src.simulation.people.person.scheduler.task.construction.build_farm import \
-    BuildFarm
-from src.simulation.people.person.scheduler.task.construction.build_home import \
-    BuildHome
-from src.simulation.people.person.scheduler.task.construction.build_mine import \
-    BuildMine
+from src.simulation.people.person.scheduler.task.construction.build_barn import BuildBarn
+from src.simulation.people.person.scheduler.task.construction.build_farm import BuildFarm
+from src.simulation.people.person.scheduler.task.construction.build_home import BuildHome
+from src.simulation.people.person.scheduler.task.construction.build_mine import BuildMine
 from src.simulation.people.person.scheduler.task.eat import Eat
 from src.simulation.people.person.scheduler.task.explore import Explore
 from src.simulation.people.person.scheduler.task.find_home import FindHome
 from src.simulation.people.person.scheduler.task.find_spouse import FindSpouse
-from src.simulation.people.person.scheduler.task.start_construction.start_barn_construction import \
-    StartBarnConstruction
-from src.simulation.people.person.scheduler.task.start_construction.start_farm_construction import \
-    StartFarmConstruction
-from src.simulation.people.person.scheduler.task.start_construction.start_home_construction import \
-    StartHomeConstruction
-from src.simulation.people.person.scheduler.task.start_construction.start_mine_construction import \
-    StartMineConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_barn_construction import StartBarnConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_farm_construction import StartFarmConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_home_construction import StartHomeConstruction
+from src.simulation.people.person.scheduler.task.start_construction.start_mine_construction import StartMineConstruction
 from src.simulation.people.person.scheduler.task.transport import Transport
 from src.simulation.people.person.scheduler.task.work.chop_tree import ChopTree
 from src.simulation.people.person.scheduler.task.work.work_farm import WorkFarm
@@ -95,37 +87,61 @@ class TaskState(State):
         self._average_complete_find_spouse_task_count: float = self._get_average_complete_find_spouse_task_count()
         logger.debug(f"Average complete find spouse task count: {self._average_complete_find_spouse_task_count}")
 
-        self._average_active_start_barn_construction_task_count: float = self._get_average_active_start_barn_construction_task_count()
+        self._average_active_start_barn_construction_task_count: float = (
+            self._get_average_active_start_barn_construction_task_count()
+        )
         logger.debug(
-            f"Average active start barn construction task count: {self._average_active_start_barn_construction_task_count}")
+            f"Average active start barn construction task count: {self._average_active_start_barn_construction_task_count}"
+        )
 
-        self._average_complete_start_barn_construction_task_count: float = self._get_average_complete_start_barn_construction_task_count()
+        self._average_complete_start_barn_construction_task_count: float = (
+            self._get_average_complete_start_barn_construction_task_count()
+        )
         logger.debug(
-            f"Average complete start barn construction task count: {self._average_complete_start_barn_construction_task_count}")
+            f"Average complete start barn construction task count: {self._average_complete_start_barn_construction_task_count}"
+        )
 
-        self._average_active_start_farm_construction_task_count: float = self._get_average_active_start_farm_construction_task_count()
+        self._average_active_start_farm_construction_task_count: float = (
+            self._get_average_active_start_farm_construction_task_count()
+        )
         logger.debug(
-            f"Average active start farm construction task count: {self._average_active_start_farm_construction_task_count}")
+            f"Average active start farm construction task count: {self._average_active_start_farm_construction_task_count}"
+        )
 
-        self._average_complete_start_farm_construction_task_count: float = self._get_average_complete_start_farm_construction_task_count()
+        self._average_complete_start_farm_construction_task_count: float = (
+            self._get_average_complete_start_farm_construction_task_count()
+        )
         logger.debug(
-            f"Average complete start farm construction task count: {self._average_complete_start_farm_construction_task_count}")
+            f"Average complete start farm construction task count: {self._average_complete_start_farm_construction_task_count}"
+        )
 
-        self._average_active_start_home_construction_task_count: float = self._get_average_active_start_home_construction_task_count()
+        self._average_active_start_home_construction_task_count: float = (
+            self._get_average_active_start_home_construction_task_count()
+        )
         logger.debug(
-            f"Average active start home construction task count: {self._average_active_start_home_construction_task_count}")
+            f"Average active start home construction task count: {self._average_active_start_home_construction_task_count}"
+        )
 
-        self._average_complete_start_home_construction_task_count: float = self._get_average_complete_start_home_construction_task_count()
+        self._average_complete_start_home_construction_task_count: float = (
+            self._get_average_complete_start_home_construction_task_count()
+        )
         logger.debug(
-            f"Average complete start home construction task count: {self._average_complete_start_home_construction_task_count}")
+            f"Average complete start home construction task count: {self._average_complete_start_home_construction_task_count}"
+        )
 
-        self._average_active_start_mine_construction_task_count: float = self._get_average_active_start_mine_construction_task_count()
+        self._average_active_start_mine_construction_task_count: float = (
+            self._get_average_active_start_mine_construction_task_count()
+        )
         logger.debug(
-            f"Average active start mine construction task count: {self._average_active_start_mine_construction_task_count}")
+            f"Average active start mine construction task count: {self._average_active_start_mine_construction_task_count}"
+        )
 
-        self._average_complete_start_mine_construction_task_count: float = self._get_average_complete_start_mine_construction_task_count()
+        self._average_complete_start_mine_construction_task_count: float = (
+            self._get_average_complete_start_mine_construction_task_count()
+        )
         logger.debug(
-            f"Average complete start mine construction task count: {self._average_complete_start_mine_construction_task_count}")
+            f"Average complete start mine construction task count: {self._average_complete_start_mine_construction_task_count}"
+        )
 
         self._average_active_work_farm_task_count: float = self._get_average_active_work_farm_task_count()
         logger.debug(f"Average active work farm task count: {self._average_active_work_farm_task_count}")
@@ -265,9 +281,7 @@ class TaskState(State):
 
     def _get_average_complete_eat_task_count(self) -> float:
         logger.debug("Calculating average complete eat task count.")
-        average = self._get_average_task_count_with_predicate(
-            lambda task: isinstance(task, Eat) and task.is_finished()
-        )
+        average = self._get_average_task_count_with_predicate(lambda task: isinstance(task, Eat) and task.is_finished())
         logger.debug(f"Average complete eat task count: {average}")
         return average
 
@@ -430,4 +444,3 @@ class TaskState(State):
         )
         logger.debug(f"Average complete transport task count: {average}")
         return average
-

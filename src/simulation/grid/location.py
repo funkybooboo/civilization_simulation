@@ -9,7 +9,7 @@ class Location:
         logger.debug(f"Initializing Location with x={x}, y={y}")
         self.x = x
         self.y = y
-        
+
         self._neighbor_offsets = [
             (-1, -1),
             (0, -1),
@@ -54,14 +54,14 @@ class Location:
 
     def is_one_away(self, other: "Location") -> bool:
         logger.debug(f"Checking if Location({self.x}, {self.y}) is one step away from {other}")
-    
+
         # Check if the difference between the current location and the other location
         # matches any of the offsets in _neighbor_offsets
         for dx, dy in self._neighbor_offsets:
             if self.x + dx == other.x and self.y + dy == other.y:
                 logger.debug(f"One step away: True")
                 return True
-    
+
         logger.debug(f"One step away: False")
         return False
 
@@ -71,10 +71,9 @@ class Location:
         else:
             return False
 
-
     def get_neighbors(self) -> List["Location"]:
         logger.debug(f"Getting neighbors for Location({self.x}, {self.y})")
-        
+
         neighbors = []
         for dx, dy in self._neighbor_offsets:
             new_location = Location(self.x + dx, self.y + dy)

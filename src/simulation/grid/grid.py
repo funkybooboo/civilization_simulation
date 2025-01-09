@@ -370,7 +370,7 @@ class Grid:
             for j in range(len(row)):
                 cell = row[j]
                 # invert coordinates for the pathfinding library
-                path_finding_matrix[j][i] = self._char_to_num[cell]  
+                path_finding_matrix[j][i] = self._char_to_num[cell]
                 logger.debug(f"Setting path_finding_matrix[{j}][{i}] = {self._char_to_num[cell]} (cell: {cell})")
 
         logger.debug("Path finding matrix generation complete.")
@@ -422,7 +422,7 @@ class Grid:
         if not self.is_in_bounds(location):
             logger.warning(f"You called is_char with a location that is out of bounds {location}")
             return False
-            
+
         return self._grid[location.y][location.x] == char
 
     def get_width(self) -> int:

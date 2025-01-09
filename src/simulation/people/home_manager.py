@@ -122,7 +122,9 @@ class HomeManager:
                     far_people[person] = combined_center
                 else:
                     continue
-                logger.debug(f"{person.get_name()} has spouse, and combined center {combined_center} and added to far people")
+                logger.debug(
+                    f"{person.get_name()} has spouse, and combined center {combined_center} and added to far people"
+                )
 
         return far_people
 
@@ -134,8 +136,8 @@ class HomeManager:
             return None
 
         total_x, total_y = sum(location.x for location in locations), sum(location.y for location in locations)
-        logger.debug(f'total x: {total_x}, total y: {total_y}, number of structures: {len(locations)}')
+        logger.debug(f"total x: {total_x}, total y: {total_y}, number of structures: {len(locations)}")
         avg_x, avg_y = total_x // len(locations), total_y // len(locations)
-        logger.debug(f'avg x: {avg_x}, avg y: {avg_y}')
+        logger.debug(f"avg x: {avg_x}, avg y: {avg_y}")
 
         return Location(avg_x, avg_y)

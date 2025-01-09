@@ -4,8 +4,7 @@ from typing import TYPE_CHECKING
 
 from src.logger import logger
 from src.settings import settings
-from src.simulation.grid.structure.work.construction.construction import \
-    Construction
+from src.simulation.grid.structure.work.construction.construction import Construction
 
 if TYPE_CHECKING:
     from src.simulation.grid.grid import Grid
